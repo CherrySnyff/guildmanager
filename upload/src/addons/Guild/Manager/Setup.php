@@ -596,6 +596,11 @@ class Setup extends AbstractSetup
     {
     }
 
+    /** Патч 1.0.2: исправление ACP find-users (GuildCreate без json()). */
+    public function upgrade1000702Step1(): void
+    {
+    }
+
     protected function seedLevelRules(): void
     {
         $db = $this->db();
