@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="public" title="guild_manager_guild.less" version_id="1000669" version_string="1.0.0 Alpha 129"><![CDATA[
+  <template type="public" title="guild_manager_guild.less" version_id="1000700" version_string="1.0.0"><![CDATA[
 .gm-page { background: @xf-contentBg; border: 1px solid @xf-borderColor; border-radius: 4px; padding: 12px 20px; }
 .gm-tabs { display: flex; flex-wrap: nowrap; gap: 4px; overflow-x: auto; border-bottom: 1px solid @xf-borderColor; margin-bottom: 12px; padding-bottom: 0; }
 .gm-tab { flex: 0 0 auto; padding: 8px 12px; border-radius: 4px 4px 0 0; color: inherit; text-decoration: none; background: @xf-contentBg; border: 1px solid @xf-borderColor; border-bottom: 0; }
@@ -541,7 +541,7 @@
 .gm-members-body > .gm-desc-read,
 .gm-members-body > .gm-empty { margin-top: 10px; }
 ]]></template>
-  <template type="public" title="guild_manager_guild_view" version_id="1000669" version_string="1.0.0 Alpha 129"><![CDATA[
+  <template type="public" title="guild_manager_guild_view" version_id="1000700" version_string="1.0.0"><![CDATA[
 <xf:title>{$guild.title}</xf:title>
 <xf:css src="guild_manager_guild.less" />
 

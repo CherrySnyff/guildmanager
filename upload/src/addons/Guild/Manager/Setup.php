@@ -586,6 +586,11 @@ class Setup extends AbstractSetup
     {
     }
 
+    /** Стабильный релиз 1.0.0: апгрейд с Alpha 129 (схема без изменений). */
+    public function upgrade1000700Step1(): void
+    {
+    }
+
     protected function seedLevelRules(): void
     {
         $db = $this->db();
