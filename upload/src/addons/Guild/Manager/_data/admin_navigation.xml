@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="guild_manager" display_order="9950" icon="fa-users" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="1"/>
+  <admin_navigation_entry navigation_id="guild_manager_list" parent_navigation_id="guild_manager" display_order="10" link="guild-manager" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="guild_manager_create" parent_navigation_id="guild_manager" display_order="20" link="guild-manager/create" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="guild_manager_logs" parent_navigation_id="guild_manager" display_order="30" link="guild-manager/logs/treasury" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="1"/>
+  <admin_navigation_entry navigation_id="guild_manager_logs_treasury" parent_navigation_id="guild_manager_logs" display_order="10" link="guild-manager/logs/treasury" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="guild_manager_logs_followers" parent_navigation_id="guild_manager_logs" display_order="20" link="guild-manager/logs/followers" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="guild_manager_logs_reputation" parent_navigation_id="guild_manager_logs" display_order="30" link="guild-manager/logs/reputation" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="guild_manager_logs_storage" parent_navigation_id="guild_manager_logs" display_order="40" link="guild-manager/logs/storage" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="guild_manager_logs_transport" parent_navigation_id="guild_manager_logs" display_order="50" link="guild-manager/logs/transport" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="guild_manager_logs_description" parent_navigation_id="guild_manager_logs" display_order="60" link="guild-manager/logs/description" admin_permission_id="guildManager" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>

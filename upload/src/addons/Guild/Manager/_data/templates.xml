@@ -1,0 +1,2058 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="guild_manager_guild.less" version_id="1000669" version_string="1.0.0 Alpha 129"><![CDATA[
+.gm-page { background: @xf-contentBg; border: 1px solid @xf-borderColor; border-radius: 4px; padding: 12px 20px; }
+.gm-tabs { display: flex; flex-wrap: nowrap; gap: 4px; overflow-x: auto; border-bottom: 1px solid @xf-borderColor; margin-bottom: 12px; padding-bottom: 0; }
+.gm-tab { flex: 0 0 auto; padding: 8px 12px; border-radius: 4px 4px 0 0; color: inherit; text-decoration: none; background: @xf-contentBg; border: 1px solid @xf-borderColor; border-bottom: 0; }
+.gm-tab:hover { background: @xf-contentHighlightBg; color: inherit; }
+.gm-tab.is-active { background: #C542D2; color: #000; font-weight: 700; }
+.gm-summary { background: @xf-contentBg; border: 1px solid #ddd; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.5; }
+.gm-summary dt { float: left; clear: left; width: 220px; color: inherit; }
+.gm-summary dd { margin: 0 0 6px 230px; }
+.gm-summary--description { font-size: 18px; line-height: 1.45; }
+.gm-summary--description dt { width: 360px; }
+.gm-summary--description dd { margin-left: 380px; }
+.gm-org-level-row .gm-level-renown-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.gm-org-level-row .gm-level-renown-notice {
+  display: inline-flex;
+  align-items: center;
+  color: #c25600;
+  cursor: help;
+  flex-shrink: 0;
+}
+.gm-org-level-row .gm-level-renown-notice:hover { color: #a04500; }
+.gm-org-level-row .gm-level-renown-text {
+  color: #c25600;
+  font-weight: normal;
+  font-size: 0.78em;
+  line-height: 1.3;
+}
+.gm-org-level-row .gm-level-renown-text:hover { color: #a04500; }
+.gm-summary--description .gm-direction-prompt {
+  margin-left: 8px;
+  font-size: 0.78em;
+  color: #c25600;
+  font-weight: normal;
+}
+.gm-status-active { color: #008209; font-weight: 700; }
+.gm-status-inactive { color: #E50000; font-weight: 700; }
+.gm-treasury-emphasis { color: #FD7300; font-weight: 700; }
+.gm-table-wrap { overflow-x: auto; margin-bottom: 12px; }
+.gm-table { width: 100%; border-collapse: collapse; font-size: 13px; background: @xf-contentBg; }
+.gm-table th, .gm-table td { border-bottom: 1px solid @xf-borderColor; padding: 6px 8px; vertical-align: top; word-break: break-word; }
+.gm-table th { text-align: left; color: #444; font-weight: 600; }
+.gm-summary--treasury { font-size: 18px; line-height: 1.45; border: none; margin-top: -7px; }
+.gm-table-wrap--treasury { text-align: center; margin-top: -12px; margin-bottom: 12px; }
+.gm-table--treasury { width: 80%; max-width: 100%; margin: 0 auto; box-sizing: border-box; }
+.gm-table--treasury th { color: inherit; text-align: center; }
+.gm-table--treasury .gm-col-amount { text-align: center; }
+.gm-add-row--treasury { width: 80%; max-width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+.gm-table-wrap--storage { margin-bottom: 12px; overflow-x: auto; }
+.gm-table--storage { width: 80%; max-width: 100%; margin: 0 auto; box-sizing: border-box; }
+.gm-table--storage th { color: inherit; text-align: center; }
+.gm-table--storage td.gm-col-name,
+.gm-table--storage td.gm-col-desc { text-align: left; }
+.gm-table--storage .gm-col-rarity { text-align: center; }
+.gm-add-row--storage { width: 80%; max-width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+.itemQuality {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 2px 6px !important;
+  line-height: 1 !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  vertical-align: baseline !important;
+  min-height: 0 !important;
+  margin: 0 2px !important;
+  border-radius: 4px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+}
+.itemQuality--common { background: #FFFED5; color: #222; border: 1px solid #333; }
+.itemQuality--uncommon { background: #ffa500; color: #222; border: 1px solid #333; }
+.itemQuality--rare { background: #00008B; color: #fff; border: 1px solid #fff; }
+.itemQuality--unique { background:rgb(125, 0, 125); color: #fff; border: 1px solid #fff; }
+.gm-row-negative { background: transparent; }
+.gm-row-negative td,
+.gm-row-negative td a { color: #F50000 !important; }
+.gm-amount-negative { color: #F50000; font-weight: 600; }
+.gm-amount-positive { font-weight: 600; }
+.gm-add-row { background: @xf-contentBg; border: 1px dashed #ccc; padding: 10px; margin-top: 8px; }
+.gm-add-row .gm-fields { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; }
+.gm-add-row .gm-field { flex: 1 1 140px; min-width: 120px; }
+.gm-add-row .gm-field.gm-field--wide { flex: 2 1 220px; }
+.gm-btn-plus { background: #B865D9; color: #fff; border: 0; border-radius: 4px; padding: 8px 14px; font-weight: 600; cursor: pointer; }
+.gm-hr { border: 0; border-top: 1px solid #666; margin: 16px 0; }
+.gm-block { margin-bottom: 14px; }
+.gm-empty { color: #666; font-style: italic; padding: 8px 0; }
+.gm-suggest { border: 1px solid #ccc; background: #fff; max-height: 200px; overflow-y: auto; margin: 4px 0 8px; display: none; }
+.gm-suggest.is-open { display: block; }
+.gm-suggest button { display: block; width: 100%; text-align: left; padding: 6px 8px; border: 0; border-bottom: 1px solid #eee; background: #fff; cursor: pointer; }
+.gm-suggest button:hover { background: #f3e9fa; }
+.gm-actions { white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+.gm-actions details { display: inline-flex; align-items: center; }
+.gm-actions details > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; color: @xf-linkColor; }
+.gm-actions details > summary:hover { color: @xf-linkHoverColor; }
+.gm-actions details > summary::-webkit-details-marker { display: none; }
+.gm-actions .button { margin-right: 0; }
+.gm-icon-btn { background: transparent; border: 0; box-shadow: none; min-width: 0; padding: 0; color: inherit; }
+.gm-icon-btn:hover { background: transparent; color: @xf-linkHoverColor; }
+.gm-admin-edit-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 10px; }
+.gm-admin-edit-row .gm-field { min-width: 180px; flex: 1 1 220px; }
+.gm-admin-inline-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; margin: 0; }
+.gm-admin-inline-form .gm-field { min-width: 180px; flex: 1 1 280px; }
+.gm-admin-inline-form .gm-field select { min-height: 40px; }
+.gm-field--leader-id .gm-field--leader-id-row { display: flex; align-items: center; gap: 8px; }
+.gm-field--leader-id .gm-field--leader-id-row .input { flex: 1 1 auto; }
+.gm-btn-save-icon { min-width: 40px; }
+.gm-edit-guild-toggle-wrap { text-align: right; margin-top: 10px; }
+.gm-edit-guild-details > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.gm-edit-guild-details > summary::-webkit-details-marker { display: none; }
+.gm-rep-tabs { display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto; margin: 10px 0; position: relative; padding-bottom: 7px; }
+.gm-rep-tabs::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 7px; border: 1px solid #222222; border-top: 0; border-radius: 0 0 6px 6px; background: #BB38E0; }
+.gm-rep-tabs--aramidis::after { background: #bf00ff; }
+.gm-rep-tabs--korzus::after { background: rgb(255, 191, 0); }
+.gm-rep-tabs--union::after { background: #7df9ff; }
+.gm-rep-tab { position: relative; overflow: hidden; flex: 0 0 auto; padding: 6px 12px; border-radius: 4px 4px 0 0; text-decoration: none; font-weight: 700; color: #000; border: 1px solid #222222; border-bottom: 0; }
+.gm-rep-tab--aramidis { background: #bf00ff; }
+.gm-rep-tab--korzus { background:rgb(255, 191, 0); }
+.gm-rep-tab--union { background: #7df9ff; }
+.gm-rep-tab::after { content: ""; position: absolute; inset: 0; background: rgba(120, 120, 120, 0.45); pointer-events: none; }
+.gm-rep-tab.is-active::after { display: none; }
+.gm-rep-tab.is-active.gm-rep-tab--aramidis { background: #bf00ff; color: #000; font-weight: 700; }
+.gm-rep-tab.is-active.gm-rep-tab--korzus { background:rgb(255, 191, 0); color: #000; font-weight: 700; }
+.gm-rep-tab.is-active.gm-rep-tab--union { background: #7df9ff; color: #000; font-weight: 700; }
+.gm-npc-page { margin: 0 20px; }
+.gm-npc-anchor-grid { display: grid; grid-template-columns: repeat(5, max-content); justify-content: center; column-gap: 15px; row-gap: 6px; margin-bottom: 10px; }
+.gm-npc-anchor-wrap { border-bottom: 1px solid @xf-borderColor; margin-bottom: 12px; padding-bottom: 10px; }
+.gm-npc-anchor-item { text-align: center; font-weight: 700; font-size: 1.3em; }
+.gm-npc-anchor-item a { color: inherit; text-decoration: none; }
+.gm-npc-anchor-item a:hover { text-decoration: underline; }
+.gm-npc-block { margin: 0 0 12px; }
+.gm-npc-block-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; flex-wrap: nowrap; }
+.gm-npc-titleLink { color: inherit; text-decoration: none; font-size: 24px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
+.gm-npc-titleLink:hover { text-decoration: underline; }
+.gm-npc-block-controls { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex-wrap: nowrap; }
+.gm-npc-edit-details { width: 100%; margin: 0 0 8px; text-align: right; }
+.gm-npc-edit-details > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; }
+.gm-npc-edit-details > summary::-webkit-details-marker { display: none; }
+.gm-npc-edit-form { margin-top: 8px; text-align: left; width: 100%; box-sizing: border-box; }
+.gm-npc-edit-form .block,
+.gm-npc-edit-form .block-container,
+.gm-npc-edit-form .block-body { width: 100%; max-width: 100%; box-sizing: border-box; }
+.gm-npc-add-form { margin-top: 12px; }
+.gm-npc-name-row { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 8px; }
+.gm-npc-name-row .gm-field--name { flex: 1 1 auto; max-width: 320px; }
+.gm-npc-name-row .gm-field--submit { flex: 0 0 auto; }
+.gm-npc-add-form .gm-btn-plus { padding: 7px 14px; }
+.gm-npc-hr { border: 0; border-top: 1px solid @xf-borderColor; margin: 12px 0; }
+.gm-table-wrap--rep-summary { width: 50%; margin: 0 auto 12px; }
+.gm-table--rep-summary { width: 100%; font-size: 13.5px; font-weight: 700; }
+.gm-table--rep-summary th { color: inherit; }
+.gm-table--rep-summary th:nth-child(1),
+.gm-table--rep-summary td:nth-child(1) { text-align: left; }
+.gm-table--rep-summary th:nth-child(n+2),
+.gm-table--rep-summary td:nth-child(n+2) { text-align: center; }
+.gm-table--rep-summary td.gm-rep-negative { color: rgb(245, 0, 0); }
+.gm-table-wrap--rep-main { width: 80%; margin-left: auto; margin-right: auto; }
+.gm-table-wrap--rep-main .gm-table th { color: inherit; }
+.gm-add-row--rep-main { width: 80%; max-width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+.gm-rep-faction-spoiler { margin-bottom: 4px; border-bottom: 1px solid @xf-borderColor; }
+.gm-rep-faction-spoiler > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) 120px 220px; gap: 6px; align-items: center; padding: 4px 6px; }
+.gm-rep-faction-spoiler > summary::-webkit-details-marker { display: none; }
+.gm-rep-faction-spoiler .gm-rep-faction-name { display: inline-flex; align-items: center; }
+.gm-rep-faction-spoiler .gm-rep-faction-name::before { content: "▸"; margin-right: 7px; }
+.gm-rep-faction-spoiler[open] .gm-rep-faction-name::before { content: "▾"; }
+.gm-rep-faction-spoiler .gm-rep-faction-total,
+.gm-rep-faction-spoiler .gm-rep-faction-relation { text-align: center; }
+.gm-rep-faction-items { padding: 0 0 8px 24px; }
+.gm-table-wrap--rep-main .gm-table th,
+.gm-table-wrap--rep-main .gm-table td { padding: 4px 6px; }
+.gm-relation-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 2px 6px !important;
+  line-height: 1 !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  vertical-align: baseline !important;
+  min-height: 0 !important;
+  margin: 0 2px !important;
+  border-radius: 4px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+  white-space: nowrap !important;
+}
+.gm-relation-pill--despised { background: #e30022; color: #222; border: 1px solid #333; }
+.gm-relation-pill--hated { background:rgb(249, 77, 0); color: #222; border: 1px solid #333; }
+.gm-relation-pill--wanted { background:rgb(255, 126, 0); color: #222; border: 1px solid #333; }
+.gm-relation-pill--suspicious { background: #ffbf00; color: #222; border: 1px solid #333; }
+.gm-relation-pill--neutral { background:rgb(238, 238, 238); color: #222; border: 1px solid #333; }
+.gm-relation-pill--friendly { background:rgba(0, 255, 0, 0.68); color: #222; border: 1px solid #333; }
+.gm-relation-pill--promising { background: #00ccff; color: #222; border: 1px solid #333; }
+.gm-relation-pill--hero { background: #0000cd; color: #fff; border: 1px solid #333; }
+.gm-relation-pill--legend { background:rgb(113, 0, 148); color: #fff; border: 1px solid #333; }
+.gm-relation-tooltip {
+  position: fixed;
+  z-index: 10000;
+  width: 300px;
+  max-width: 300px;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid @xf-borderColor;
+  border-radius: 6px;
+  background: @xf-contentBg;
+  color: @xf-textColor;
+  line-height: 1.35;
+  white-space: normal;
+  word-break: break-word;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+@media (max-width: 1024px) {
+  .gm-page { padding: 10px 12px; }
+  .gm-tabs { gap: 6px; overflow-x: auto; }
+  .gm-tab { padding: 9px 12px; }
+  .gm-summary--description { font-size: 17px; }
+  .gm-summary--description dt { width: 250px; }
+  .gm-summary--description dd { margin-left: 265px; }
+  .gm-admin-inline-form .gm-field,
+  .gm-admin-edit-row .gm-field { min-width: 220px; flex: 1 1 220px; }
+  .gm-table-wrap--treasury,
+  .gm-table-wrap--storage,
+  .gm-table-wrap--followers-80,
+  .gm-table-wrap--rep-summary,
+  .gm-table-wrap--rep-main,
+  .gm-add-row--treasury,
+  .gm-add-row--storage,
+  .gm-add-row--followers,
+  .gm-add-row--rep-main { width: 100%; }
+  .gm-table--treasury,
+  .gm-table--storage { width: 100%; }
+  .gm-members-col { width: 340px; }
+  .gm-npc-anchor-grid { grid-template-columns: repeat(3, max-content); column-gap: 10px; }
+}
+@media (max-width: 720px) {
+  .gm-page { padding: 8px 8px; border-radius: 0; border-left: 0; border-right: 0; }
+  .gm-tabs { gap: 4px; margin-bottom: 10px; }
+  .gm-tab { font-size: 12px; padding: 8px 10px; }
+  .gm-summary { font-size: 13px; padding: 8px 10px; }
+  .gm-add-row .gm-fields { flex-direction: column; align-items: stretch; }
+  .gm-summary dt { float: none; width: auto; font-weight: 600; }
+  .gm-summary dd { margin: 0 0 8px 0; }
+  .gm-summary--description { font-size: 18px; }
+  .gm-summary--description dd { margin-left: 0; }
+  .gm-summary--followers { font-size: 1em; gap: 6px 8px; }
+  .gm-followers-rules-open { margin-left: 0; }
+  .gm-admin-edit-row,
+  .gm-admin-inline-form { flex-direction: column; align-items: stretch; }
+  .gm-admin-inline-form .gm-field,
+  .gm-admin-edit-row .gm-field { min-width: 0; width: 100%; }
+  .gm-field--leader-id .gm-field--leader-id-row { flex-direction: column; align-items: stretch; gap: 6px; }
+  .gm-btn-save-icon { width: 100%; min-width: 0; }
+  .gm-table-wrap--rep-summary,
+  .gm-table-wrap--rep-main,
+  .gm-add-row--rep-main { width: 100%; }
+  .gm-rep-faction-spoiler > summary { grid-template-columns: minmax(0, 1fr) 100px 170px; }
+  .gm-rep-faction-spoiler .gm-rep-faction-total,
+  .gm-rep-faction-spoiler .gm-rep-faction-relation { font-size: 12px; }
+  .gm-npc-page { margin: 0; }
+  .gm-npc-anchor-grid { grid-template-columns: repeat(2, max-content); }
+  .gm-npc-name-row { flex-direction: column; align-items: stretch; }
+  .gm-npc-name-row .gm-field--name { max-width: none; }
+  .gm-npc-titleLink { font-size: 20px; }
+  .gm-followers-rules-modal__dialog { width: 92%; }
+  .gm-add-row--followers { width: 100%; }
+  .gm-table th, .gm-table td { padding: 5px 6px; font-size: 12px; }
+  .gm-actions { gap: 6px; }
+  .gm-members-grid { gap: 10px; }
+  .gm-members-editor-row { grid-template-columns: 1fr; }
+  .gm-members-col { width: 280px; }
+}
+/* Описание: [IMG float] / align — схлопывание высоты. overflow + clearfix; не полагаться на flow-root при конфликтах с ядром */
+.gm-desc-body { width: 100%; box-sizing: border-box; }
+.gm-desc-manage { margin: 0 0 8px; text-align: right; }
+.gm-desc-manage::after { content: ""; display: table; clear: both; }
+.gm-desc-details { display: block; }
+.gm-desc-details > .gm-desc-detailsSummary { list-style: none; cursor: pointer; display: block; user-select: none; }
+.gm-desc-details > .gm-desc-detailsSummary::-webkit-details-marker { display: none; }
+.gm-desc-editForm { text-align: left; margin-top: 8px; }
+.gm-desc-editForm .block-container { max-width: 100%; }
+.gm-desc-editForm .formRow--submit dt { display: none; }
+.gm-desc-editForm .formRow--submit dd { margin-left: 0; }
+.gm-desc-editForm .formRow--submit { margin-top: 5px; }
+.gm-desc-editForm .formButtonGroup { display: flex; justify-content: flex-end; }
+.gm-page .gm-desc-read {
+  min-height: 1.5em;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* BFC: обнимает float снизу */
+  position: relative;
+  z-index: 0;
+}
+.gm-page .gm-desc-bb {
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-width: 0;
+  position: relative;
+  z-index: 0;
+}
+/* Доп. пойманный float на прямых img/p/div от редактора */
+.gm-page .gm-desc-bb::after,
+.gm-page .gm-desc-read::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* bbCodeBlock без overflow: hidden — иначе обрезает широкий [CODE] */
+.gm-page .gm-desc-read .bbCodeBlock,
+.gm-page .gm-desc-bb .bbCodeBlock { text-align: left; max-width: 100%; box-sizing: border-box; }
+.gm-page .gm-desc-read .bbWrapper,
+.gm-page .gm-desc-bb .bbWrapper {
+  text-align: left;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+/* dl: float dt — в конец списка clearfix, чтобы не уезжал следующий блок */
+.gm-page .gm-summary::after { content: ""; display: table; clear: both; }
+/* Разделитель после описания: явный clear, если float визуально пересекал бы следующий блок */
+.gm-page .gm-block.gm-desc-body + .gm-hr { clear: both; }
+.gm-summary--followers {
+  font-size: 1.2em;
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  border-color: @xf-borderColor;
+}
+.gm-summary--followers .gm-followers-summary-text { flex: 1 1 240px; min-width: 0; }
+.gm-followers-rules-open {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 4px 8px;
+  color: @xf-linkColor;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 1.1em;
+}
+.gm-followers-rules-open:hover { color: @xf-linkHoverColor; }
+.gm-lieutenant-mid { color: #D33; }
+.gm-lieutenant-high { color: #238D36; }
+.gm-lieutenant-mid strong,
+.gm-lieutenant-high strong { font-weight: 700; }
+.gm-transport-heading {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+.gm-table-wrap--followers-80 {
+  width: 80%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+.gm-table--followers th { color: inherit; }
+.gm-followers-rules-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 80020;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.gm-followers-rules-modal[hidden] { display: none !important; }
+.gm-followers-rules-modal__backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.gm-followers-rules-modal__dialog {
+  position: relative;
+  z-index: 1;
+  flex: 0 1 auto;
+  /* Окно ровно по ширине блока таблицы: 75% ширины вьюпорта */
+  width: 75%;
+  max-width: ~"min(920px, 96vw)";
+  max-height: 88vh;
+  overflow: auto;
+  background: @xf-contentBg;
+  border: 1px solid @xf-borderColor;
+  border-radius: 6px;
+  padding: 16px 44px 18px 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+}
+.gm-followers-rules-modal__close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.gm-followers-rules-modal__close:hover { background: @xf-contentHighlightBg; }
+.gm-followers-rules-modal__body {
+  margin-top: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gm-followers-rules-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.gm-followers-rules-table th {
+  border: none;
+  border-bottom: 2px solid @xf-borderColor;
+  text-align: left;
+  font-weight: 700;
+  color: inherit;
+  white-space: nowrap;
+  padding: 6px;
+}
+.gm-followers-rules-table td {
+  border: none;
+  border-bottom: 1px solid @xf-borderColor;
+  padding: 6px;
+  color: inherit;
+}
+.gm-followers-rules-note {
+  margin-top: 10px;
+  font-size: 0.92em;
+  line-height: 1.45;
+  color: inherit;
+}
+.gm-add-row--followers {
+  width: 80%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+.gm-label-with-help {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.gm-followers-qty-help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: @xf-linkColor;
+  cursor: help;
+  line-height: 1;
+  font-size: 1em;
+  vertical-align: middle;
+}
+.gm-followers-qty-help:hover,
+.gm-followers-qty-help:focus {
+  color: @xf-linkHoverColor;
+}
+.gm-followers-qty-help:focus {
+  outline: 1px solid @xf-borderColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.gm-followers-field-tooltip {
+  position: fixed;
+  z-index: 80030;
+  display: none;
+  width: 200px;
+  max-width: ~"min(200px, 92vw)";
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid @xf-borderColor;
+  border-radius: 6px;
+  background: @xf-contentBg;
+  color: @xf-textColor;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: normal;
+  word-break: break-word;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+.gm-members-editor-list { display: flex; flex-direction: column; gap: 8px; }
+.gm-members-editor-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+}
+.gm-members-editor-row .gm-field { min-width: 0; }
+.gm-members-editor-row .gm-field label { display: block; margin-bottom: 4px; }
+.gm-members-editor-row .gm-member-remove {
+  align-self: end;
+  margin-bottom: 1px;
+  padding: 8px 10px;
+  border: 1px solid @xf-borderColor;
+  border-radius: 4px;
+  background: @xf-contentBg;
+  color: inherit;
+  cursor: pointer;
+}
+.gm-members-grid-wrap { overflow-x: auto; }
+.gm-members-grid { display: inline-flex; align-items: flex-start; gap: 20px; width: auto; }
+.gm-members-col { border-collapse: collapse; table-layout: fixed; width: 360px; }
+.gm-members-col th,
+.gm-members-col td { border: 0; padding: 2px 6px; text-align: left; vertical-align: top; }
+.gm-members-col th { font-weight: 700; }
+.gm-members-name strong { font-weight: 700; }
+.gm-members-body { display: flex; flex-direction: column; gap: 0; }
+.gm-members-body > .gm-desc-manage,
+.gm-members-body > .gm-members-grid-wrap,
+.gm-members-body > .gm-desc-read,
+.gm-members-body > .gm-empty { margin: 0; }
+.gm-members-body > .gm-members-grid-wrap,
+.gm-members-body > .gm-desc-read,
+.gm-members-body > .gm-empty { margin-top: 10px; }
+]]></template>
+  <template type="public" title="guild_manager_guild_view" version_id="1000669" version_string="1.0.0 Alpha 129"><![CDATA[
+<xf:title>{$guild.title}</xf:title>
+<xf:css src="guild_manager_guild.less" />
+
+<div class="gm-page" id="top">
+  <div class="gm-tabs">
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'description'}) }}" class="gm-tab<xf:if is="$tab == 'description'"> is-active</xf:if>">Описание</a>
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'treasury'}) }}" class="gm-tab<xf:if is="$tab == 'treasury'"> is-active</xf:if>">Казна</a>
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'storage'}) }}" class="gm-tab<xf:if is="$tab == 'storage'"> is-active</xf:if>">Склад</a>
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'followers'}) }}" class="gm-tab<xf:if is="$tab == 'followers'"> is-active</xf:if>">Последователи</a>
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'reputation'}) }}" class="gm-tab<xf:if is="$tab == 'reputation'"> is-active</xf:if>">Репутация</a>
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'important-npcs'}) }}" class="gm-tab<xf:if is="$tab == 'important-npcs'"> is-active</xf:if>">Важные НПС</a>
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'members'}) }}" class="gm-tab<xf:if is="$tab == 'members'"> is-active</xf:if>">Участники</a>
+  </div>
+
+  <xf:if is="$tab == 'description'">
+    <dl class="gm-summary gm-summary--description gm-block">
+      <dt>Уровень организации</dt><dd class="gm-org-level-row"><strong>{$guild.organization_level}</strong> — <strong>{$sizeRu}</strong><xf:if is="$showLevelRenownCapNotice"> <span class="gm-level-renown-wrap"><span class="gm-level-renown-notice" title="Уровень не может быть повышен: не хватает известности." role="img" aria-label="Уровень не может быть повышен: не хватает известности."><xf:fa icon="fa-solid fa-triangle-exclamation" /></span><span class="gm-level-renown-text">Уровень не может быть повышен: не хватает известности.</span></span></xf:if></dd>
+      <dt>Направленности</dt>
+      <dd>
+        <xf:if is="$summaryDirections is not empty">{$summaryDirections}<xf:else /><span class="gm-empty">не выбраны</span></xf:if><xf:if is="$showDirectionMilestoneNotice"> <span class="gm-direction-prompt" title="выберите направленность." role="note">выберите направленность.</span></xf:if>
+      </dd>
+      <dt>Лидер организации</dt>
+      <dd>
+        <xf:if is="$leaderUser">
+          <strong><xf:username user="{$leaderUser}" rich="true" /></strong>
+        <xf:else />
+          <strong>{$guild.leader_username}</strong>
+        </xf:if>
+      </dd>
+      <dt>Эффект «Защита новичка»</dt>
+      <dd>
+        <xf:if is="$noviceProtectionActive">
+          <span class="gm-status-active">АКТИВНА</span>
+        <xf:else />
+          <span class="gm-status-inactive">НЕАКТИВНА</span>
+        </xf:if>
+      </dd>
+      <dt>Текущее состояние казны</dt><dd><span class="gm-treasury-emphasis">{$guild.treasury_balance|number}</span> ЗМ</dd>
+    </dl>
+
+    <div class="gm-block gm-desc-body">
+      <xf:if is="$canEditDescription">
+        <div class="gm-desc-manage">
+          <details class="gm-desc-details block">
+            <summary class="gm-desc-detailsSummary" title="Редактировать описание" aria-label="Редактировать описание">
+              <span class="u-muted"><xf:fa icon="edit" /></span>
+            </summary>
+            <div class="gm-desc-editForm">
+              <xf:form action="{$guildRoot}/description" class="block message">
+                <div class="block-container">
+                  <div class="block-body">
+                    <xf:editorrow
+                      name="message"
+                      value="{$guild.description}"
+                      rowtype="fullWidth noLabel"
+                      data-user-mention-url="{{ link('members/find') }}"
+                      data-min-height="200" />
+                  </div>
+                  <dl class="formRow formRow--submit">
+                    <dt></dt>
+                    <dd>
+                      <div class="formButtonGroup">
+                        <button type="submit" class="button button--primary" title="Сохранить описание" aria-label="Сохранить описание"><xf:fa icon="save" /></button>
+                      </div>
+                    </dd>
+                  </dl>
+                </div>
+              </xf:form>
+            </div>
+          </details>
+        </div>
+      </xf:if>
+      <xf:if is="$hasDescriptionToShow">
+        <div class="gm-desc-read">
+          <div class="gm-desc-bb">{$descriptionDisplayHtml|raw}</div>
+        </div>
+      <xf:else />
+        <div class="gm-empty">Описание организации пока не заполнено.</div>
+      </xf:if>
+    </div>
+
+    <xf:if is="$canEditGuildPanel">
+      <hr class="gm-hr" />
+      <div class="gm-edit-guild-toggle-wrap">
+        <details class="gm-edit-guild-details block">
+          <summary title="Редактировать гильдию" aria-label="Редактировать гильдию">
+            <xf:fa icon="edit" /> Редактировать гильдию
+          </summary>
+          <div class="gm-desc-editForm">
+            <xf:form action="{$guildRoot}/leader" class="gm-block gm-admin-inline-form">
+              <xf:if is="$canEditGuildTitleAdmin">
+                <div class="gm-field">
+                  <label>Редактировать название гильдии</label>
+                  <input type="text" name="guild_title" value="{$guild.title}" class="input" maxlength="100" />
+                </div>
+              </xf:if>
+              <div class="gm-field gm-field--leader-id">
+                <label>ID выбранного лидера</label>
+                <div class="gm-field--leader-id-row">
+                  <input type="number" name="leader_user_id" id="gm-leader-user-id" value="{$guild.leader_user_id}" class="input" min="1" />
+                  <button type="submit" class="button gm-btn-save-icon" title="Сохранить изменения гильдии" aria-label="Сохранить изменения гильдии"><xf:fa icon="save" /></button>
+                </div>
+              </div>
+            </xf:form>
+
+            <xf:if is="$maxDirectionSlots &gt;= 1">
+              <xf:form action="{$guildRoot}/directions" class="gm-block gm-admin-inline-form">
+                <div class="gm-field">
+                  <label>Направленность 1-го уровня</label>
+                  <select name="direction_1" class="input"<xf:if is="$directionSlot1Locked"> disabled="disabled"</xf:if>>
+                    <option value="">— Выберите направленность —</option>
+                    <xf:foreach loop="$focusOptions" value="$opt">
+                        <option value="{$opt.key}"<xf:if is="$directionSlot1 == $opt.key"> selected="selected"</xf:if>>{$opt.label}</option>
+                    </xf:foreach>
+                  </select>
+                  <xf:if is="$directionSlot1Locked">
+                    <input type="hidden" name="direction_1" value="{$directionSlot1}" />
+                  </xf:if>
+                </div>
+
+                <xf:if is="$maxDirectionSlots &gt;= 2">
+                  <div class="gm-field">
+                    <label>Направленность 6-го уровня</label>
+                    <select name="direction_2" class="input"<xf:if is="$directionSlot2Locked"> disabled="disabled"</xf:if>>
+                      <option value="">— Выберите направленность —</option>
+                      <xf:foreach loop="$focusOptions" value="$opt">
+                        <option value="{$opt.key}"<xf:if is="$directionSlot2 == $opt.key"> selected="selected"</xf:if>>{$opt.label}</option>
+                      </xf:foreach>
+                    </select>
+                    <xf:if is="$directionSlot2Locked">
+                      <input type="hidden" name="direction_2" value="{$directionSlot2}" />
+                    </xf:if>
+                  </div>
+                </xf:if>
+
+                <xf:if is="$maxDirectionSlots &gt;= 3">
+                  <div class="gm-field">
+                    <label>Направленность 11-го уровня</label>
+                    <select name="direction_3" class="input"<xf:if is="$directionSlot3Locked"> disabled="disabled"</xf:if>>
+                      <option value="">— Выберите направленность —</option>
+                      <xf:foreach loop="$focusOptions" value="$opt">
+                        <option value="{$opt.key}"<xf:if is="$directionSlot3 == $opt.key"> selected="selected"</xf:if>>{$opt.label}</option>
+                      </xf:foreach>
+                    </select>
+                    <xf:if is="$directionSlot3Locked">
+                      <input type="hidden" name="direction_3" value="{$directionSlot3}" />
+                    </xf:if>
+                  </div>
+                </xf:if>
+
+                <xf:if is="$maxDirectionSlots &gt;= 4">
+                  <div class="gm-field">
+                    <label>Направленность 16-го уровня</label>
+                    <select name="direction_4" class="input"<xf:if is="$directionSlot4Locked"> disabled="disabled"</xf:if>>
+                      <option value="">— Выберите направленность —</option>
+                      <xf:foreach loop="$focusOptions" value="$opt">
+                        <option value="{$opt.key}"<xf:if is="$directionSlot4 == $opt.key"> selected="selected"</xf:if>>{$opt.label}</option>
+                      </xf:foreach>
+                    </select>
+                    <xf:if is="$directionSlot4Locked">
+                      <input type="hidden" name="direction_4" value="{$directionSlot4}" />
+                    </xf:if>
+                  </div>
+                </xf:if>
+
+                <div class="gm-field">
+                  <label>&nbsp;</label>
+                  <button type="submit" class="button gm-btn-save-icon" title="Сохранить направленности" aria-label="Сохранить направленности"><xf:fa icon="save" /></button>
+                </div>
+              </xf:form>
+            </xf:if>
+          </div>
+        </details>
+      </div>
+    </xf:if>
+  </xf:if>
+
+  <xf:if is="$tab == 'treasury'">
+    <p class="gm-summary gm-summary--treasury">Текущее состояние казны: <span class="gm-treasury-emphasis">{$guild.treasury_balance|number}</span> ЗМ</p>
+    <div class="gm-table-wrap gm-table-wrap--treasury">
+      <table class="gm-table gm-table--treasury">
+        <tr><th>Персонаж</th><th>Заявка</th><th class="gm-col-amount">Сумма ЗМ</th><th>Причина</th><xf:if is="$canEditTreasury || $canDeleteTreasury"><th class="gm-actions">Действия</th></xf:if></tr>
+        <xf:if is="$treasuryRows is not empty">
+          <xf:foreach loop="$treasuryRows" value="$row">
+            <tr<xf:if is="$row.amount < 0"> class="gm-row-negative"</xf:if>>
+              <td>{$row.character_name}</td>
+              <td><a href="{$row.source_url}" target="_blank" rel="noopener">Заявка на пополнение/списание казны</a></td>
+              <td class="gm-col-amount<xf:if is="$row.amount < 0"> gm-amount-negative<xf:else /> gm-amount-positive</xf:if>"><xf:if is="$row.amount > 0">+</xf:if>{$row.amount|number}</td>
+              <td>{$row.reason}</td>
+              <xf:if is="$canEditTreasury || $canDeleteTreasury">
+                <td class="gm-actions">
+                  <xf:if is="$canEditTreasury">
+                    <details><summary title="Редактировать" aria-label="Редактировать"><xf:fa icon="edit" /></summary>
+                      <xf:form action="{$guildRoot}/treasury/{$row.treasury_log_id}/edit" class="gm-add-row" style="margin-top:8px">
+                        <div class="gm-fields">
+                          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" value="{$row.character_name}" class="input" /></div>
+                          <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" value="{$row.source_url}" class="input" /></div>
+                          <div class="gm-field"><label>Сумма</label><input type="number" name="amount" class="input" placeholder="Текущее: {$row.amount|number}" /></div>
+                          <div class="gm-field gm-field--wide"><label>Причина</label><input type="text" name="reason" value="{$row.reason}" class="input" /></div>
+                          <div class="gm-field"><button type="submit" class="button button--primary" title="Сохранить" aria-label="Сохранить"><xf:fa icon="save" /></button></div>
+                        </div>
+                      </xf:form>
+                    </details>
+                  </xf:if>
+                  <xf:if is="$canDeleteTreasury">
+                    <xf:form action="{$guildRoot}/treasury/{$row.treasury_log_id}/delete" style="display:inline">
+                      <button type="submit" class="button button--link gm-icon-btn" title="Удалить" aria-label="Удалить"><xf:fa icon="fa-solid fa-eraser" /></button>
+                    </xf:form>
+                  </xf:if>
+                </td>
+              </xf:if>
+            </tr>
+          </xf:foreach>
+        <xf:else />
+          <xf:if is="$canEditTreasury || $canDeleteTreasury">
+            <tr><td colspan="5" class="gm-empty">Операций с казной пока нет.</td></tr>
+          <xf:else />
+            <tr><td colspan="4" class="gm-empty">Операций с казной пока нет.</td></tr>
+          </xf:if>
+        </xf:if>
+      </table>
+    </div>
+    <xf:if is="$canAddTreasury">
+      <xf:form action="{$guildRoot}/treasury/add" class="gm-add-row gm-add-row--treasury">
+        <div class="gm-fields">
+          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" /></div>
+          <div class="gm-field gm-field--wide"><label>Ссылка https://</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
+          <div class="gm-field"><label>Сумма</label><input type="number" name="amount" class="input" /></div>
+          <div class="gm-field gm-field--wide"><label>Причина</label><input type="text" name="reason" class="input" /></div>
+          <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
+        </div>
+      </xf:form>
+    </xf:if>
+  </xf:if>
+
+  <xf:if is="$tab == 'storage'">
+    <div class="gm-table-wrap gm-table-wrap--storage">
+      <table class="gm-table gm-table--storage">
+        <tr><th class="gm-col-name">Название</th><th class="gm-col-desc">Описание</th><th class="gm-col-rarity">Редкость</th><th>Источник</th><xf:if is="$canEditStorage || $canDeleteStorage"><th class="gm-actions">Действия</th></xf:if></tr>
+        <xf:if is="$storageRows is not empty">
+          <xf:foreach loop="$storageRows" value="$it">
+            <tr>
+              <td class="gm-col-name">{$it.item_name}</td>
+              <td class="gm-col-desc">{$it.item_description}</td>
+              <td class="gm-col-rarity"><span class="itemQuality itemQuality--{$it.rarity}"><xf:if is="$it.rarity == 'common'">Обычный</xf:if><xf:if is="$it.rarity == 'uncommon'">Необычный</xf:if><xf:if is="$it.rarity == 'rare'">Редкий</xf:if><xf:if is="$it.rarity == 'unique'">Уникальный</xf:if></span></td>
+              <td><xf:if is="$it.source_url is not empty"><a href="{$it.source_url}" target="_blank" rel="noopener">Источник</a></xf:if></td>
+              <xf:if is="$canEditStorage || $canDeleteStorage">
+                <td class="gm-actions">
+                  <xf:if is="$canEditStorage">
+                    <details><summary title="Редактировать" aria-label="Редактировать"><xf:fa icon="edit" /></summary>
+                      <xf:form action="{$guildRoot}/storage/{$it.storage_id}/edit" class="gm-add-row" style="margin-top:8px">
+                        <div class="gm-fields">
+                          <div class="gm-field"><label>Название</label><input type="text" name="item_name" value="{$it.item_name}" class="input" /></div>
+                          <div class="gm-field gm-field--wide"><label>Описание</label><input type="text" name="item_description" value="{$it.item_description}" class="input" /></div>
+                          <div class="gm-field"><label>Редкость</label>
+                            <select name="rarity" class="input">
+                              <option value="common"<xf:if is="$it.rarity == 'common'"> selected="selected"</xf:if>>Обычный</option>
+                              <option value="uncommon"<xf:if is="$it.rarity == 'uncommon'"> selected="selected"</xf:if>>Необычный</option>
+                              <option value="rare"<xf:if is="$it.rarity == 'rare'"> selected="selected"</xf:if>>Редкий</option>
+                              <option value="unique"<xf:if is="$it.rarity == 'unique'"> selected="selected"</xf:if>>Уникальный</option>
+                            </select>
+                          </div>
+                          <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" value="{$it.source_url}" class="input" /></div>
+                          <div class="gm-field"><button type="submit" class="button button--primary" title="Сохранить" aria-label="Сохранить"><xf:fa icon="save" /></button></div>
+                        </div>
+                      </xf:form>
+                    </details>
+                  </xf:if>
+                  <xf:if is="$canDeleteStorage">
+                    <xf:form action="{$guildRoot}/storage/{$it.storage_id}/delete" style="display:inline">
+                      <button type="submit" class="button button--link gm-icon-btn" title="Удалить" aria-label="Удалить"><xf:fa icon="fa-solid fa-eraser" /></button>
+                    </xf:form>
+                  </xf:if>
+                </td>
+              </xf:if>
+            </tr>
+          </xf:foreach>
+        <xf:else />
+          <xf:if is="$canEditStorage || $canDeleteStorage">
+            <tr><td colspan="5" class="gm-empty">На складе пока нет предметов.</td></tr>
+          <xf:else />
+            <tr><td colspan="4" class="gm-empty">На складе пока нет предметов.</td></tr>
+          </xf:if>
+        </xf:if>
+      </table>
+    </div>
+    <xf:if is="$canManageStorage">
+      <xf:form action="{$guildRoot}/storage/add" class="gm-add-row gm-add-row--storage">
+        <div class="gm-fields">
+          <div class="gm-field"><label>Название</label><input type="text" name="item_name" class="input" /></div>
+          <div class="gm-field gm-field--wide"><label>Описание</label><input type="text" name="item_description" class="input" /></div>
+          <div class="gm-field"><label>Редкость</label>
+            <select name="rarity" class="input">
+              <option value="common">Обычный</option>
+              <option value="uncommon">Необычный</option>
+              <option value="rare">Редкий</option>
+              <option value="unique">Уникальный</option>
+            </select>
+          </div>
+          <div class="gm-field gm-field--wide"><label>Ссылка (необязательно)</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
+          <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
+        </div>
+      </xf:form>
+    </xf:if>
+  </xf:if>
+
+  <xf:if is="$tab == 'followers'">
+    <p class="gm-summary gm-summary--followers">
+      <span class="gm-followers-summary-text">Текущее количество НПС-последователей в организации: <strong>{$guild.followers_total|number}</strong> последователей {$followersLieutenantFragmentHtml|raw}</span>
+      <button type="button" class="gm-followers-rules-open" id="gm-followers-rules-open" title="Таблица уровней гильдии" aria-label="Таблица уровней гильдии"><xf:fa icon="fa-solid fa-table" /></button>
+    </p>
+    <div id="gm-followers-rules-modal" class="gm-followers-rules-modal" hidden="hidden">
+      <div class="gm-followers-rules-modal__backdrop" data-gm-followers-rules-close="1"></div>
+      <div class="gm-followers-rules-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="gm-followers-rules-title">
+        <button type="button" class="gm-followers-rules-modal__close" data-gm-followers-rules-close="1" title="Закрыть" aria-label="Закрыть">×</button>
+        <h3 class="block-textHeader" id="gm-followers-rules-title">Последователи и лейтенанты по уровню гильдии</h3>
+        <div class="gm-followers-rules-modal__body">{$followersRulesTableHtml|raw}</div>
+      </div>
+    </div>
+    <div class="gm-table-wrap gm-table-wrap--followers-80">
+      <table class="gm-table gm-table--followers">
+        <tr><th>Персонаж</th><th>Заявка</th><th>Последователи</th><th>Дата</th><xf:if is="$canEditFollower || $canDeleteFollower"><th class="gm-actions">Действия</th></xf:if></tr>
+        <xf:if is="$followerRows is not empty">
+          <xf:foreach loop="$followerRows" value="$row">
+            <tr<xf:if is="$row.amount < 0"> class="gm-row-negative"</xf:if>>
+              <td>{$row.character_name}</td>
+              <td><a href="{$row.source_url}" target="_blank" rel="noopener">Заявка на получение</a></td>
+              <td<xf:if is="$row.amount < 0"> class="gm-amount-negative"<xf:else /> class="gm-amount-positive"</xf:if>><xf:if is="$row.amount > 0">+</xf:if>{$row.amount|number}</td>
+              <td>{$row.event_date_text}</td>
+              <xf:if is="$canEditFollower || $canDeleteFollower">
+                <td class="gm-actions">
+                  <xf:if is="$canEditFollower">
+                    <details><summary title="Редактировать" aria-label="Редактировать"><xf:fa icon="edit" /></summary>
+                      <xf:form action="{$guildRoot}/followers/{$row.follower_log_id}/edit" class="gm-add-row" style="margin-top:8px">
+                        <div class="gm-fields">
+                          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" value="{$row.character_name}" class="input" /></div>
+                          <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" value="{$row.source_url}" class="input" /></div>
+                          <div class="gm-field"><label>Количество</label><input type="number" name="followers_amount" class="input" placeholder="Текущее: {$row.amount|number}" /></div>
+                          <div class="gm-field"><label>Дата</label><input type="text" name="date" value="{$row.event_date_text}" class="input" /></div>
+                          <div class="gm-field"><button type="submit" class="button button--primary" title="Сохранить" aria-label="Сохранить"><xf:fa icon="save" /></button></div>
+                        </div>
+                      </xf:form>
+                    </details>
+                  </xf:if>
+                  <xf:if is="$canDeleteFollower">
+                    <xf:form action="{$guildRoot}/followers/{$row.follower_log_id}/delete" style="display:inline">
+                      <button type="submit" class="button button--link gm-icon-btn" title="Удалить" aria-label="Удалить"><xf:fa icon="fa-solid fa-eraser" /></button>
+                    </xf:form>
+                  </xf:if>
+                </td>
+              </xf:if>
+            </tr>
+          </xf:foreach>
+        <xf:else />
+          <xf:if is="$canEditFollower || $canDeleteFollower">
+            <tr><td colspan="5" class="gm-empty">Записей о последователях пока нет.</td></tr>
+          <xf:else />
+            <tr><td colspan="4" class="gm-empty">Записей о последователях пока нет.</td></tr>
+          </xf:if>
+        </xf:if>
+      </table>
+    </div>
+    <xf:if is="$canAddFollower">
+      <xf:form action="{$guildRoot}/followers/add" class="gm-add-row gm-add-row--followers">
+        <div class="gm-fields">
+          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" /></div>
+          <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
+          <div class="gm-field">
+            <label class="gm-label-with-help">Количество
+              <button type="button" class="gm-followers-qty-help" id="gm-followers-qty-help" aria-label="Справка: количество последователей" title="Подсказка"><xf:fa icon="fa-solid fa-circle-question" /></button>
+            </label>
+            <input type="number" name="followers_amount" class="input" /></div>
+          <div class="gm-field"><label>Дата дд.мм.гггг</label><input type="text" name="date" class="input" value="{$followersAddDefaultDate}" placeholder="дд.мм.гггг" /></div>
+          <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
+        </div>
+      </xf:form>
+    </xf:if>
+
+    <hr class="gm-hr" />
+    <h3 class="block-textHeader gm-transport-heading">ТРАНСПОРТ</h3>
+    <div class="gm-table-wrap gm-table-wrap--followers-80">
+      <table class="gm-table gm-table--followers">
+        <tr><th>Название</th><th>Состояние</th><xf:if is="$canEditVehicle || $canDeleteVehicle"><th class="gm-actions">Действия</th></xf:if></tr>
+        <xf:if is="$vehicleRows is not empty">
+          <xf:foreach loop="$vehicleRows" value="$v">
+            <tr>
+              <td>{$v.vehicle_name}</td>
+              <td><xf:if is="$v.vehicle_status == 'busy'">Занят<xf:else />Свободен</xf:if></td>
+              <xf:if is="$canEditVehicle || $canDeleteVehicle">
+                <td class="gm-actions">
+                  <xf:if is="$canEditVehicle">
+                    <details><summary title="Редактировать" aria-label="Редактировать"><xf:fa icon="edit" /></summary>
+                      <xf:form action="{$guildRoot}/transport/{$v.vehicle_id}/edit" class="gm-add-row" style="margin-top:8px">
+                        <div class="gm-fields">
+                          <div class="gm-field"><label>Название</label><input type="text" name="transport_name" value="{$v.vehicle_name}" class="input" /></div>
+                          <div class="gm-field"><label>Состояние</label>
+                            <select name="transport_status" class="input">
+                              <option value="free"<xf:if is="$v.vehicle_status == 'free'"> selected="selected"</xf:if>>Свободен</option>
+                              <option value="busy"<xf:if is="$v.vehicle_status == 'busy'"> selected="selected"</xf:if>>Занят</option>
+                            </select>
+                          </div>
+                          <div class="gm-field"><button type="submit" class="button button--primary" title="Сохранить" aria-label="Сохранить"><xf:fa icon="save" /></button></div>
+                        </div>
+                      </xf:form>
+                    </details>
+                  </xf:if>
+                  <xf:if is="$canDeleteVehicle">
+                    <xf:form action="{$guildRoot}/transport/{$v.vehicle_id}/delete" style="display:inline">
+                      <button type="submit" class="button button--link gm-icon-btn" title="Удалить" aria-label="Удалить"><xf:fa icon="fa-solid fa-eraser" /></button>
+                    </xf:form>
+                  </xf:if>
+                </td>
+              </xf:if>
+            </tr>
+          </xf:foreach>
+        <xf:else />
+          <xf:if is="$canEditVehicle || $canDeleteVehicle">
+            <tr><td colspan="3" class="gm-empty">Транспортные средства пока не указаны.</td></tr>
+          <xf:else />
+            <tr><td colspan="2" class="gm-empty">Транспортные средства пока не указаны.</td></tr>
+          </xf:if>
+        </xf:if>
+      </table>
+    </div>
+    <xf:if is="$canAddFollower">
+      <xf:form action="{$guildRoot}/transport/add" class="gm-add-row gm-add-row--followers">
+        <div class="gm-fields">
+          <div class="gm-field"><label>Название</label><input type="text" name="transport_name" class="input" /></div>
+          <div class="gm-field"><label>Состояние</label>
+            <select name="transport_status" class="input">
+              <option value="free">Свободен</option>
+              <option value="busy">Занят</option>
+            </select>
+          </div>
+          <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
+        </div>
+      </xf:form>
+    </xf:if>
+    <div id="gm-followers-qty-tip-source" style="display: none;" aria-hidden="true">Менелдер наёмных рабочих [способность]<br /> В случае найма на бирже вы получаете 1 дополнительного последователя за каждые потраченные 50 золотых монет</div>
+    <script>
+    (function () {
+      var modal = document.getElementById('gm-followers-rules-modal');
+      var openBtn = document.getElementById('gm-followers-rules-open');
+      if (!modal || !openBtn) return;
+      function openM() {
+        modal.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeM() {
+        modal.setAttribute('hidden', 'hidden');
+        document.body.style.overflow = '';
+      }
+      openBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openM();
+      });
+      modal.addEventListener('click', function (e) {
+        var el = e.target;
+        if (!el || !el.getAttribute) return;
+        if (el.getAttribute('data-gm-followers-rules-close') === '1') {
+          closeM();
+        }
+      });
+    })();
+
+    (function () {
+      var btn = document.getElementById('gm-followers-qty-help');
+      var src = document.getElementById('gm-followers-qty-tip-source');
+      if (!btn || !src) return;
+
+      var tip = null;
+      var hideTimer = null;
+
+      function ensureTip() {
+        if (tip) return tip;
+        tip = document.createElement('div');
+        tip.className = 'gm-followers-field-tooltip';
+        tip.setAttribute('role', 'tooltip');
+        document.body.appendChild(tip);
+        tip.addEventListener('mouseenter', function () {
+          if (hideTimer) {
+            clearTimeout(hideTimer);
+            hideTimer = null;
+          }
+        });
+        tip.addEventListener('mouseleave', scheduleHide);
+        return tip;
+      }
+
+      function positionTip() {
+        if (!tip) return;
+        var r = btn.getBoundingClientRect();
+        var w = 200;
+        var left = Math.round(r.left + r.width / 2 - w / 2);
+        if (left < 8) left = 8;
+        if (left + w > window.innerWidth - 8) left = window.innerWidth - w - 8;
+        var top = Math.round(r.bottom + 6);
+        var th = tip.offsetHeight;
+        if (top + th > window.innerHeight - 8) {
+          top = Math.round(r.top - th - 6);
+          if (top < 8) top = 8;
+        }
+        tip.style.left = left + 'px';
+        tip.style.top = top + 'px';
+      }
+
+      function show() {
+        if (hideTimer) {
+          clearTimeout(hideTimer);
+          hideTimer = null;
+        }
+        var t = ensureTip();
+        t.innerHTML = src.innerHTML;
+        t.style.display = 'block';
+        positionTip();
+        requestAnimationFrame(function () {
+          positionTip();
+        });
+      }
+
+      function hide() {
+        if (hideTimer) {
+          clearTimeout(hideTimer);
+          hideTimer = null;
+        }
+        if (tip) tip.style.display = 'none';
+      }
+
+      function scheduleHide() {
+        if (hideTimer) clearTimeout(hideTimer);
+        hideTimer = setTimeout(hide, 120);
+      }
+
+      btn.addEventListener('mouseenter', show);
+      btn.addEventListener('mouseleave', scheduleHide);
+      btn.addEventListener('focus', show);
+      btn.addEventListener('blur', function () {
+        hideTimer = setTimeout(hide, 150);
+      });
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (tip && tip.style.display === 'block') {
+          hide();
+          return;
+        }
+        show();
+      });
+      document.addEventListener('click', function (e) {
+        if (!tip || tip.style.display !== 'block') return;
+        if (btn.contains(e.target) || tip.contains(e.target)) return;
+        hide();
+      });
+      window.addEventListener('scroll', function () {
+        if (tip && tip.style.display === 'block') positionTip();
+      }, true);
+      window.addEventListener('resize', function () {
+        if (tip && tip.style.display === 'block') positionTip();
+      });
+    })();
+    </script>
+  </xf:if>
+
+  <xf:if is="$tab == 'reputation'">
+    <div class="gm-table-wrap gm-table-wrap--rep-summary">
+      <table class="gm-table gm-table--rep-summary">
+        <tr><th>Биом</th><th>Отрицательная</th><th>Положительная</th><th>Общая</th></tr>
+        <xf:foreach loop="$influenceRows" key="$k" value="$ir">
+          <tr>
+            <td>{$ir.label}</td>
+            <td class="gm-rep-negative">{$ir.negative|number}</td>
+            <td>{$ir.positive|number}</td>
+            <td>{$ir.total|number}</td>
+          </tr>
+        </xf:foreach>
+      </table>
+    </div>
+
+    <div class="gm-rep-tabs gm-rep-tabs--{$repRegion}">
+      <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'reputation', 'rep': 'aramidis'}) }}" class="gm-rep-tab gm-rep-tab--aramidis<xf:if is="$repRegion == 'aramidis'"> is-active</xf:if>">АРАМИДИС</a>
+      <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'reputation', 'rep': 'korzus'}) }}" class="gm-rep-tab gm-rep-tab--korzus<xf:if is="$repRegion == 'korzus'"> is-active</xf:if>">КОРЗУС</a>
+      <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'reputation', 'rep': 'union'}) }}" class="gm-rep-tab gm-rep-tab--union<xf:if is="$repRegion == 'union'"> is-active</xf:if>">ЮНИОН</a>
+    </div>
+
+    <div class="gm-rep-dynamic">
+    <h4 class="block-textHeader">Репутация фракций региона</h4>
+    <div class="gm-table-wrap gm-table-wrap--rep-main">
+      <table class="gm-table">
+        <tr><th>Фракция</th><th>Сумма</th><th>Отношение</th></tr>
+        <xf:if is="$factionRows is not empty">
+          <xf:foreach loop="$factionRows" value="$fr">
+            <tr>
+              <td colspan="3">
+                <details class="gm-rep-faction-spoiler">
+                  <summary>
+                    <span class="gm-rep-faction-name">{$fr.display_name}</span>
+                    <span class="gm-rep-faction-total">{$fr.total|number}</span>
+                    <span class="gm-rep-faction-relation"><span class="gm-relation-pill gm-relation-pill--{$fr.relation_class}" data-gm-tooltip="{$fr.relation_tooltip}">{$fr.relation}</span></span>
+                  </summary>
+                  <div class="gm-rep-faction-items">
+                    <table class="gm-table">
+                      <tr><th>Персонаж</th><th>Ссылка</th><th>Репутация</th><th>Фракция</th><xf:if is="$canEditReputation || $canDeleteReputation"><th class="gm-actions">Действия</th></xf:if></tr>
+                      <xf:if is="$fr.entries is not empty">
+                        <xf:foreach loop="$fr.entries" value="$row">
+                          <tr<xf:if is="$row.amount < 0"> class="gm-row-negative"</xf:if>>
+                            <td>{$row.character_name}</td>
+                            <td><a href="{$row.source_url}" target="_blank" rel="noopener">Ссылка на источник</a></td>
+                            <td<xf:if is="$row.amount < 0"> class="gm-amount-negative"<xf:else /> class="gm-amount-positive"</xf:if>>{$row.amount|number}</td>
+                            <td>{$row.faction_name}</td>
+                            <xf:if is="$canEditReputation || $canDeleteReputation">
+                              <td class="gm-actions">
+                                <xf:if is="$canEditReputation">
+                                  <details><summary title="Редактировать" aria-label="Редактировать"><xf:fa icon="edit" /></summary>
+                                    <xf:form action="{$guildRoot}/reputation/{$row.reputation_log_id}/edit" class="gm-add-row" style="margin-top:8px">
+                                      <input type="hidden" name="rep" value="{$repRegion}" />
+                                      <input type="hidden" name="region_key" value="{$row.region_key}" />
+                                      <div class="gm-fields">
+                                        <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" value="{$row.character_name}" class="input" /></div>
+                                        <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" value="{$row.source_url}" class="input" /></div>
+                                        <div class="gm-field"><label>Репутация</label><input type="number" name="reputation_amount" class="input" placeholder="Текущее: {$row.amount|number}" /></div>
+                                        <div class="gm-field gm-field--wide"><label>Фракция</label><input type="text" name="faction_name" value="{$row.faction_name}" class="input" /></div>
+                                        <div class="gm-field"><button type="submit" class="button button--primary" title="Сохранить" aria-label="Сохранить"><xf:fa icon="save" /></button></div>
+                                      </div>
+                                    </xf:form>
+                                  </details>
+                                </xf:if>
+                                <xf:if is="$canDeleteReputation">
+                                  <xf:form action="{$guildRoot}/reputation/{$row.reputation_log_id}/delete" style="display:inline">
+                                    <button type="submit" class="button button--link gm-icon-btn" title="Удалить" aria-label="Удалить"><xf:fa icon="fa-solid fa-eraser" /></button>
+                                  </xf:form>
+                                </xf:if>
+                              </td>
+                            </xf:if>
+                          </tr>
+                        </xf:foreach>
+                      <xf:else />
+                        <xf:if is="$canEditReputation || $canDeleteReputation">
+                          <tr><td colspan="5" class="gm-empty">Записей по этой фракции пока нет.</td></tr>
+                        <xf:else />
+                          <tr><td colspan="4" class="gm-empty">Записей по этой фракции пока нет.</td></tr>
+                        </xf:if>
+                      </xf:if>
+                    </table>
+                  </div>
+                </details>
+              </td>
+            </tr>
+          </xf:foreach>
+        <xf:else />
+          <tr><td colspan="3" class="gm-empty">Нет данных по фракциям.</td></tr>
+        </xf:if>
+      </table>
+    </div>
+
+    <xf:if is="$canAddReputation">
+      <xf:form action="{$guildRoot}/reputation/add" class="gm-add-row gm-add-row--rep-main">
+        <input type="hidden" name="rep" value="{$repRegion}" />
+        <input type="hidden" name="region_key" value="{$repRegion}" />
+        <div class="gm-fields">
+          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" /></div>
+          <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
+          <div class="gm-field"><label>Репутация</label><input type="number" name="reputation_amount" class="input" /></div>
+          <div class="gm-field gm-field--wide"><label>Фракция</label><input type="text" name="faction_name" class="input" /></div>
+          <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
+        </div>
+      </xf:form>
+    </xf:if>
+    </div>
+  </xf:if>
+
+
+  <xf:if is="$tab == 'important-npcs'">
+    <div class="gm-npc-page">
+      <xf:if is="$importantNpcRows is not empty">
+        <div class="gm-npc-anchor-wrap">
+          <div class="gm-npc-anchor-grid">
+            <xf:foreach loop="$importantNpcRows" value="$npc">
+              <div class="gm-npc-anchor-item"><a href="#npc-{$npc.important_npc_id}">{$npc.npc_name}</a></div>
+            </xf:foreach>
+          </div>
+        </div>
+      </xf:if>
+
+      <xf:if is="$importantNpcRows is not empty">
+        <xf:foreach loop="$importantNpcRows" value="$npc">
+          <div class="gm-npc-block" id="npc-{$npc.important_npc_id}">
+            <div class="gm-npc-block-header">
+              <a href="#npc-{$npc.important_npc_id}" class="gm-npc-titleLink">{$npc.npc_name}</a>
+              <div class="gm-npc-block-controls">
+                <xf:if is="$canManageImportantNpcs">
+                  <details class="gm-npc-edit-details">
+                    <summary title="Редактировать запись" aria-label="Редактировать запись"><span class="u-muted"><xf:fa icon="edit" /></span></summary>
+                    <div class="gm-npc-edit-form">
+                      <xf:form action="{$guildRoot}/important-npcs/{$npc.important_npc_id}/edit" class="block message">
+                        <div class="block-container">
+                          <div class="block-body">
+                            <div class="gm-npc-name-row">
+                              <div class="gm-field gm-field--name">
+                                <label>Имя НПС <span class="u-muted">(обязательное для заполнения)</span></label>
+                                <input type="text" name="npc_name" value="{$npc.npc_name}" class="input" maxlength="150" required="required" />
+                              </div>
+                              <div class="gm-field gm-field--submit">
+                                <label>&nbsp;</label>
+                                <button type="submit" class="button button--primary" title="Сохранить запись" aria-label="Сохранить запись"><xf:fa icon="save" /></button>
+                              </div>
+                            </div>
+                            <xf:editorrow
+                              name="message"
+                              value="{$npc.npc_bbcode}"
+                              rowtype="fullWidth noLabel"
+                              data-user-mention-url="{{ link('members/find') }}"
+                              data-min-height="180" />
+                          </div>
+                        </div>
+                      </xf:form>
+                    </div>
+                  </details>
+                  <xf:form action="{$guildRoot}/important-npcs/{$npc.important_npc_id}/delete" style="display:inline">
+                    <button type="submit" class="button button--link gm-icon-btn" title="Удалить запись" aria-label="Удалить запись"><xf:fa icon="fa-solid fa-eraser" /></button>
+                  </xf:form>
+                </xf:if>
+                <a href="#top" class="u-muted" style="font-size:12px;text-transform:lowercase;">вверх</a>
+              </div>
+            </div>
+            <div class="gm-desc-read">
+              <div class="gm-desc-bb">{$npc.npc_rendered|raw}</div>
+            </div>
+          </div>
+          <hr class="gm-npc-hr" />
+        </xf:foreach>
+      <xf:else />
+        <div class="gm-empty">Важные НПС пока не добавлены.</div>
+      </xf:if>
+
+      <xf:if is="$canManageImportantNpcs">
+        <xf:form action="{$guildRoot}/important-npcs/add" class="gm-add-row gm-npc-add-form block message">
+          <div class="block-container">
+            <div class="block-body">
+              <div class="gm-npc-name-row">
+                <div class="gm-field gm-field--name">
+                  <label>Имя НПС <span class="u-muted">(обязательное для заполнения)</span></label>
+                  <input type="text" name="npc_name" class="input" maxlength="150" required="required" />
+                </div>
+                <div class="gm-field gm-field--submit">
+                  <label>&nbsp;</label>
+                  <button type="submit" class="gm-btn-plus">+</button>
+                </div>
+              </div>
+              <xf:editorrow
+                name="message"
+                value=""
+                rowtype="fullWidth noLabel"
+                data-user-mention-url="{{ link('members/find') }}"
+                data-min-height="220" />
+            </div>
+          </div>
+        </xf:form>
+      </xf:if>
+    </div>
+  </xf:if>
+
+
+  <xf:if is="$tab == 'members'">
+    <div class="gm-block gm-desc-body gm-members-body">
+      <xf:if is="$canManageMembersBlock">
+        <div class="gm-desc-manage">
+          <details class="gm-desc-details block">
+            <summary class="gm-desc-detailsSummary" title="Редактировать участников" aria-label="Редактировать участников">
+              <span class="u-muted"><xf:fa icon="edit" /></span>
+            </summary>
+            <div class="gm-desc-editForm">
+              <xf:form action="{$guildRoot}/members/update" class="block message" id="gm-members-editor" data-find-url="{$findUsersUrl}">
+                <div class="block-container">
+                  <div class="block-body">
+                    <p class="formRow-explain">Выберите пользователя через поиск форума и укажите роль (до 60 символов, можно оставить пустой).</p>
+                    <div class="gm-members-editor-list" id="gm-members-editor-list">
+                      <xf:if is="$membersTableRows is not empty">
+                        <xf:foreach loop="$membersTableRows" value="$row">
+                          <div class="gm-members-editor-row">
+                            <div class="gm-field gm-member-user-search" data-find-url="{$findUsersUrl}">
+                              <label>Ник пользователя</label>
+                              <input type="hidden" name="member_user_id[]" value="{$row.user.user_id}" class="gm-member-user-id" />
+                              <input type="search" name="member_username[]" value="{$row.user.username}" class="input gm-member-user-q" autocomplete="off" placeholder="Введите минимум 2 символа" />
+                              <div class="gm-suggest gm-member-user-suggest" role="listbox"></div>
+                            </div>
+                            <div class="gm-field">
+                              <label>Роль в гильдии</label>
+                              <input type="text" name="member_role[]" value="{$row.role}" class="input" maxlength="60" />
+                            </div>
+                            <button type="button" class="gm-member-remove" title="Удалить строку" aria-label="Удалить строку"><xf:fa icon="fa-solid fa-eraser" /></button>
+                          </div>
+                        </xf:foreach>
+                      </xf:if>
+                    </div>
+                    <div style="margin-top: 8px;">
+                      <button type="button" class="button" id="gm-member-add-row">+ Добавить участника</button>
+                    </div>
+                  </div>
+                  <dl class="formRow formRow--submit">
+                    <dt></dt>
+                    <dd>
+                      <div class="formButtonGroup">
+                        <button type="submit" class="button button--primary" title="Сохранить" aria-label="Сохранить"><xf:fa icon="save" /></button>
+                      </div>
+                    </dd>
+                  </dl>
+                </div>
+              </xf:form>
+            </div>
+          </details>
+        </div>
+      </xf:if>
+      <xf:if is="$hasMembersBlockToShow">
+        <xf:if is="$membersUsesStructuredMode">
+          <div class="gm-members-grid-wrap">
+            <div class="gm-members-grid">
+              <xf:foreach loop="$membersTableColumns" value="$column">
+                <table class="gm-members-col">
+                  <thead>
+                    <tr><th>Ник пользователя</th><th>Роль в гильдии</th></tr>
+                  </thead>
+                  <tbody>
+                    <xf:foreach loop="$column" value="$row">
+                      <tr>
+                        <td class="gm-members-name"><strong><xf:username user="{$row.user}" rich="true" /></strong></td>
+                        <td>{$row.role}</td>
+                      </tr>
+                    </xf:foreach>
+                  </tbody>
+                </table>
+              </xf:foreach>
+            </div>
+          </div>
+        <xf:else />
+          <div class="gm-desc-read">
+            <div class="gm-desc-bb">{$membersBlockDisplayHtml|raw}</div>
+          </div>
+        </xf:if>
+      <xf:else />
+        <div class="gm-empty">Участники организации пока не указаны.</div>
+      </xf:if>
+    </div>
+  </xf:if>
+
+  <xf:if is="$tab == 'reputation'">
+    <script>
+    (function () {
+      var tabsWrap = document.querySelector('.gm-rep-tabs');
+      if (!tabsWrap) return;
+
+      tabsWrap.addEventListener('click', function (e) {
+        var link = e.target && e.target.closest ? e.target.closest('a.gm-rep-tab') : null;
+        if (!link) return;
+
+        e.preventDefault();
+        var href = link.getAttribute('href');
+        if (!href) return;
+
+        fetch(href, {
+          credentials: 'same-origin',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        }).then(function (r) {
+          return r.text();
+        }).then(function (html) {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(html, 'text/html');
+          var nextTabs = doc.querySelector('.gm-rep-tabs');
+          var nextDynamic = doc.querySelector('.gm-rep-dynamic');
+          if (!nextTabs || !nextDynamic) {
+            window.location.href = href;
+            return;
+          }
+
+          tabsWrap.className = nextTabs.className;
+          var dynamic = document.querySelector('.gm-rep-dynamic');
+          if (dynamic) {
+            dynamic.outerHTML = nextDynamic.outerHTML;
+          }
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, '', href);
+          }
+        }).catch(function () {
+          window.location.href = href;
+        });
+      });
+
+      if (!window.__gmRelationTooltipInit) {
+        window.__gmRelationTooltipInit = true;
+        var tooltipEl = null;
+        var activeTrigger = null;
+
+        function ensureTooltip() {
+          if (tooltipEl) return tooltipEl;
+          tooltipEl = document.createElement('div');
+          tooltipEl.className = 'gm-relation-tooltip';
+          tooltipEl.style.display = 'none';
+          document.body.appendChild(tooltipEl);
+          return tooltipEl;
+        }
+
+        function positionTooltip(evt) {
+          if (!tooltipEl || tooltipEl.style.display === 'none') return;
+          var w = 300;
+          var left = evt.clientX - (w / 2);
+          if (left < 8) left = 8;
+          if (left > (window.innerWidth - w - 8)) left = window.innerWidth - w - 8;
+          var top = evt.clientY - tooltipEl.offsetHeight - 12;
+          if (top < 8) top = evt.clientY + 14;
+          tooltipEl.style.left = left + 'px';
+          tooltipEl.style.top = top + 'px';
+        }
+
+        document.addEventListener('mouseover', function (evt) {
+          var trigger = evt.target && evt.target.closest ? evt.target.closest('.gm-relation-pill[data-gm-tooltip]') : null;
+          if (!trigger) return;
+          activeTrigger = trigger;
+          var tip = ensureTooltip();
+          tip.textContent = trigger.getAttribute('data-gm-tooltip') || '';
+          tip.style.display = 'block';
+          positionTooltip(evt);
+        });
+
+        document.addEventListener('mousemove', function (evt) {
+          if (!activeTrigger) return;
+          positionTooltip(evt);
+        });
+
+        document.addEventListener('mouseout', function (evt) {
+          if (!activeTrigger) return;
+          var rel = evt.relatedTarget;
+          if (rel && activeTrigger.contains(rel)) return;
+          activeTrigger = null;
+          if (tooltipEl) {
+            tooltipEl.style.display = 'none';
+          }
+        });
+      }
+    })();
+    </script>
+  </xf:if>
+
+  <xf:if is="$canSearchLeaderUsers">
+    <script>
+    (function () {
+      var root = document.getElementById('gm-leader-search-root');
+      if (!root) return;
+      var url = root.getAttribute('data-find-url');
+      var q = document.getElementById('gm-leader-q');
+      var box = document.getElementById('gm-leader-suggest');
+      var idInput = document.getElementById('gm-leader-user-id');
+      if (!url || !q || !box || !idInput) return;
+      var t;
+      function esc(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+      function render(list) {
+        box.innerHTML = '';
+        if (!list || !list.length) {
+          box.classList.remove('is-open');
+          return;
+        }
+        list.forEach(function (u) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.innerHTML = esc(u.username) + ' <span class="muted">#' + u.user_id + '</span>';
+          b.addEventListener('click', function () {
+            idInput.value = u.user_id;
+            q.value = u.username;
+            box.classList.remove('is-open');
+          });
+          box.appendChild(b);
+        });
+        box.classList.add('is-open');
+      }
+      q.addEventListener('input', function () {
+        clearTimeout(t);
+        var v = (q.value || '').trim();
+        if (v.length < 2) {
+          box.classList.remove('is-open');
+          box.innerHTML = '';
+          return;
+        }
+        t = setTimeout(function () {
+          var sep = url.indexOf('?') >= 0 ? '&' : '?';
+          fetch(url + sep + 'q=' + encodeURIComponent(v), {
+            credentials: 'same-origin',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+          }).then(function (r) { return r.json(); }).then(function (j) {
+            render(j.results || []);
+          }).catch(function () { box.classList.remove('is-open'); });
+        }, 250);
+      });
+    })();
+    </script>
+  </xf:if>
+  <xf:if is="$canManageMembersBlock">
+    <script>
+    (function () {
+      var editor = document.getElementById('gm-members-editor');
+      if (!editor) return;
+      var list = document.getElementById('gm-members-editor-list');
+      var addBtn = document.getElementById('gm-member-add-row');
+      if (!list || !addBtn) return;
+      var findUrl = editor.getAttribute('data-find-url') || '';
+      function esc(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+      function bindRow(row) {
+        var userInput = row.querySelector('.gm-member-user-q');
+        var userIdInput = row.querySelector('.gm-member-user-id');
+        var box = row.querySelector('.gm-member-user-suggest');
+        var removeBtn = row.querySelector('.gm-member-remove');
+        if (removeBtn) {
+          removeBtn.addEventListener('click', function () { row.remove(); });
+        }
+        if (!userInput || !userIdInput || !box || !findUrl) return;
+        var timer;
+        function closeSuggest() {
+          box.classList.remove('is-open');
+          box.innerHTML = '';
+        }
+        function render(found) {
+          box.innerHTML = '';
+          if (!found || !found.length) {
+            closeSuggest();
+            return;
+          }
+          found.forEach(function (u) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.innerHTML = esc(u.username) + ' <span class="muted">#' + u.user_id + '</span>';
+            b.addEventListener('click', function () {
+              userIdInput.value = u.user_id;
+              userInput.value = u.username;
+              closeSuggest();
+            });
+            box.appendChild(b);
+          });
+          box.classList.add('is-open');
+        }
+        userInput.addEventListener('input', function () {
+          clearTimeout(timer);
+          userIdInput.value = '';
+          var q = (userInput.value || '').trim();
+          if (q.length < 2) {
+            closeSuggest();
+            return;
+          }
+          timer = setTimeout(function () {
+            var sep = findUrl.indexOf('?') >= 0 ? '&' : '?';
+            fetch(findUrl + sep + 'q=' + encodeURIComponent(q), {
+              credentials: 'same-origin',
+              headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function (r) { return r.json(); }).then(function (j) {
+              render((j && j.results) ? j.results : []);
+            }).catch(closeSuggest);
+          }, 250);
+        });
+      }
+      function createRow() {
+        var row = document.createElement('div');
+        row.className = 'gm-members-editor-row';
+        row.innerHTML =
+          '<div class="gm-field gm-member-user-search">' +
+            '<label>Ник пользователя</label>' +
+            '<input type="hidden" name="member_user_id[]" value="" class="gm-member-user-id" />' +
+            '<input type="search" name="member_username[]" value="" class="input gm-member-user-q" autocomplete="off" placeholder="Введите минимум 2 символа" />' +
+            '<div class="gm-suggest gm-member-user-suggest" role="listbox"></div>' +
+          '</div>' +
+          '<div class="gm-field">' +
+            '<label>Роль в гильдии</label>' +
+            '<input type="text" name="member_role[]" value="" class="input" maxlength="60" />' +
+          '</div>' +
+          '<button type="button" class="gm-member-remove" title="Удалить строку" aria-label="Удалить строку"><i class="fa--xf far fa-eraser" aria-hidden="true"></i></button>';
+        bindRow(row);
+        return row;
+      }
+      Array.prototype.forEach.call(list.querySelectorAll('.gm-members-editor-row'), bindRow);
+      addBtn.addEventListener('click', function () {
+        list.appendChild(createRow());
+      });
+      if (!list.querySelector('.gm-members-editor-row')) {
+        list.appendChild(createRow());
+      }
+    })();
+    </script>
+  </xf:if>
+</div>
+]]></template>
+  <template type="admin" title="guild_manager_admin_create" version_id="1000270" version_string="1.0.0 Alpha 27"><![CDATA[
+<xf:title>Guild Manager: Создать гильдию</xf:title>
+
+<xf:form action="{{ link('guild-manager/create/save') }}" ajax="true" class="block">
+  <div class="block-container">
+    <div class="block-body">
+      <xf:formrow label="Пользователь-автор" hint="Кто создает гильдию из ACP.">
+        <input type="hidden" name="actor_user_id" id="gm-actor-user-id" value="{$defaultActorId}" />
+        <xf:textbox name="actor_username" id="gm-actor-username" value="{$defaultActorName}" autocomplete="off" />
+        <div class="formRow-explain">Текущий: {$defaultActorName} (#{$defaultActorId})</div>
+        <div class="gm-user-suggest" id="gm-actor-suggest"></div>
+      </xf:formrow>
+
+      <xf:formrow label="Гильдмастер (владелец)" hint="Пользователь станет лидером гильдии.">
+        <input type="hidden" name="owner_user_id" id="gm-owner-user-id" value="{$defaultOwnerId}" />
+        <xf:textbox name="owner_username" id="gm-owner-username" value="{$defaultOwnerName}" autocomplete="off" />
+        <div class="formRow-explain">По умолчанию текущий админ: {$defaultOwnerName} (#{$defaultOwnerId})</div>
+        <div class="gm-user-suggest" id="gm-owner-suggest"></div>
+      </xf:formrow>
+
+      <xf:textboxrow name="title"
+        label="Название гильдии"
+        maxlength="100"
+        required="true" />
+
+      <xf:textarearow name="description"
+        label="Описание"
+        autosize="true" />
+
+      <xf:formrow label="Раздел для ярлыка" hint="Опционально: создаст ссылку в дереве форума, ведущую на страницу гильдии.">
+        <select name="shortcut_parent_node_id" class="input">
+          <xf:foreach loop="$nodeChoices" key="$nodeId" value="$nodeLabel">
+            <option value="{$nodeId}">{$nodeLabel}</option>
+          </xf:foreach>
+        </select>
+      </xf:formrow>
+
+    </div>
+    <xf:submitrow submit="Создать гильдию" sticky="true" />
+  </div>
+</xf:form>
+<style>
+.gm-user-suggest
+{
+  display: none;
+  max-height: 240px;
+  overflow: auto;
+  margin-top: 6px;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  background: #fff;
+}
+.gm-user-suggest.is-open { display: block; }
+.gm-user-suggest button
+{
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: #fff;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.gm-user-suggest button:hover { background: #f2f5f8; }
+</style>
+<script>
+(function () {
+  function initUserPicker(textInputId, hiddenInputId, suggestId, finderUrl) {
+    var q = document.getElementById(textInputId);
+    var idInput = document.getElementById(hiddenInputId);
+    var box = document.getElementById(suggestId);
+    if (!q || !idInput || !box || !finderUrl) {
+      return;
+    }
+    var t = null;
+    var esc = function (s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c];
+      });
+    };
+    var close = function () {
+      box.classList.remove('is-open');
+      box.innerHTML = '';
+    };
+    function render(list) {
+      box.innerHTML = '';
+      if (!list || !list.length) {
+        close();
+        return;
+      }
+      list.forEach(function (u) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.innerHTML = esc(u.username) + ' <span class="u-muted">#' + u.user_id + '</span>';
+        b.addEventListener('click', function () {
+          idInput.value = u.user_id;
+          q.value = u.username;
+          close();
+        });
+        box.appendChild(b);
+      });
+      box.classList.add('is-open');
+    }
+    q.addEventListener('input', function () {
+      clearTimeout(t);
+      idInput.value = '';
+      var v = (q.value || '').trim();
+      if (v.length < 2) {
+        close();
+        return;
+      }
+      t = setTimeout(function () {
+        var sep = finderUrl.indexOf('?') >= 0 ? '&' : '?';
+        fetch(finderUrl + sep + 'q=' + encodeURIComponent(v), {
+          credentials: 'same-origin',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        }).then(function (r) {
+          if (!r.ok) {
+            throw new Error('HTTP ' + r.status);
+          }
+          return r.json();
+        }).then(function (j) {
+          render((j && j.results) ? j.results : []);
+        }).catch(close);
+      }, 250);
+    });
+    document.addEventListener('click', function (e) {
+      if (!box.contains(e.target) && e.target !== q) {
+        close();
+      }
+    });
+  }
+  initUserPicker('gm-actor-username', 'gm-actor-user-id', 'gm-actor-suggest', '{$userFinderUrl|escape('js')}');
+  initUserPicker('gm-owner-username', 'gm-owner-user-id', 'gm-owner-suggest', '{$userFinderUrl|escape('js')}');
+})();
+</script>
+]]></template>
+  <template type="admin" title="guild_manager_admin_guild_edit" version_id="1000380" version_string="1.0.0 Alpha 38"><![CDATA[
+<xf:title>Редактирование: {$guild.title}</xf:title>
+
+<xf:pageaction>
+  <xf:button href="{{ link('guild-manager') }}">Список гильдий</xf:button>
+  <xf:button href="{{ link_type('public', 'enterum-guilds', $guild) }}" target="_blank" icon="link">Публичная страница</xf:button>
+</xf:pageaction>
+
+<xf:form action="{$formAction|escape}" class="block">
+  <div class="block-container">
+    <div class="block-body">
+      <xf:formrow label="Гильдмастер (владелец)">
+        <input type="hidden" name="owner_user_id" id="gm-edit-owner-user-id" value="{$guild.leader_user_id}" />
+        <xf:textbox name="owner_username" id="gm-edit-owner-username" value="{$guild.leader_username}" autocomplete="off" />
+        <div class="formRow-explain">Выбор из подсказки (от 2 символов) или точный ник.</div>
+        <div class="gm-user-suggest" id="gm-edit-owner-suggest"></div>
+      </xf:formrow>
+
+      <xf:textboxrow name="title" value="{$guild.title}"
+        label="Название гильдии"
+        maxlength="100"
+        required="true" />
+
+      <xf:textarearow name="description" value="{$guild.description}"
+        label="Описание"
+        autosize="true" />
+    </div>
+    <xf:submitrow icon="save" sticky="true" />
+  </div>
+</xf:form>
+<style>
+.gm-user-suggest
+{
+  display: none;
+  max-height: 240px;
+  overflow: auto;
+  margin-top: 6px;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  background: #fff;
+}
+.gm-user-suggest.is-open { display: block; }
+.gm-user-suggest button
+{
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: #fff;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.gm-user-suggest button:hover { background: #f2f5f8; }
+</style>
+<script>
+(function () {
+  function initUserPicker(textInputId, hiddenInputId, suggestId, finderUrl) {
+    var q = document.getElementById(textInputId);
+    var idInput = document.getElementById(hiddenInputId);
+    var box = document.getElementById(suggestId);
+    if (!q || !idInput || !box || !finderUrl) {
+      return;
+    }
+    var t = null;
+    var esc = function (s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c];
+      });
+    };
+    var close = function () {
+      box.classList.remove('is-open');
+      box.innerHTML = '';
+    };
+    function render(list) {
+      box.innerHTML = '';
+      if (!list || !list.length) {
+        close();
+        return;
+      }
+      list.forEach(function (u) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.innerHTML = esc(u.username) + ' <span class="u-muted">#' + u.user_id + '</span>';
+        b.addEventListener('click', function () {
+          idInput.value = u.user_id;
+          q.value = u.username;
+          close();
+        });
+        box.appendChild(b);
+      });
+      box.classList.add('is-open');
+    }
+    q.addEventListener('input', function () {
+      clearTimeout(t);
+      idInput.value = '';
+      var v = (q.value || '').trim();
+      if (v.length < 2) {
+        close();
+        return;
+      }
+      t = setTimeout(function () {
+        var sep = finderUrl.indexOf('?') >= 0 ? '&' : '?';
+        fetch(finderUrl + sep + 'q=' + encodeURIComponent(v), {
+          credentials: 'same-origin',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        }).then(function (r) {
+          if (!r.ok) {
+            throw new Error('HTTP ' + r.status);
+          }
+          return r.json();
+        }).then(function (j) {
+          render((j && j.results) ? j.results : []);
+        }).catch(close);
+      }, 250);
+    });
+    document.addEventListener('click', function (e) {
+      if (!box.contains(e.target) && e.target !== q) {
+        close();
+      }
+    });
+  }
+  initUserPicker('gm-edit-owner-username', 'gm-edit-owner-user-id', 'gm-edit-owner-suggest', '{$userFinderUrl|escape('js')}');
+})();
+</script>
+]]></template>
+  <template type="admin" title="guild_manager_admin_guild_list" version_id="1000410" version_string="1.0.0 Alpha 41"><![CDATA[
+<xf:title>Менеджер гильдий: Список гильдий</xf:title>
+
+<xf:pageaction>
+  <xf:button href="{{ link('guild-manager/create') }}" icon="add">Создать гильдию</xf:button>
+</xf:pageaction>
+
+<xf:if is="$listRows is not empty">
+  <div class="block">
+    <div class="block-container">
+      <div class="block-body">
+        <div class="blockMessage u-muted" style="margin-bottom:8px">Неактивная: публичная страница недоступна, ярлык в разделах скрыт (если ярлык был создан).</div>
+        <xf:datalist>
+          <xf:datarow rowclass="dataList-row--header">
+            <xf:cell class="dataList-cell--min">ID</xf:cell>
+            <xf:cell>Название</xf:cell>
+            <xf:cell class="dataList-cell--min">Владелец</xf:cell>
+            <xf:cell class="dataList-cell--min">Открыть</xf:cell>
+            <xf:cell>Состояние</xf:cell>
+          </xf:datarow>
+          <xf:foreach loop="$listRows" value="$row">
+            <xf:datarow>
+              <xf:cell class="dataList-cell--min">{$row.guild.guild_id}</xf:cell>
+              <xf:cell class="dataList-cell--main">
+                <a href="{$row.urlEdit|escape}">{$row.guild.title}</a>
+              </xf:cell>
+              <xf:cell class="dataList-cell--min">{$row.guild.leader_username}</xf:cell>
+              <xf:cell class="dataList-cell--min">
+                <a href="{$row.urlPublic|escape}" target="_blank" rel="noopener">Страница</a>
+              </xf:cell>
+              <xf:cell>
+                <xf:form action="{{ link('guild-manager') }}">
+                  <input type="hidden" name="gmo" value="setState" />
+                  <input type="hidden" name="guild_id" value="{$row.guild.guild_id}" />
+                  <xf:if is="$row.guild.guild_state == 'active'">
+                    <select name="guild_state" class="input" onchange="this.form.submit()">
+                      <option value="active" selected="selected">Активная</option>
+                      <option value="archived">Неактивная</option>
+                    </select>
+                  <xf:else />
+                    <select name="guild_state" class="input" onchange="this.form.submit()">
+                      <option value="active">Активная</option>
+                      <option value="archived" selected="selected">Неактивная</option>
+                    </select>
+                  </xf:if>
+                </xf:form>
+              </xf:cell>
+            </xf:datarow>
+          </xf:foreach>
+        </xf:datalist>
+      </div>
+    </div>
+  </div>
+<xf:else />
+  <div class="blockMessage">Гильдии еще не созданы.</div>
+</xf:if>
+]]></template>
+  <template type="admin" title="guild_manager_admin_logs_list" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[
+<xf:title>{$logTitle}</xf:title>
+
+<div class="block" style="margin-bottom: 10px;">
+  <div class="block-container">
+    <div class="block-body block-row">
+      <xf:foreach loop="$tabs" key="$tabKey" value="$tab">
+        <a href="{{ link($tab.link, null, $filterParams) }}" class="button<xf:if is="$activeTab == $tabKey"> button--primary</xf:if>" style="margin-right:6px; margin-bottom:6px;">{$tab.label}</a>
+      </xf:foreach>
+    </div>
+  </div>
+</div>
+
+<xf:form action="{{ link($baseLink) }}" class="block" style="margin-bottom:10px;">
+  <div class="block-container">
+    <div class="block-body block-row">
+      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end;">
+        <div>
+          <label style="display:block; margin-bottom:3px;">Гильдия</label>
+          <input type="text" name="guild" value="{$filterGuild}" class="input" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:3px;">Пользователь</label>
+          <input type="text" name="user" value="{$filterUser}" class="input" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:3px;">Дата с</label>
+          <input type="date" name="date_from" value="{$filterDateFrom}" class="input" />
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:3px;">Дата по</label>
+          <input type="date" name="date_to" value="{$filterDateTo}" class="input" />
+        </div>
+        <input type="hidden" name="sort" value="{$sort}" />
+        <input type="hidden" name="direction" value="{$direction}" />
+        <div>
+          <button type="submit" class="button button--primary">Фильтр</button>
+          <a href="{{ link($baseLink) }}" class="button">Сброс</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</xf:form>
+
+<xf:if is="!$hasActionLogTable">
+  <div class="blockMessage blockMessage--warning" style="margin-bottom:10px;">
+    Таблица audit-лога еще не создана. Запустите обновление аддона в ACP повторно.
+  </div>
+</xf:if>
+
+<xf:if is="$rows is not empty">
+  <div class="block">
+    <div class="block-container">
+      <div class="block-body">
+        <xf:datalist>
+          <xf:datarow rowclass="dataList-row--header">
+            <xf:cell class="dataList-cell--min">
+              <a href="{{ link($baseLink, null, {'sort': 'date', 'direction': $sort == 'date' && $direction == 'asc' ? 'desc' : 'asc', 'guild': $filterGuild, 'user': $filterUser, 'date_from': $filterDateFrom, 'date_to': $filterDateTo}) }}">Дата</a>
+            </xf:cell>
+            <xf:cell>
+              <a href="{{ link($baseLink, null, {'sort': 'guild', 'direction': $sort == 'guild' && $direction == 'asc' ? 'desc' : 'asc', 'guild': $filterGuild, 'user': $filterUser, 'date_from': $filterDateFrom, 'date_to': $filterDateTo}) }}">Гильдия</a>
+            </xf:cell>
+            <xf:cell class="dataList-cell--min">
+              <a href="{{ link($baseLink, null, {'sort': 'user', 'direction': $sort == 'user' && $direction == 'asc' ? 'desc' : 'asc', 'guild': $filterGuild, 'user': $filterUser, 'date_from': $filterDateFrom, 'date_to': $filterDateTo}) }}">Пользователь</a>
+            </xf:cell>
+            <xf:cell class="dataList-cell--min">Действие</xf:cell>
+            <xf:cell>Детали</xf:cell>
+          </xf:datarow>
+
+          <xf:foreach loop="$rows" value="$row">
+            <xf:datarow>
+              <xf:cell class="dataList-cell--min">
+                <xf:date time="{$row.event_date}" />
+              </xf:cell>
+              <xf:cell>{$row.guild_title|default('—')}</xf:cell>
+              <xf:cell class="dataList-cell--min">{$row.actor_username|default('—')}</xf:cell>
+              <xf:cell class="dataList-cell--min">
+                <xf:if is="$row.action_type == 'add'">Добавлен</xf:if>
+                <xf:if is="$row.action_type == 'update'">Изменен</xf:if>
+                <xf:if is="$row.action_type == 'delete'">Удален</xf:if>
+              </xf:cell>
+              <xf:cell>{$row.summary}</xf:cell>
+            </xf:datarow>
+          </xf:foreach>
+        </xf:datalist>
+      </div>
+    </div>
+  </div>
+
+  <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="{$baseLink}" params="{{ {'sort': $sort, 'direction': $direction, 'guild': $filterGuild, 'user': $filterUser, 'date_from': $filterDateFrom, 'date_to': $filterDateTo} }}" wrapperclass="block-outer block-outer--after" />
+<xf:else />
+  <div class="blockMessage">Записей в этом логе пока нет.</div>
+</xf:if>
+<script>
+(function () {
+  var refreshMs = 15000;
+  window.setTimeout(function () {
+    window.location.reload();
+  }, refreshMs);
+})();
+</script>
+]]></template>
+</templates>

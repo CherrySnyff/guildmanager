@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="treasury_entry" format=":int&lt;guild_id&gt;/treasury/:int&lt;entry_id&gt;/" controller="Guild\Manager:Guild\Treasury"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="treasury" format=":int&lt;guild_id&gt;/treasury/" controller="Guild\Manager:Guild\Treasury"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="storage_item" format=":int&lt;guild_id&gt;/storage/:int&lt;item_id&gt;/" controller="Guild\Manager:Guild\Storage"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="storage" format=":int&lt;guild_id&gt;/storage/" controller="Guild\Manager:Guild\Storage"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="followers_entry" format=":int&lt;guild_id&gt;/followers/:int&lt;entry_id&gt;/" controller="Guild\Manager:Guild\Followers"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="followers" format=":int&lt;guild_id&gt;/followers/" controller="Guild\Manager:Guild\Followers"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="reputation_entry" format=":int&lt;guild_id&gt;/reputation/:int&lt;entry_id&gt;/" controller="Guild\Manager:Guild\Reputation"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="reputation" format=":int&lt;guild_id&gt;/reputation/" controller="Guild\Manager:Guild\Reputation"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="transport_vehicle" format=":int&lt;guild_id&gt;/transport/:int&lt;vehicle_id&gt;/" controller="Guild\Manager:Guild\Transport"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="transport" format=":int&lt;guild_id&gt;/transport/" controller="Guild\Manager:Guild\Transport"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="achievements_item" format=":int&lt;guild_id&gt;/achievements/:int&lt;achievement_id&gt;/" controller="Guild\Manager:Guild\Achievements"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="achievements" format=":int&lt;guild_id&gt;/achievements/" controller="Guild\Manager:Guild\Achievements"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="important_npcs_item" format=":int&lt;guild_id&gt;/important-npcs/:int&lt;npc_id&gt;/" controller="Guild\Manager:Guild\ImportantNpcs"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="important_npcs" format=":int&lt;guild_id&gt;/important-npcs/" controller="Guild\Manager:Guild\ImportantNpcs"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="members" format=":int&lt;guild_id&gt;/members/" controller="Guild\Manager:Guild\Members"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="find_users" format=":int&lt;guild_id&gt;/find-users" controller="Guild\Manager:Guild\FindUsers"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="directions" format=":int&lt;guild_id&gt;/directions" controller="Guild\Manager:Guild\Directions"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="leader" format=":int&lt;guild_id&gt;/leader" controller="Guild\Manager:Guild\Leader"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="description" format=":int&lt;guild_id&gt;/description" controller="Guild\Manager:Guild\Description"/>
+  <route route_type="public" route_prefix="enterum-guilds" format=":int&lt;guild_id&gt;/" controller="Guild\Manager:Guild"/>
+  <route route_type="admin" route_prefix="guild-manager" format="" controller="Guild\Manager:Guild"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="create" format="create" controller="Guild\Manager:GuildCreate"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="logs" format="logs" controller="Guild\Manager:GuildLogs"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="logs_treasury" format="logs/treasury" controller="Guild\Manager:GuildLogs" action_prefix="treasury"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="logs_followers" format="logs/followers" controller="Guild\Manager:GuildLogs" action_prefix="followers"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="logs_reputation" format="logs/reputation" controller="Guild\Manager:GuildLogs" action_prefix="reputation"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="logs_storage" format="logs/storage" controller="Guild\Manager:GuildLogs" action_prefix="storage"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="logs_transport" format="logs/transport" controller="Guild\Manager:GuildLogs" action_prefix="transport"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="logs_description" format="logs/description" controller="Guild\Manager:GuildLogs" action_prefix="description"/>
+  <route route_type="admin" route_prefix="guild-manager" sub_name="find_users" format="find-users" controller="Guild\Manager:GuildCreate" action_prefix="find-users"/>
+</routes>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="guild_manager" permission_id="view" permission_type="flag" interface_group_id="guild_general" display_order="10"/>
+  <permission permission_group_id="guild_manager" permission_id="createGuild" permission_type="flag" interface_group_id="guild_general" display_order="20"/>
+  <permission permission_group_id="guild_manager" permission_id="joinGuild" permission_type="flag" interface_group_id="guild_general" display_order="30"/>
+  <permission permission_group_id="guild_manager" permission_id="maxOwnedGuilds" permission_type="integer" interface_group_id="guild_general" display_order="40"/>
+  <permission permission_group_id="guild_manager" permission_id="manageGuildAny" permission_type="flag" interface_group_id="guild_management" display_order="100"/>
+  <permission permission_group_id="guild_manager" permission_id="editGuildTitleAny" permission_type="flag" depend_permission_id="manageGuildAny" interface_group_id="guild_management" display_order="105"/>
+  <permission permission_group_id="guild_manager" permission_id="editGuildDirectionsAny" permission_type="flag" depend_permission_id="manageGuildAny" interface_group_id="guild_management" display_order="106"/>
+  <permission permission_group_id="guild_manager" permission_id="manageMembersAny" permission_type="flag" depend_permission_id="manageGuildAny" interface_group_id="guild_management" display_order="110"/>
+  <permission permission_group_id="guild_manager" permission_id="manageTreasuryAny" permission_type="flag" depend_permission_id="manageGuildAny" interface_group_id="guild_management" display_order="120"/>
+  <permission permission_group_id="guild_manager" permission_id="manageReputationAny" permission_type="flag" depend_permission_id="manageGuildAny" interface_group_id="guild_management" display_order="130"/>
+  <permission permission_group_id="guild_manager" permission_id="manageImportantNpcsAny" permission_type="flag" depend_permission_id="manageGuildAny" interface_group_id="guild_management" display_order="140"/>
+</permissions>

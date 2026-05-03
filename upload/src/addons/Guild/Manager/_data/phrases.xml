@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_permission.guildManager" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Менеджер гильдий: управление системой]]></phrase>
+  <phrase title="admin_navigation.guild_manager" version_id="1000310" version_string="1.0.0 Alpha 31"><![CDATA[Менеджер гильдий]]></phrase>
+  <phrase title="admin_navigation.guild_manager_list" version_id="1000310" version_string="1.0.0 Alpha 31"><![CDATA[Список гильдий]]></phrase>
+  <phrase title="admin_navigation.guild_manager_create" version_id="1000310" version_string="1.0.0 Alpha 31"><![CDATA[Создать гильдию]]></phrase>
+  <phrase title="admin_navigation.guild_manager_logs" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[Логи гильдий]]></phrase>
+  <phrase title="admin_navigation.guild_manager_logs_treasury" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[Лог казны]]></phrase>
+  <phrase title="admin_navigation.guild_manager_logs_followers" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[Лог последователей]]></phrase>
+  <phrase title="admin_navigation.guild_manager_logs_reputation" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[Лог репутации]]></phrase>
+  <phrase title="admin_navigation.guild_manager_logs_storage" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[Лог склада]]></phrase>
+  <phrase title="admin_navigation.guild_manager_logs_transport" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[Лог транспорта]]></phrase>
+  <phrase title="admin_navigation.guild_manager_logs_description" version_id="1000660" version_string="1.0.0 Alpha 120"><![CDATA[Лог описания]]></phrase>
+
+  <phrase title="permission_interface.guild_general" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Менеджер гильдий: общие права]]></phrase>
+  <phrase title="permission_interface.guild_management" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Менеджер гильдий: права управления]]></phrase>
+
+  <phrase title="permission.guild_manager_view" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Просмотр содержимого гильдий]]></phrase>
+  <phrase title="permission.guild_manager_createGuild" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Создание гильдий]]></phrase>
+  <phrase title="permission.guild_manager_joinGuild" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Вступление в гильдии]]></phrase>
+  <phrase title="permission.guild_manager_maxOwnedGuilds" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Максимум гильдий во владении пользователя]]></phrase>
+  <phrase title="permission.guild_manager_manageGuildAny" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Управление любыми гильдиями]]></phrase>
+  <phrase title="permission.guild_manager_editGuildTitleAny" version_id="1000622" version_string="1.0.0 Alpha 82"><![CDATA[Редактирование названия любой гильдии]]></phrase>
+  <phrase title="permission.guild_manager_editGuildDirectionsAny" version_id="1000625" version_string="1.0.0 Alpha 85"><![CDATA[Редактирование направленностей любой гильдии]]></phrase>
+  <phrase title="permission.guild_manager_manageMembersAny" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Управление участниками в любых гильдиях]]></phrase>
+  <phrase title="permission.guild_manager_manageTreasuryAny" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Управление казной любых гильдий]]></phrase>
+  <phrase title="permission.guild_manager_manageReputationAny" version_id="1000020" version_string="1.0.0 Alpha 2"><![CDATA[Управление репутацией любых гильдий]]></phrase>
+  <phrase title="permission.guild_manager_manageImportantNpcsAny" version_id="1000636" version_string="1.0.0 Alpha 96"><![CDATA[Управление важными НПС в любых гильдиях]]></phrase>
+</phrases>

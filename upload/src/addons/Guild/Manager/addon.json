@@ -1,0 +1,23 @@
+{
+    "legacy_addon_id": "",
+    "title": "Guild Manager",
+    "description": "Менеджер гильдий для сайта Энтерум на XenForo 2.2",
+  "version_id": 1000669,
+  "version_string": "1.0.0 Alpha 129",
+    "dev": "EvRa",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2020070,
+            "XenForo 2.2.0 or higher"
+        ],
+        "php": [
+            "7.2.0",
+            "PHP 7.2.0 or higher"
+        ]
+    },
+    "icon": "icon.png"
+}
