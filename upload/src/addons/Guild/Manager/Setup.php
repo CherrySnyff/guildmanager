@@ -601,6 +601,11 @@ class Setup extends AbstractSetup
     {
     }
 
+    /** Патч 1.0.3: FindUsersJson возвращает массив для XF Json renderer. */
+    public function upgrade1000703Step1(): void
+    {
+    }
+
     protected function seedLevelRules(): void
     {
         $db = $this->db();
