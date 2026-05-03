@@ -118,7 +118,9 @@ class GuildCreate extends AbstractController
         $this->assertAdminPermission('guildManager');
         $query = trim($this->filter('q', 'str'));
         if ($query === '' || mb_strlen($query) < 2) {
-            return $this->json(['results' => []]);
+            $this->setResponseType('json');
+
+            return $this->view('Guild\Manager:FindUsersJson', '', ['results' => []]);
         }
 
         $finder = $this->finder('XF:User');
@@ -141,7 +143,9 @@ class GuildCreate extends AbstractController
             ];
         }
 
-        return $this->json(['results' => $results]);
+        $this->setResponseType('json');
+
+        return $this->view('Guild\Manager:FindUsersJson', '', ['results' => $results]);
     }
 
     protected function createGuildShortcutNode(
