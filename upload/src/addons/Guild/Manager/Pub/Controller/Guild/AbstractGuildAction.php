@@ -75,13 +75,13 @@ abstract class AbstractGuildAction extends AbstractController
     /**
      * Общий успешный исход: возврат на карточку с нужной вкладкой и (для репутации) подвыбранным регионом rep.
      */
-    protected function redirectToGuild(GuildEntity $guild, string $tab, string $repRegion = 'aramidis'): Redirect
+    protected function redirectToGuild(GuildEntity $guild, string $tab, string $repRegion = 'aramidis', array $extraParams = []): Redirect
     {
         return $this->redirect(
-            $this->buildLink('enterum-guilds', ['guild_id' => $guild->guild_id], [
+            $this->buildLink('enterum-guilds', ['guild_id' => $guild->guild_id], array_merge([
                 'tab' => $tab,
                 'rep' => $repRegion,
-            ])
+            ], $extraParams))
         );
     }
 
@@ -95,7 +95,8 @@ abstract class AbstractGuildAction extends AbstractController
         callable $fn,
         GuildEntity $guild,
         string $tab,
-        string $repRegion = 'aramidis'
+        string $repRegion = 'aramidis',
+        array $extraParams = []
     ): AbstractReply {
         try {
             $fn();
@@ -117,7 +118,7 @@ abstract class AbstractGuildAction extends AbstractController
             return $this->error('Не удалось сохранить данные. Попробуйте ещё раз.');
         }
 
-        return $this->redirectToGuild($guild, $tab, $repRegion);
+        return $this->redirectToGuild($guild, $tab, $repRegion, $extraParams);
     }
 
     /**

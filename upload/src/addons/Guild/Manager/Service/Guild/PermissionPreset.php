@@ -19,9 +19,13 @@ class PermissionPreset extends AbstractService
     public const ACTION_ADD_REPUTATION = 'add_reputation_operation';
     public const ACTION_CHANGE_LEADER = 'change_leader';
     public const ACTION_EDIT_DESCRIPTION = 'edit_description';
+    public const ACTION_MANAGE_DIRECTIONS = 'manage_directions';
     public const ACTION_MANAGE_STORAGE = 'manage_storage';
     public const ACTION_MANAGE_ACHIEVEMENTS = 'manage_achievements';
     public const ACTION_MANAGE_MEMBERS_BLOCK = 'manage_members_block';
+    public const ACTION_MANAGE_IMPORTANT_NPCS = 'manage_important_npcs';
+    public const ACTION_DELETE_IMPORTANT_NPCS = 'delete_important_npcs';
+    public const ACTION_MANAGE_BASES = 'manage_guild_bases';
 
     public function getRoleMatrix(): array
     {
@@ -33,9 +37,13 @@ class PermissionPreset extends AbstractService
                 self::ACTION_ADD_REPUTATION => true,
                 self::ACTION_CHANGE_LEADER => true,
                 self::ACTION_EDIT_DESCRIPTION => true,
+                self::ACTION_MANAGE_DIRECTIONS => true,
                 self::ACTION_MANAGE_STORAGE => true,
                 self::ACTION_MANAGE_ACHIEVEMENTS => true,
                 self::ACTION_MANAGE_MEMBERS_BLOCK => true,
+                self::ACTION_MANAGE_IMPORTANT_NPCS => true,
+                self::ACTION_DELETE_IMPORTANT_NPCS => true,
+                self::ACTION_MANAGE_BASES => true,
             ],
             self::ROLE_OFFICER => [
                 self::ACTION_MANAGE_GUILD => false,
@@ -44,9 +52,13 @@ class PermissionPreset extends AbstractService
                 self::ACTION_ADD_REPUTATION => true,
                 self::ACTION_CHANGE_LEADER => false,
                 self::ACTION_EDIT_DESCRIPTION => true,
+                self::ACTION_MANAGE_DIRECTIONS => true,
                 self::ACTION_MANAGE_STORAGE => true,
                 self::ACTION_MANAGE_ACHIEVEMENTS => true,
                 self::ACTION_MANAGE_MEMBERS_BLOCK => true,
+                self::ACTION_MANAGE_IMPORTANT_NPCS => true,
+                self::ACTION_DELETE_IMPORTANT_NPCS => true,
+                self::ACTION_MANAGE_BASES => true,
             ],
             self::ROLE_MEMBER => [
                 self::ACTION_MANAGE_GUILD => false,
@@ -55,9 +67,13 @@ class PermissionPreset extends AbstractService
                 self::ACTION_ADD_REPUTATION => false,
                 self::ACTION_CHANGE_LEADER => false,
                 self::ACTION_EDIT_DESCRIPTION => false,
+                self::ACTION_MANAGE_DIRECTIONS => false,
                 self::ACTION_MANAGE_STORAGE => false,
                 self::ACTION_MANAGE_ACHIEVEMENTS => false,
                 self::ACTION_MANAGE_MEMBERS_BLOCK => false,
+                self::ACTION_MANAGE_IMPORTANT_NPCS => false,
+                self::ACTION_DELETE_IMPORTANT_NPCS => false,
+                self::ACTION_MANAGE_BASES => false,
             ],
         ];
     }

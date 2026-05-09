@@ -47,6 +47,7 @@ class Guild extends AbstractController
             'followers',
             'reputation',
             'important-npcs',
+            'bases',
             'achievements',
             'members',
         ];
@@ -92,6 +93,8 @@ class Guild extends AbstractController
         $isGuildOwner = $visitor->user_id > 0 && (int)$guild->leader_user_id === (int)$visitor->user_id;
         $canEditGuildTitleAny = $visitor->hasPermission('guild_manager', 'editGuildTitleAny');
         $canEditGuildDirectionsAny = $visitor->hasPermission('guild_manager', 'editGuildDirectionsAny');
+        $canManageDirections = $guard->canManageDirections($guild, $visitor, $guildRole);
+        $canAppointGuildOfficer = $guard->canAppointGuildOfficer($guild, $visitor, $guildRole);
 
         $focusRows = $this->finder('Guild\Manager:GuildFocus')
             ->where('guild_id', $guild->guild_id)
@@ -115,17 +118,29 @@ class Guild extends AbstractController
             $maxDirectionSlots = 2;
         }
 
-        $summaryDirectionParts = [];
+        $summaryDirectionItems = [];
         $selectedDirections = [];
         foreach ($focusRows as $f) {
             $slot = (int)$f->display_order;
             $key = (string)$f->focus_key;
             $selectedDirections[] = $key;
             if ($slot >= 1 && $slot <= $maxDirectionSlots) {
-                $summaryDirectionParts[] = $focusLabels[$key] ?? $key;
+                $label = $focusLabels[$key] ?? $key;
+                $hint = FocusManager::FOCUS_HINTS[$key] ?? '';
+                $summaryDirectionItems[] = [
+                    'key' => $key,
+                    'label' => $label,
+                    'hint' => $hint,
+                    'index' => count($summaryDirectionItems),
+                ];
             }
         }
-        $summaryDirections = implode(', ', $summaryDirectionParts);
+        $summaryDirections = implode(
+            ', ',
+            array_map(static function (array $row): string {
+                return (string)($row['label'] ?? '');
+            }, $summaryDirectionItems)
+        );
 
         $focusOptions = [];
         foreach ($focusLabels as $k => $label) {
@@ -158,6 +173,24 @@ class Guild extends AbstractController
             ->where('guild_id', $guild->guild_id)
             ->order('display_order', 'ASC')
             ->fetch();
+
+        $basesOpenBaseId = (int)$this->filter('open_base', 'uint');
+        $basesAddBuilding = (int)$this->filter('add_building', 'uint') ? 1 : 0;
+        $guildBasesGrouped = [];
+        $guildBaseEntities = $this->finder('Guild\Manager:GuildBase')
+            ->where('guild_id', $guild->guild_id)
+            ->order('display_order', 'ASC')
+            ->fetch();
+        foreach ($guildBaseEntities as $baseEnt) {
+            $buildingRows = $this->finder('Guild\Manager:GuildBaseBuilding')
+                ->where('guild_base_id', $baseEnt->guild_base_id)
+                ->order('display_order', 'ASC')
+                ->fetch();
+            $guildBasesGrouped[] = [
+                'base' => $baseEnt,
+                'buildings' => $buildingRows,
+            ];
+        }
         $repRegions = ['aramidis', 'korzus', 'union'];
         $repRowsByRegion = [];
         $factionRowsByRegion = [];
@@ -238,6 +271,7 @@ class Guild extends AbstractController
             'leaderUser' => $leaderUser,
             'focusRows' => $focusRows,
             'focusLabels' => $focusLabels,
+            'summaryDirectionItems' => $summaryDirectionItems,
             'summaryDirections' => $summaryDirections,
             'selectedDirections' => $selectedDirections,
             'directionSlots' => $directionSlots,
@@ -253,9 +287,11 @@ class Guild extends AbstractController
             'focusOptions' => $focusOptions,
             'canEditDescription' => $guard->canEditDescription($guild, $visitor, $guildRole),
             'canChangeLeader' => $guard->canChangeLeader($guild, $visitor, $guildRole),
-            'canEditGuildPanel' => ($isGuildOwner || $canEditGuildTitleAny || $canEditGuildDirectionsAny),
+            'canEditGuildPanel' => ($isGuildOwner || $canEditGuildTitleAny || $canManageDirections || $canAppointGuildOfficer),
+            'canAppointGuildOfficer' => $canAppointGuildOfficer,
             'canEditGuildTitleAdmin' => $canEditGuildTitleAny,
             'canEditGuildDirectionsAny' => $canEditGuildDirectionsAny,
+            'canManageDirections' => $canManageDirections,
             'canAddTreasury' => $guard->canAddTreasuryOperation($guild, $visitor, $guildRole),
             'canAddFollower' => $guard->canAddFollowerOperation($guild, $visitor, $guildRole),
             'canAddReputation' => $guard->canAddReputationOperation($guild, $visitor, $guildRole),
@@ -263,7 +299,12 @@ class Guild extends AbstractController
             'canManageAchievements' => $guard->canManageAchievements($guild, $visitor, $guildRole),
             'canManageMembersBlock' => $guard->canManageMembersBlock($guild, $visitor, $guildRole),
             'canManageImportantNpcs' => $guard->canManageImportantNpcs($guild, $visitor, $guildRole),
-            'canDeleteAchievements' => $guard->canChangeLeader($guild, $visitor, $guildRole),
+            'canManageGuildBases' => $guard->canManageGuildBases($guild, $visitor, $guildRole),
+            'guildBasesGrouped' => $guildBasesGrouped,
+            'basesOpenBaseId' => $basesOpenBaseId,
+            'basesAddBuilding' => $basesAddBuilding,
+            'canDeleteImportantNpcs' => $guard->canDeleteImportantNpcs($guild, $visitor, $guildRole),
+            'canDeleteAchievements' => $guard->canManageAchievements($guild, $visitor, $guildRole),
             'canEditTreasury' => $guard->canEditTreasuryLogEntry($guild, $visitor, $guildRole),
             'canDeleteTreasury' => $guard->canDeleteTreasuryLogEntry($guild, $visitor, $guildRole),
             'canEditFollower' => $guard->canEditFollowerLogEntry($guild, $visitor, $guildRole),

@@ -292,12 +292,42 @@ class GuildWorkflow extends AbstractService
         return $this->transferLeadership($guild, $actor, $newLeader, $guildRole);
     }
 
+    public function appointOfficerByUserId(
+        Guild $guild,
+        User $actor,
+        int $officerUserId,
+        ?string $guildRole = null
+    ): void {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanAppointGuildOfficer($guild, $actor, $guildRole);
+
+        if ($officerUserId <= 0) {
+            throw new PrintableException('Укажите корректный ID пользователя.');
+        }
+
+        if ((int)$guild->leader_user_id === $officerUserId) {
+            throw new PrintableException('Лидер гильдии уже имеет высшую роль; назначать офицером его не нужно.');
+        }
+
+        /** @var User|null $target */
+        $target = $this->em()->find('XF:User', $officerUserId);
+        if (!$target) {
+            throw new PrintableException('Пользователь не найден.');
+        }
+
+        /** @var MembershipManager $membershipManager */
+        $membershipManager = $this->service('Guild\Manager:Guild\MembershipManager');
+        $membershipManager->setMemberRole($guild, $target, PermissionPreset::ROLE_OFFICER);
+    }
+
     public function addStorageItem(
         Guild $guild,
         User $actor,
         string $itemName,
         string $itemDescription,
         string $rarity,
+        string $itemUrl,
         string $sourceUrl,
         ?string $guildRole = null
     ): \Guild\Manager\Entity\GuildStorage {
@@ -314,6 +344,7 @@ class GuildWorkflow extends AbstractService
             'item_name' => $itemName,
             'item_description' => $itemDescription,
             'rarity' => $rarity,
+            'item_url' => $itemUrl,
             'source_url' => $sourceUrl,
             'created_by_user_id' => $actor->user_id,
             'created_date' => \XF::$time,
@@ -359,7 +390,7 @@ class GuildWorkflow extends AbstractService
     ): void {
         /** @var PermissionGuard $permissionGuard */
         $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
-        $permissionGuard->assertCanChangeLeader($guild, $actor, $guildRole);
+        $permissionGuard->assertCanManageAchievements($guild, $actor, $guildRole);
 
         /** @var \Guild\Manager\Entity\GuildAchievement|null $row */
         $row = $this->em()->find('Guild\Manager:GuildAchievement', $achievementId);
@@ -454,7 +485,7 @@ class GuildWorkflow extends AbstractService
     ): void {
         /** @var PermissionGuard $permissionGuard */
         $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
-        $permissionGuard->assertCanManageImportantNpcs($guild, $actor, $guildRole);
+        $permissionGuard->assertCanDeleteImportantNpcs($guild, $actor, $guildRole);
 
         /** @var \Guild\Manager\Entity\GuildImportantNpc|null $row */
         $row = $this->em()->find('Guild\Manager:GuildImportantNpc', $npcId);
@@ -636,6 +667,7 @@ class GuildWorkflow extends AbstractService
         string $itemName,
         string $itemDescription,
         string $rarity,
+        string $itemUrl,
         string $sourceUrl,
         ?string $guildRole = null
     ): \Guild\Manager\Entity\GuildStorage {
@@ -655,6 +687,7 @@ class GuildWorkflow extends AbstractService
             'item_name' => $itemName,
             'item_description' => $itemDescription,
             'rarity' => $rarity,
+            'item_url' => $itemUrl,
             'source_url' => $sourceUrl,
         ]);
         $row->save();
@@ -701,5 +734,211 @@ class GuildWorkflow extends AbstractService
         /** @var OperationManager $operationManager */
         $operationManager = $this->service('Guild\Manager:Guild\OperationManager');
         $operationManager->deleteVehicle($guild, $actor, $vehicleId, $guildRole);
+    }
+
+    public function addGuildBase(Guild $guild, User $actor, string $baseName, string $bbcode, ?string $guildRole = null): \Guild\Manager\Entity\GuildBase
+    {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanManageGuildBases($guild, $actor, $guildRole);
+
+        $rendered = BbCodeContent::renderToHtml($this->app, $bbcode, true);
+
+        $nextOrder = (int)$this->db()->fetchOne(
+            '
+                SELECT COALESCE(MAX(display_order), 0) + 1
+                FROM xf_guild_base
+                WHERE guild_id = ?
+            ',
+            [$guild->guild_id]
+        );
+
+        /** @var \Guild\Manager\Entity\GuildBase $row */
+        $row = $this->em()->create('Guild\Manager:GuildBase');
+        $row->bulkSet([
+            'guild_id' => $guild->guild_id,
+            'base_name' => $baseName,
+            'base_bbcode' => $bbcode,
+            'base_rendered' => $rendered,
+            'display_order' => $nextOrder ?: \XF::$time,
+            'created_by_user_id' => $actor->user_id,
+            'created_date' => \XF::$time,
+            'last_update' => \XF::$time,
+        ]);
+        $row->save();
+
+        return $row;
+    }
+
+    public function updateGuildBase(Guild $guild, User $actor, int $baseId, string $baseName, string $bbcode, ?string $guildRole = null): \Guild\Manager\Entity\GuildBase
+    {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanManageGuildBases($guild, $actor, $guildRole);
+
+        /** @var \Guild\Manager\Entity\GuildBase|null $row */
+        $row = $this->em()->find('Guild\Manager:GuildBase', $baseId);
+        if (!$row || (int)$row->guild_id !== (int)$guild->guild_id) {
+            throw new PrintableException('Запись не найдена.');
+        }
+
+        $rendered = BbCodeContent::renderToHtml($this->app, $bbcode, true);
+        $row->bulkSet([
+            'base_name' => $baseName,
+            'base_bbcode' => $bbcode,
+            'base_rendered' => $rendered,
+            'last_update' => \XF::$time,
+        ]);
+        $row->save();
+
+        return $row;
+    }
+
+    public function deleteGuildBase(Guild $guild, User $actor, int $baseId, ?string $guildRole = null): void
+    {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanManageGuildBases($guild, $actor, $guildRole);
+
+        /** @var \Guild\Manager\Entity\GuildBase|null $row */
+        $row = $this->em()->find('Guild\Manager:GuildBase', $baseId);
+        if (!$row || (int)$row->guild_id !== (int)$guild->guild_id) {
+            throw new PrintableException('Запись не найдена.');
+        }
+
+        foreach ($this->finder('Guild\Manager:GuildBaseBuilding')->where('guild_base_id', $baseId)->fetch() as $b) {
+            $b->delete();
+        }
+
+        $row->delete();
+    }
+
+    public function assertBaseBelongsGuild(Guild $guild, int $baseId): \Guild\Manager\Entity\GuildBase
+    {
+        /** @var \Guild\Manager\Entity\GuildBase|null $row */
+        $row = $this->em()->find('Guild\Manager:GuildBase', $baseId);
+        if (!$row || (int)$row->guild_id !== (int)$guild->guild_id) {
+            throw new PrintableException('База не найдена.');
+        }
+
+        return $row;
+    }
+
+    public function addGuildBaseBuilding(
+        Guild $guild,
+        User $actor,
+        int $baseId,
+        string $name,
+        string $buildingLevel,
+        string $directionText,
+        string $lieutenantName,
+        string $bonusText,
+        string $followersText,
+        string $descriptionBbcode,
+        ?string $guildRole = null
+    ): \Guild\Manager\Entity\GuildBaseBuilding {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanManageGuildBases($guild, $actor, $guildRole);
+        $this->assertBaseBelongsGuild($guild, $baseId);
+
+        $rendered = $descriptionBbcode !== ''
+            ? BbCodeContent::renderToHtml($this->app, $descriptionBbcode, true)
+            : '';
+
+        $nextOrder = (int)$this->db()->fetchOne(
+            '
+                SELECT COALESCE(MAX(display_order), 0) + 1
+                FROM xf_guild_base_building
+                WHERE guild_base_id = ?
+            ',
+            [$baseId]
+        );
+
+        /** @var \Guild\Manager\Entity\GuildBaseBuilding $row */
+        $row = $this->em()->create('Guild\Manager:GuildBaseBuilding');
+        $row->bulkSet([
+            'guild_base_id' => $baseId,
+            'guild_id' => $guild->guild_id,
+            'building_name' => $name,
+            'building_level' => $buildingLevel,
+            'direction_text' => $directionText,
+            'lieutenant_name' => $lieutenantName,
+            'bonus_text' => $bonusText,
+            'followers_text' => $followersText,
+            'description_bbcode' => $descriptionBbcode,
+            'description_rendered' => $rendered,
+            'display_order' => $nextOrder ?: \XF::$time,
+            'created_date' => \XF::$time,
+            'last_update' => \XF::$time,
+        ]);
+        $row->save();
+
+        return $row;
+    }
+
+    public function updateGuildBaseBuilding(
+        Guild $guild,
+        User $actor,
+        int $baseId,
+        int $buildingId,
+        string $name,
+        string $buildingLevel,
+        string $directionText,
+        string $lieutenantName,
+        string $bonusText,
+        string $followersText,
+        string $descriptionBbcode,
+        ?string $guildRole = null
+    ): \Guild\Manager\Entity\GuildBaseBuilding {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanManageGuildBases($guild, $actor, $guildRole);
+        $this->assertBaseBelongsGuild($guild, $baseId);
+
+        /** @var \Guild\Manager\Entity\GuildBaseBuilding|null $row */
+        $row = $this->em()->find('Guild\Manager:GuildBaseBuilding', $buildingId);
+        if (!$row
+            || (int)$row->guild_base_id !== $baseId
+            || (int)$row->guild_id !== (int)$guild->guild_id) {
+            throw new PrintableException('Запись не найдена.');
+        }
+
+        $rendered = $descriptionBbcode !== ''
+            ? BbCodeContent::renderToHtml($this->app, $descriptionBbcode, true)
+            : '';
+
+        $row->bulkSet([
+            'building_name' => $name,
+            'building_level' => $buildingLevel,
+            'direction_text' => $directionText,
+            'lieutenant_name' => $lieutenantName,
+            'bonus_text' => $bonusText,
+            'followers_text' => $followersText,
+            'description_bbcode' => $descriptionBbcode,
+            'description_rendered' => $rendered,
+            'last_update' => \XF::$time,
+        ]);
+        $row->save();
+
+        return $row;
+    }
+
+    public function deleteGuildBaseBuilding(Guild $guild, User $actor, int $baseId, int $buildingId, ?string $guildRole = null): void
+    {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanManageGuildBases($guild, $actor, $guildRole);
+        $this->assertBaseBelongsGuild($guild, $baseId);
+
+        /** @var \Guild\Manager\Entity\GuildBaseBuilding|null $row */
+        $row = $this->em()->find('Guild\Manager:GuildBaseBuilding', $buildingId);
+        if (!$row
+            || (int)$row->guild_base_id !== $baseId
+            || (int)$row->guild_id !== (int)$guild->guild_id) {
+            throw new PrintableException('Запись не найдена.');
+        }
+
+        $row->delete();
     }
 }

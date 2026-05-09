@@ -450,6 +450,7 @@ class Setup extends AbstractSetup
                 $table->addColumn('item_name', 'varchar', 200)->setDefault('');
                 $table->addColumn('item_description', 'mediumtext')->nullable();
                 $table->addColumn('rarity', 'enum', ['common', 'uncommon', 'rare', 'unique'])->setDefault('common');
+                $table->addColumn('item_url', 'varchar', 500)->setDefault('');
                 $table->addColumn('source_url', 'varchar', 500)->setDefault('');
                 $table->addColumn('created_by_user_id', 'int')->unsigned()->setDefault(0);
                 $table->addColumn('created_date', 'int')->unsigned()->setDefault(0);
@@ -485,6 +486,41 @@ class Setup extends AbstractSetup
                 $table->addKey('guild_id');
                 $table->addKey('display_order');
                 $table->addKey('created_date');
+            },
+            'xf_guild_base' => function (Create $table)
+            {
+                $table->addColumn('guild_base_id', 'int')->unsigned()->autoIncrement();
+                $table->addColumn('guild_id', 'int')->unsigned();
+                $table->addColumn('base_name', 'varchar', 200)->setDefault('');
+                $table->addColumn('base_bbcode', 'mediumtext')->nullable();
+                $table->addColumn('base_rendered', 'mediumtext')->nullable();
+                $table->addColumn('display_order', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('created_by_user_id', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('created_date', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('last_update', 'int')->unsigned()->setDefault(0);
+
+                $table->addKey('guild_id');
+                $table->addKey('display_order');
+            },
+            'xf_guild_base_building' => function (Create $table)
+            {
+                $table->addColumn('guild_base_building_id', 'int')->unsigned()->autoIncrement();
+                $table->addColumn('guild_base_id', 'int')->unsigned();
+                $table->addColumn('guild_id', 'int')->unsigned();
+                $table->addColumn('building_name', 'varchar', 200)->setDefault('');
+                $table->addColumn('building_level', 'varchar', 20)->setDefault('');
+                $table->addColumn('direction_text', 'varchar', 255)->setDefault('');
+                $table->addColumn('lieutenant_name', 'varchar', 150)->setDefault('');
+                $table->addColumn('bonus_text', 'varchar', 600)->setDefault('');
+                $table->addColumn('followers_text', 'varchar', 120)->setDefault('');
+                $table->addColumn('description_bbcode', 'mediumtext')->nullable();
+                $table->addColumn('description_rendered', 'mediumtext')->nullable();
+                $table->addColumn('display_order', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('created_date', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('last_update', 'int')->unsigned()->setDefault(0);
+
+                $table->addKey(['guild_base_id', 'display_order']);
+                $table->addKey('guild_id');
             },
             'xf_guild_action_log' => function (Create $table)
             {
@@ -604,6 +640,86 @@ class Setup extends AbstractSetup
     /** Патч 1.0.3: FindUsersJson возвращает массив для XF Json renderer. */
     public function upgrade1000703Step1(): void
     {
+    }
+
+    /** Патч 1.0.4: подсказки по направленностям на вкладке описания (шаблон, стили, FocusManager). */
+    public function upgrade1000704Step1(): void
+    {
+    }
+
+    /** Патч 1.0.5: правки подсказок направленностей (текст, переносы; шаблон). */
+    public function upgrade1000705Step1(): void
+    {
+    }
+
+    /** Патч 1.0.6: на складе разделены ссылки на предмет и на пост получения. */
+    public function upgrade1000706Step1(): void
+    {
+        $sm = $this->schemaManager();
+        if (!$sm->tableExists('xf_guild_storage') || $sm->columnExists('xf_guild_storage', 'item_url')) {
+            return;
+        }
+
+        $sm->alterTable('xf_guild_storage', function (Alter $table)
+        {
+            $table->addColumn('item_url', 'varchar', 500)->setDefault('')->after('rarity');
+        });
+    }
+
+    /** Патч 1.0.7: вкладка «Базы» гильдии (описание BB-код + здания). */
+    public function upgrade1000707Step1(): void
+    {
+        foreach ($this->getTablesSubsetForBases() as $tableName => $apply) {
+            if ($this->schemaManager()->tableExists($tableName)) {
+                continue;
+            }
+
+            $this->schemaManager()->createTable($tableName, $apply);
+        }
+    }
+
+    /**
+     * Только xf_guild_base / xf_guild_base_building — для апгрейда без полного повтора getTables.
+     *
+     * @return array<string, callable(Create):void>
+     */
+    protected function getTablesSubsetForBases(): array
+    {
+        return [
+            'xf_guild_base' => static function (Create $table): void {
+                $table->addColumn('guild_base_id', 'int')->unsigned()->autoIncrement();
+                $table->addColumn('guild_id', 'int')->unsigned();
+                $table->addColumn('base_name', 'varchar', 200)->setDefault('');
+                $table->addColumn('base_bbcode', 'mediumtext')->nullable();
+                $table->addColumn('base_rendered', 'mediumtext')->nullable();
+                $table->addColumn('display_order', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('created_by_user_id', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('created_date', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('last_update', 'int')->unsigned()->setDefault(0);
+
+                $table->addKey('guild_id');
+                $table->addKey('display_order');
+            },
+            'xf_guild_base_building' => static function (Create $table): void {
+                $table->addColumn('guild_base_building_id', 'int')->unsigned()->autoIncrement();
+                $table->addColumn('guild_base_id', 'int')->unsigned();
+                $table->addColumn('guild_id', 'int')->unsigned();
+                $table->addColumn('building_name', 'varchar', 200)->setDefault('');
+                $table->addColumn('building_level', 'varchar', 20)->setDefault('');
+                $table->addColumn('direction_text', 'varchar', 255)->setDefault('');
+                $table->addColumn('lieutenant_name', 'varchar', 150)->setDefault('');
+                $table->addColumn('bonus_text', 'varchar', 600)->setDefault('');
+                $table->addColumn('followers_text', 'varchar', 120)->setDefault('');
+                $table->addColumn('description_bbcode', 'mediumtext')->nullable();
+                $table->addColumn('description_rendered', 'mediumtext')->nullable();
+                $table->addColumn('display_order', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('created_date', 'int')->unsigned()->setDefault(0);
+                $table->addColumn('last_update', 'int')->unsigned()->setDefault(0);
+
+                $table->addKey(['guild_base_id', 'display_order']);
+                $table->addKey('guild_id');
+            },
+        ];
     }
 
     protected function seedLevelRules(): void

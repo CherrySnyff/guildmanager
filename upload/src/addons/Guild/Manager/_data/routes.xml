@@ -14,10 +14,14 @@
   <route route_type="public" route_prefix="enterum-guilds" sub_name="achievements" format=":int&lt;guild_id&gt;/achievements/" controller="Guild\Manager:Guild\Achievements"/>
   <route route_type="public" route_prefix="enterum-guilds" sub_name="important_npcs_item" format=":int&lt;guild_id&gt;/important-npcs/:int&lt;npc_id&gt;/" controller="Guild\Manager:Guild\ImportantNpcs"/>
   <route route_type="public" route_prefix="enterum-guilds" sub_name="important_npcs" format=":int&lt;guild_id&gt;/important-npcs/" controller="Guild\Manager:Guild\ImportantNpcs"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="guild_bases_building_item" format=":int&lt;guild_id&gt;/bases/:int&lt;base_id&gt;/building/:int&lt;building_id&gt;/" controller="Guild\Manager:Guild\Bases"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="guild_bases_base_item" format=":int&lt;guild_id&gt;/bases/:int&lt;base_id&gt;/" controller="Guild\Manager:Guild\Bases"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="guild_bases_root" format=":int&lt;guild_id&gt;/bases/" controller="Guild\Manager:Guild\Bases"/>
   <route route_type="public" route_prefix="enterum-guilds" sub_name="members" format=":int&lt;guild_id&gt;/members/" controller="Guild\Manager:Guild\Members"/>
   <route route_type="public" route_prefix="enterum-guilds" sub_name="find_users" format=":int&lt;guild_id&gt;/find-users" controller="Guild\Manager:Guild\FindUsers"/>
   <route route_type="public" route_prefix="enterum-guilds" sub_name="directions" format=":int&lt;guild_id&gt;/directions" controller="Guild\Manager:Guild\Directions"/>
   <route route_type="public" route_prefix="enterum-guilds" sub_name="leader" format=":int&lt;guild_id&gt;/leader" controller="Guild\Manager:Guild\Leader"/>
+  <route route_type="public" route_prefix="enterum-guilds" sub_name="officer" format=":int&lt;guild_id&gt;/officer" controller="Guild\Manager:Guild\Officer"/>
   <route route_type="public" route_prefix="enterum-guilds" sub_name="description" format=":int&lt;guild_id&gt;/description" controller="Guild\Manager:Guild\Description"/>
   <route route_type="public" route_prefix="enterum-guilds" format=":int&lt;guild_id&gt;/" controller="Guild\Manager:Guild"/>
   <route route_type="admin" route_prefix="guild-manager" format="" controller="Guild\Manager:Guild"/>

@@ -152,6 +152,23 @@ class PermissionGuard extends AbstractService
         }
     }
 
+    /** Назначение офицера по ID: лидер гильдии или глобальное право manageGuildAny. */
+    public function canAppointGuildOfficer(Guild $guild, User $actor, ?string $guildRole = null): bool
+    {
+        if ($actor->hasPermission('guild_manager', 'manageGuildAny')) {
+            return true;
+        }
+
+        return $guild->leader_user_id > 0 && (int)$guild->leader_user_id === (int)$actor->user_id;
+    }
+
+    public function assertCanAppointGuildOfficer(Guild $guild, User $actor, ?string $guildRole = null): void
+    {
+        if (!$this->canAppointGuildOfficer($guild, $actor, $guildRole)) {
+            throw new PrintableException(XF::phrase('no_permission'));
+        }
+    }
+
     public function assertCanEditDescription(Guild $guild, User $actor, ?string $guildRole = null): void
     {
         if (!$this->canEditDescription($guild, $actor, $guildRole)) {
@@ -215,6 +232,43 @@ class PermissionGuard extends AbstractService
             return true;
         }
 
+        if ($this->canByPreset($guildRole, PermissionPreset::ACTION_MANAGE_IMPORTANT_NPCS)) {
+            return true;
+        }
+
+        return $guild->leader_user_id > 0 && $guild->leader_user_id === $actor->user_id;
+    }
+
+    public function canDeleteImportantNpcs(Guild $guild, User $actor, ?string $guildRole = null): bool
+    {
+        $guildRole = $this->resolveGuildRole($guild, $actor, $guildRole);
+
+        if (
+            $actor->hasPermission('guild_manager', 'manageGuildAny')
+            || $actor->hasPermission('guild_manager', 'manageImportantNpcsAny')
+        ) {
+            return true;
+        }
+
+        if ($this->canByPreset($guildRole, PermissionPreset::ACTION_DELETE_IMPORTANT_NPCS)) {
+            return true;
+        }
+
+        return $guild->leader_user_id > 0 && $guild->leader_user_id === $actor->user_id;
+    }
+
+    public function canManageDirections(Guild $guild, User $actor, ?string $guildRole = null): bool
+    {
+        $guildRole = $this->resolveGuildRole($guild, $actor, $guildRole);
+
+        if ($actor->hasPermission('guild_manager', 'editGuildDirectionsAny')) {
+            return true;
+        }
+
+        if ($this->canByPreset($guildRole, PermissionPreset::ACTION_MANAGE_DIRECTIONS)) {
+            return true;
+        }
+
         return $guild->leader_user_id > 0 && $guild->leader_user_id === $actor->user_id;
     }
 
@@ -242,6 +296,43 @@ class PermissionGuard extends AbstractService
     public function assertCanManageImportantNpcs(Guild $guild, User $actor, ?string $guildRole = null): void
     {
         if (!$this->canManageImportantNpcs($guild, $actor, $guildRole)) {
+            throw new PrintableException(XF::phrase('no_permission'));
+        }
+    }
+
+    public function assertCanDeleteImportantNpcs(Guild $guild, User $actor, ?string $guildRole = null): void
+    {
+        if (!$this->canDeleteImportantNpcs($guild, $actor, $guildRole)) {
+            throw new PrintableException(XF::phrase('no_permission'));
+        }
+    }
+
+    public function assertCanManageDirections(Guild $guild, User $actor, ?string $guildRole = null): void
+    {
+        if (!$this->canManageDirections($guild, $actor, $guildRole)) {
+            throw new PrintableException(XF::phrase('no_permission'));
+        }
+    }
+
+    /** Базы гильдии: администратор форума, лидер и офицер (внутри своей гильдии). */
+    public function canManageGuildBases(Guild $guild, User $actor, ?string $guildRole = null): bool
+    {
+        $guildRole = $this->resolveGuildRole($guild, $actor, $guildRole);
+
+        if ($actor->hasPermission('guild_manager', 'manageGuildAny')) {
+            return true;
+        }
+
+        if ($this->canByPreset($guildRole, PermissionPreset::ACTION_MANAGE_BASES)) {
+            return true;
+        }
+
+        return $guild->leader_user_id > 0 && $guild->leader_user_id === $actor->user_id;
+    }
+
+    public function assertCanManageGuildBases(Guild $guild, User $actor, ?string $guildRole = null): void
+    {
+        if (!$this->canManageGuildBases($guild, $actor, $guildRole)) {
             throw new PrintableException(XF::phrase('no_permission'));
         }
     }

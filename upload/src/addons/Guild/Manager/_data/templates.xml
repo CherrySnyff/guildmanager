@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="public" title="guild_manager_guild.less" version_id="1000700" version_string="1.0.0"><![CDATA[
+  <template type="public" title="guild_manager_guild.less" version_id="1000711" version_string="1.0.11"><![CDATA[
 .gm-page { background: @xf-contentBg; border: 1px solid @xf-borderColor; border-radius: 4px; padding: 12px 20px; }
 .gm-tabs { display: flex; flex-wrap: nowrap; gap: 4px; overflow-x: auto; border-bottom: 1px solid @xf-borderColor; margin-bottom: 12px; padding-bottom: 0; }
-.gm-tab { flex: 0 0 auto; padding: 8px 12px; border-radius: 4px 4px 0 0; color: inherit; text-decoration: none; background: @xf-contentBg; border: 1px solid @xf-borderColor; border-bottom: 0; }
+.gm-tab { flex: 0 0 auto; padding: 8px 12px; font-size: 1em; border-radius: 4px 4px 0 0; color: inherit; text-decoration: none; background: @xf-contentBg; border: 1px solid @xf-borderColor; border-bottom: 0; }
 .gm-tab:hover { background: @xf-contentHighlightBg; color: inherit; }
 .gm-tab.is-active { background: #C542D2; color: #000; font-weight: 700; }
 .gm-summary { background: @xf-contentBg; border: 1px solid #ddd; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.5; }
@@ -61,6 +61,19 @@
 .gm-table--storage td.gm-col-desc { text-align: left; }
 .gm-table--storage .gm-col-rarity { text-align: center; }
 .gm-add-row--storage { width: 80%; max-width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+.gm-add-row--storage .gm-fields {
+  display: grid;
+  grid-template-columns: 20fr 15fr 30fr 15fr 20fr auto;
+  gap: 8px;
+  align-items: end;
+}
+.gm-add-row--storage .gm-field { min-width: 0; }
+.gm-add-row--storage .gm-field--storage-name { grid-column: 1; }
+.gm-add-row--storage .gm-field--storage-item-url { grid-column: 2; }
+.gm-add-row--storage .gm-field--storage-description { grid-column: 3; }
+.gm-add-row--storage .gm-field--storage-rarity { grid-column: 4; }
+.gm-add-row--storage .gm-field--storage-source { grid-column: 5; }
+.gm-add-row--storage .gm-field--submit { grid-column: 6; }
 .itemQuality {
   display: inline-flex !important;
   align-items: center !important;
@@ -136,8 +149,8 @@
 .gm-npc-anchor-item { text-align: center; font-weight: 700; font-size: 1.3em; }
 .gm-npc-anchor-item a { color: inherit; text-decoration: none; }
 .gm-npc-anchor-item a:hover { text-decoration: underline; }
-.gm-npc-block { margin: 0 0 12px; }
-.gm-npc-block-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; flex-wrap: nowrap; }
+.gm-npc-block { margin: 0 0 12px; width: 100%; max-width: 100%; box-sizing: border-box; }
+.gm-npc-block-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; flex-wrap: nowrap; min-width: 0; }
 .gm-npc-titleLink { color: inherit; text-decoration: none; font-size: 24px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
 .gm-npc-titleLink:hover { text-decoration: underline; }
 .gm-npc-block-controls { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; flex-wrap: nowrap; }
@@ -147,7 +160,22 @@
 .gm-npc-edit-form { margin-top: 8px; text-align: left; width: 100%; box-sizing: border-box; }
 .gm-npc-edit-form .block,
 .gm-npc-edit-form .block-container,
-.gm-npc-edit-form .block-body { width: 100%; max-width: 100%; box-sizing: border-box; }
+.gm-npc-edit-form .block-body { width: 100%; max-width: 100%; box-sizing: border-box; min-width: 0; }
+.gm-npc-edit-form .formRow,
+.gm-npc-edit-form .fr-box,
+.gm-npc-edit-form .fr-wrapper,
+.gm-npc-edit-form .fr-element,
+.gm-npc-edit-form .bbWrapper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.gm-npc-edit-form .fr-element,
+.gm-npc-edit-form .bbWrapper {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 .gm-npc-add-form { margin-top: 12px; }
 .gm-npc-name-row { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 8px; }
 .gm-npc-name-row .gm-field--name { flex: 1 1 auto; max-width: 320px; }
@@ -217,6 +245,34 @@
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
+.gm-focus-pill {
+  cursor: help;
+  color: @xf-linkColor;
+  border-bottom: 1px dotted @xf-borderColor;
+}
+.gm-focus-pill--no-tip {
+  cursor: default;
+  color: inherit;
+  border-bottom: 0;
+}
+.gm-focus-tooltip {
+  position: fixed;
+  z-index: 10000;
+  width: 200px;
+  max-width: 200px;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid @xf-borderColor;
+  border-radius: 6px;
+  background: @xf-contentBg;
+  color: @xf-textColor;
+  font-size: 0.88em;
+  line-height: 1.35;
+  white-space: pre-line;
+  word-break: break-word;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
 @media (max-width: 1024px) {
   .gm-page { padding: 10px 12px; }
   .gm-tabs { gap: 6px; overflow-x: auto; }
@@ -243,9 +299,10 @@
 @media (max-width: 720px) {
   .gm-page { padding: 8px 8px; border-radius: 0; border-left: 0; border-right: 0; }
   .gm-tabs { gap: 4px; margin-bottom: 10px; }
-  .gm-tab { font-size: 12px; padding: 8px 10px; }
+  .gm-tab { font-size: 1em; padding: 8px 10px; }
   .gm-summary { font-size: 13px; padding: 8px 10px; }
   .gm-add-row .gm-fields { flex-direction: column; align-items: stretch; }
+  .gm-add-row--storage .gm-fields { display: flex; }
   .gm-summary dt { float: none; width: auto; font-weight: 600; }
   .gm-summary dd { margin: 0 0 8px 0; }
   .gm-summary--description { font-size: 18px; }
@@ -540,8 +597,352 @@
 .gm-members-body > .gm-members-grid-wrap,
 .gm-members-body > .gm-desc-read,
 .gm-members-body > .gm-empty { margin-top: 10px; }
+.gm-bases-page {
+  margin: 0 4px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-bases-empty-plate {
+  box-sizing: border-box;
+  min-height: 100px;
+  border-bottom: 1px solid @xf-borderColor;
+  padding: 10px 8px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.gm-bases-empty-plate-corner {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  text-align: right;
+}
+.gm-base-block {
+  margin: 0 0 22px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-base-title {
+  margin: 0;
+  font-size: 1.75em;
+  font-weight: 700;
+  line-height: 1.2;
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.gm-base-up { font-size: 12px; text-transform: lowercase; white-space: nowrap; }
+.gm-base-edit-sheet {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0 0 10px;
+  box-sizing: border-box;
+}
+.gm-base-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  min-width: 0;
+}
+.gm-base-header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; flex-wrap: nowrap; min-width: 0; }
+.gm-base-edit-details { margin: 0; padding: 0; text-align: right; width: 100%; max-width: 100%; min-width: 0; }
+.gm-base-edit-details > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.gm-base-edit-details > summary::-webkit-details-marker { display: none; }
+.gm-base-edit-form {
+  margin-top: 10px;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.gm-base-edit-form .block,
+.gm-base-edit-form .block-container,
+.gm-base-edit-form .block-body,
+.gm-base-edit-form .formRow-main,
+.gm-base-edit-form .editorContainer,
+.gm-base-edit-form .editorWrapper {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.gm-base-edit-form .fr-box,
+.gm-base-edit-form .fr-wrapper {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+.gm-base-edit-form .input,
+.gm-base-edit-form .fr-element.bbWrapper {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.gm-bases-add-form .block-body,
+.gm-bases-add-form .editorContainer,
+.gm-bases-add-form .editorWrapper {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+.gm-base-building-form {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.gm-base-building-form .block,
+.gm-base-building-form .block-container,
+.gm-base-building-form .block-body,
+.gm-base-building-form .formRow,
+.gm-base-building-form .formRow-main,
+.gm-base-building-form .formRow-body,
+.gm-base-building-form .formRow-fullWidth,
+.gm-base-building-form .inputGroup,
+.gm-base-building-form .editorContainer,
+.gm-base-building-form .editorWrapper {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.gm-base-building-form .fr-box,
+.gm-base-building-form .fr-wrapper,
+.gm-base-building-form .fr-element,
+.gm-base-building-form .fr-toolbar,
+.gm-base-building-form .fr-second-toolbar,
+.gm-base-building-form .fr-sticky-on,
+.gm-base-building-form .fr-sticky-off {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+.gm-base-building-form .fr-toolbar,
+.gm-base-building-form .fr-second-toolbar {
+  flex-wrap: wrap;
+}
+.gm-base-building-form .fr-element.bbWrapper,
+.gm-base-building-form .input {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.gm-base-building-form iframe {
+  max-width: 100% !important;
+}
+.gm-bases-add-form { margin-top: 12px; }
+.gm-bases-buildings-spoiler {
+  margin-top: 12px;
+  border: 1px solid @xf-borderColor;
+  border-radius: 4px;
+  background: @xf-contentBg;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-bases-buildings-spoiler > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 12px;
+  font-weight: 600;
+}
+.gm-bases-buildings-spoiler > summary::-webkit-details-marker { display: none; }
+.gm-bases-buildings-spoiler > summary::before { content: "▸"; margin-right: 8px; }
+.gm-bases-buildings-spoiler[open] > summary::before { content: "▾"; }
+.gm-bases-buildings-inner {
+  padding: 0 12px 14px 12px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-base-building-edit-details > div:first-of-type {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+.gm-base-building-row {
+  padding: 10px 0;
+  border-top: 1px solid @xf-borderColor;
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-base-building-row:first-of-type { border-top: 0; }
+.gm-base-building-controls { position: absolute; top: 10px; right: 0; display: inline-flex; gap: 6px; z-index: 1; }
+.gm-base-building-read {
+  display: flow-root;
+  min-width: 0;
+  max-width: 100%;
+  padding-right: 56px;
+  box-sizing: border-box;
+  clear: both;
+}
+.gm-base-building-meta {
+  float: left;
+  clear: left;
+  width: ~"clamp(240px, 38%, 420px)";
+  max-width: 420px;
+  margin: 0 16px 12px 0;
+  padding: 0 8px 8px 0;
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 1.45;
+  shape-outside: margin-box;
+  -webkit-shape-outside: margin-box;
+}
+.gm-base-building-meta dt { margin: 0 0 2px; font-weight: 700; clear: left; float: left; width: 40%; padding-right: 8px; }
+.gm-base-building-meta dd {
+  margin: 0 0 8px 40%;
+  min-height: 1.2em;
+  word-break: break-word;
+}
+/* BB: убираем лишние блочные обёртки XF/div, строки текста обтекают float у dl справа и снизу. */
+.gm-base-building-read .gm-base-building-desc-title {
+  display: block;
+  margin: 0 0 8px 0;
+  padding: 0;
+  font-weight: 700;
+  font-size: 13px;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose {
+  display: contents;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose *:not(a):not(br):not(hr):not(wbr):not(img):not(picture):not(source):not(video):not(iframe):not(svg):not(canvas):not(audio):not(embed):not(object):not(table):not(thead):not(tbody):not(tfoot):not(tr):not(th):not(td):not(caption):not(col):not(colgroup):not(ul):not(ol):not(li):not(pre):not(code):not(blockquote):not(figure):not(figcaption) {
+  display: contents !important;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose blockquote {
+  display: block !important;
+  margin: 0.6em 0;
+  padding: 0.25em 0 0.25em 1em;
+  border-left: 3px solid @xf-borderColor;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose figure {
+  display: block !important;
+  margin: 0.6em 0;
+  max-width: 100%;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose a {
+  display: inline !important;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose img,
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose .bbImage {
+  display: inline-block !important;
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose table {
+  display: table !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose ul,
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose ol {
+  display: block !important;
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose li {
+  display: list-item !important;
+}
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose pre,
+.gm-base-building-read .gm-desc-bb.gm-base-building-prose code {
+  display: block !important;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 100%;
+}
+.gm-base-building-read::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.gm-base-building-form-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 400px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.gm-base-building-form-fields {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.gm-base-building-editor {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.gm-base-building-field-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 46%) minmax(0, 1fr);
+  gap: 6px 12px;
+  align-items: center;
+  margin-bottom: 12px;
+  min-width: 0;
+}
+.gm-base-building-field-row > label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.gm-base-building-field-row > .gm-base-building-field-control {
+  min-width: 0;
+}
+.gm-base-building-field-row > .gm-base-building-field-control .input {
+  width: 100%;
+}
+.gm-base-building-field-row-buttons {
+  grid-template-columns: minmax(150px, 46%) minmax(0, 1fr);
+  align-items: end;
+}
+.gm-base-building-field-row-buttons > .gm-base-building-field-label-spacer {
+  display: none;
+}
+.gm-base-building-editor .formRow-label {
+  margin-bottom: 6px;
+}
+@media (max-width: 900px) {
+  .gm-base-building-read { padding-right: 0; }
+  .gm-base-building-meta { float: none; width: 100%; max-width: none; margin-right: 0; padding-right: 0; shape-outside: none; -webkit-shape-outside: none; }
+  .gm-base-building-meta dt { float: none; width: auto; padding-right: 0; display: block; }
+  .gm-base-building-meta dd { margin-left: 0; }
+  .gm-base-building-form-layout { grid-template-columns: 1fr; }
+  .gm-base-building-field-row,
+  .gm-base-building-field-row-buttons {
+    grid-template-columns: 1fr;
+  }
+  .gm-base-building-field-row-buttons > .gm-base-building-field-label-spacer {
+    display: none;
+  }
+}
+.gm-base-building-edit-details {
+  flex: 0 0 auto;
+  margin: 0;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.gm-base-building-edit-details > summary { list-style: none; cursor: pointer; display: inline-flex; }
+.gm-base-building-edit-details > summary::-webkit-details-marker { display: none; }
 ]]></template>
-  <template type="public" title="guild_manager_guild_view" version_id="1000700" version_string="1.0.0"><![CDATA[
+  <template type="public" title="guild_manager_guild_view" version_id="1000711" version_string="1.0.11"><![CDATA[
 <xf:title>{$guild.title}</xf:title>
 <xf:css src="guild_manager_guild.less" />
 
@@ -553,6 +954,7 @@
     <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'followers'}) }}" class="gm-tab<xf:if is="$tab == 'followers'"> is-active</xf:if>">Последователи</a>
     <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'reputation'}) }}" class="gm-tab<xf:if is="$tab == 'reputation'"> is-active</xf:if>">Репутация</a>
     <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'important-npcs'}) }}" class="gm-tab<xf:if is="$tab == 'important-npcs'"> is-active</xf:if>">Важные НПС</a>
+    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'bases'}) }}" class="gm-tab<xf:if is="$tab == 'bases'"> is-active</xf:if>">Базы</a>
     <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'members'}) }}" class="gm-tab<xf:if is="$tab == 'members'"> is-active</xf:if>">Участники</a>
   </div>
 
@@ -561,7 +963,18 @@
       <dt>Уровень организации</dt><dd class="gm-org-level-row"><strong>{$guild.organization_level}</strong> — <strong>{$sizeRu}</strong><xf:if is="$showLevelRenownCapNotice"> <span class="gm-level-renown-wrap"><span class="gm-level-renown-notice" title="Уровень не может быть повышен: не хватает известности." role="img" aria-label="Уровень не может быть повышен: не хватает известности."><xf:fa icon="fa-solid fa-triangle-exclamation" /></span><span class="gm-level-renown-text">Уровень не может быть повышен: не хватает известности.</span></span></xf:if></dd>
       <dt>Направленности</dt>
       <dd>
-        <xf:if is="$summaryDirections is not empty">{$summaryDirections}<xf:else /><span class="gm-empty">не выбраны</span></xf:if><xf:if is="$showDirectionMilestoneNotice"> <span class="gm-direction-prompt" title="выберите направленность." role="note">выберите направленность.</span></xf:if>
+        <xf:if is="$summaryDirectionItems is not empty">
+          <xf:foreach loop="$summaryDirectionItems" value="$dir">
+            <xf:if is="$dir.index &gt; 0">, </xf:if>
+            <xf:if is="$dir.hint is not empty">
+              <span class="gm-focus-pill" data-gm-tooltip="{$dir.hint}">{$dir.label}</span>
+            <xf:else />
+              <span class="gm-focus-pill gm-focus-pill--no-tip">{$dir.label}</span>
+            </xf:if>
+          </xf:foreach>
+        <xf:else />
+          <span class="gm-empty">не выбраны</span>
+        </xf:if><xf:if is="$showDirectionMilestoneNotice"> <span class="gm-direction-prompt" title="выберите направленность." role="note">выберите направленность.</span></xf:if>
       </dd>
       <dt>Лидер организации</dt>
       <dd>
@@ -631,23 +1044,39 @@
             <xf:fa icon="edit" /> Редактировать гильдию
           </summary>
           <div class="gm-desc-editForm">
-            <xf:form action="{$guildRoot}/leader" class="gm-block gm-admin-inline-form">
-              <xf:if is="$canEditGuildTitleAdmin">
-                <div class="gm-field">
-                  <label>Редактировать название гильдии</label>
-                  <input type="text" name="guild_title" value="{$guild.title}" class="input" maxlength="100" />
-                </div>
-              </xf:if>
-              <div class="gm-field gm-field--leader-id">
-                <label>ID выбранного лидера</label>
-                <div class="gm-field--leader-id-row">
-                  <input type="number" name="leader_user_id" id="gm-leader-user-id" value="{$guild.leader_user_id}" class="input" min="1" />
-                  <button type="submit" class="button gm-btn-save-icon" title="Сохранить изменения гильдии" aria-label="Сохранить изменения гильдии"><xf:fa icon="save" /></button>
-                </div>
-              </div>
-            </xf:form>
+            <xf:if is="$canChangeLeader || $canEditGuildTitleAdmin">
+              <xf:form action="{$guildRoot}/leader" class="gm-block gm-admin-inline-form">
+                <xf:if is="$canEditGuildTitleAdmin">
+                  <div class="gm-field">
+                    <label>Редактировать название гильдии</label>
+                    <input type="text" name="guild_title" value="{$guild.title}" class="input" maxlength="100" />
+                  </div>
+                </xf:if>
+                <xf:if is="$canChangeLeader">
+                  <div class="gm-field gm-field--leader-id">
+                    <label>ID выбранного лидера</label>
+                    <div class="gm-field--leader-id-row">
+                      <input type="number" name="leader_user_id" id="gm-leader-user-id" value="{$guild.leader_user_id}" class="input" min="1" />
+                      <button type="submit" class="button gm-btn-save-icon" title="Сохранить изменения гильдии" aria-label="Сохранить изменения гильдии"><xf:fa icon="save" /></button>
+                    </div>
+                  </div>
+                </xf:if>
+              </xf:form>
+            </xf:if>
 
-            <xf:if is="$maxDirectionSlots &gt;= 1">
+            <xf:if is="$canAppointGuildOfficer">
+              <xf:form action="{$guildRoot}/officer" class="gm-block gm-admin-inline-form">
+                <div class="gm-field gm-field--leader-id">
+                  <label>Добавить офицера (ID пользователя)</label>
+                  <div class="gm-field--leader-id-row">
+                    <input type="number" name="officer_user_id" id="gm-officer-user-id" value="" class="input" min="1" />
+                    <button type="submit" class="button gm-btn-save-icon" title="Назначить офицера" aria-label="Назначить офицера"><xf:fa icon="save" /></button>
+                  </div>
+                </div>
+              </xf:form>
+            </xf:if>
+
+            <xf:if is="$canManageDirections && $maxDirectionSlots &gt;= 1">
               <xf:form action="{$guildRoot}/directions" class="gm-block gm-admin-inline-form">
                 <div class="gm-field">
                   <label>Направленность 1-го уровня</label>
@@ -767,10 +1196,10 @@
     <xf:if is="$canAddTreasury">
       <xf:form action="{$guildRoot}/treasury/add" class="gm-add-row gm-add-row--treasury">
         <div class="gm-fields">
-          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" /></div>
+          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" placeholder="Ник персонажа" /></div>
           <div class="gm-field gm-field--wide"><label>Ссылка https://</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
-          <div class="gm-field"><label>Сумма</label><input type="number" name="amount" class="input" /></div>
-          <div class="gm-field gm-field--wide"><label>Причина</label><input type="text" name="reason" class="input" /></div>
+          <div class="gm-field"><label>Сумма</label><input type="number" name="amount" class="input" placeholder="+ или -" /></div>
+          <div class="gm-field gm-field--wide"><label>Причина</label><input type="text" name="reason" class="input" placeholder="Пополнение/списание/Квест и тд" /></div>
           <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
         </div>
       </xf:form>
@@ -780,11 +1209,19 @@
   <xf:if is="$tab == 'storage'">
     <div class="gm-table-wrap gm-table-wrap--storage">
       <table class="gm-table gm-table--storage">
-        <tr><th class="gm-col-name">Название</th><th class="gm-col-desc">Описание</th><th class="gm-col-rarity">Редкость</th><th>Источник</th><xf:if is="$canEditStorage || $canDeleteStorage"><th class="gm-actions">Действия</th></xf:if></tr>
+        <tr><th class="gm-col-name">Название предмета</th><th class="gm-col-desc">Описание предмета</th><th class="gm-col-rarity">Редкость</th><th>Источник</th><xf:if is="$canEditStorage || $canDeleteStorage"><th class="gm-actions">Действия</th></xf:if></tr>
         <xf:if is="$storageRows is not empty">
           <xf:foreach loop="$storageRows" value="$it">
             <tr>
-              <td class="gm-col-name">{$it.item_name}</td>
+              <td class="gm-col-name">
+                <xf:if is="$it.item_url is not empty">
+                  <a href="{$it.item_url}" target="_blank" rel="noopener">{$it.item_name}</a>
+                <xf:elseif is="$it.source_url is not empty" />
+                  <a href="{$it.source_url}" target="_blank" rel="noopener">{$it.item_name}</a>
+                <xf:else />
+                  {$it.item_name}
+                </xf:if>
+              </td>
               <td class="gm-col-desc">{$it.item_description}</td>
               <td class="gm-col-rarity"><span class="itemQuality itemQuality--{$it.rarity}"><xf:if is="$it.rarity == 'common'">Обычный</xf:if><xf:if is="$it.rarity == 'uncommon'">Необычный</xf:if><xf:if is="$it.rarity == 'rare'">Редкий</xf:if><xf:if is="$it.rarity == 'unique'">Уникальный</xf:if></span></td>
               <td><xf:if is="$it.source_url is not empty"><a href="{$it.source_url}" target="_blank" rel="noopener">Источник</a></xf:if></td>
@@ -804,7 +1241,8 @@
                               <option value="unique"<xf:if is="$it.rarity == 'unique'"> selected="selected"</xf:if>>Уникальный</option>
                             </select>
                           </div>
-                          <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" value="{$it.source_url}" class="input" /></div>
+                          <div class="gm-field gm-field--wide"><label>Ссылка на предмет</label><input type="url" name="item_url" value="{$it.item_url}" class="input" placeholder="https://..." /></div>
+                          <div class="gm-field gm-field--wide"><label>Ссылка на пост с получением</label><input type="url" name="source_url" value="{$it.source_url}" class="input" placeholder="https://..." /></div>
                           <div class="gm-field"><button type="submit" class="button button--primary" title="Сохранить" aria-label="Сохранить"><xf:fa icon="save" /></button></div>
                         </div>
                       </xf:form>
@@ -831,9 +1269,10 @@
     <xf:if is="$canManageStorage">
       <xf:form action="{$guildRoot}/storage/add" class="gm-add-row gm-add-row--storage">
         <div class="gm-fields">
-          <div class="gm-field"><label>Название</label><input type="text" name="item_name" class="input" /></div>
-          <div class="gm-field gm-field--wide"><label>Описание</label><input type="text" name="item_description" class="input" /></div>
-          <div class="gm-field"><label>Редкость</label>
+          <div class="gm-field gm-field--storage-name"><label>Название</label><input type="text" name="item_name" class="input" placeholder="Название предмета" /></div>
+          <div class="gm-field gm-field--storage-item-url"><label>Ссылка на предмет</label><input type="url" name="item_url" class="input" placeholder="https://..." /></div>
+          <div class="gm-field gm-field--storage-description"><label>Описание</label><input type="text" name="item_description" class="input" placeholder="Пример: используемый магический предмет 3го уровня" /></div>
+          <div class="gm-field gm-field--storage-rarity"><label>Редкость</label>
             <select name="rarity" class="input">
               <option value="common">Обычный</option>
               <option value="uncommon">Необычный</option>
@@ -841,8 +1280,8 @@
               <option value="unique">Уникальный</option>
             </select>
           </div>
-          <div class="gm-field gm-field--wide"><label>Ссылка (необязательно)</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
-          <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
+          <div class="gm-field gm-field--storage-source"><label>Ссылка на источник</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
+          <div class="gm-field gm-field--submit"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
         </div>
       </xf:form>
     </xf:if>
@@ -907,13 +1346,13 @@
     <xf:if is="$canAddFollower">
       <xf:form action="{$guildRoot}/followers/add" class="gm-add-row gm-add-row--followers">
         <div class="gm-fields">
-          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" /></div>
+          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" placeholder="Ник персонажа" /></div>
           <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
           <div class="gm-field">
             <label class="gm-label-with-help">Количество
               <button type="button" class="gm-followers-qty-help" id="gm-followers-qty-help" aria-label="Справка: количество последователей" title="Подсказка"><xf:fa icon="fa-solid fa-circle-question" /></button>
             </label>
-            <input type="number" name="followers_amount" class="input" /></div>
+            <input type="number" name="followers_amount" class="input" placeholder="+ или -" /></div>
           <div class="gm-field"><label>Дата дд.мм.гггг</label><input type="text" name="date" class="input" value="{$followersAddDefaultDate}" placeholder="дд.мм.гггг" /></div>
           <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
         </div>
@@ -980,7 +1419,7 @@
         </div>
       </xf:form>
     </xf:if>
-    <div id="gm-followers-qty-tip-source" style="display: none;" aria-hidden="true">Менелдер наёмных рабочих [способность]<br /> В случае найма на бирже вы получаете 1 дополнительного последователя за каждые потраченные 50 золотых монет</div>
+    <div id="gm-followers-qty-tip-source" style="display: none;" aria-hidden="true">Менеджер наёмных рабочих [способность]<br /> В случае найма на бирже вы получаете 1 дополнительного последователя за каждые потраченные 50 золотых монет</div>
     <script>
     (function () {
       var modal = document.getElementById('gm-followers-rules-modal');
@@ -1200,10 +1639,10 @@
         <input type="hidden" name="rep" value="{$repRegion}" />
         <input type="hidden" name="region_key" value="{$repRegion}" />
         <div class="gm-fields">
-          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" /></div>
+          <div class="gm-field"><label>Персонаж</label><input type="text" name="character_name" class="input" placeholder="Ник персонажа" /></div>
           <div class="gm-field gm-field--wide"><label>Ссылка</label><input type="url" name="source_url" class="input" placeholder="https://..." /></div>
-          <div class="gm-field"><label>Репутация</label><input type="number" name="reputation_amount" class="input" /></div>
-          <div class="gm-field gm-field--wide"><label>Фракция</label><input type="text" name="faction_name" class="input" /></div>
+          <div class="gm-field"><label>Репутация</label><input type="number" name="reputation_amount" class="input" placeholder="+ или -" /></div>
+          <div class="gm-field gm-field--wide"><label>Фракция</label><input type="text" name="faction_name" class="input" placeholder="Город, Название фракции" /></div>
           <div class="gm-field"><label>&nbsp;</label><button type="submit" class="gm-btn-plus">+</button></div>
         </div>
       </xf:form>
@@ -1231,40 +1670,44 @@
               <a href="#npc-{$npc.important_npc_id}" class="gm-npc-titleLink">{$npc.npc_name}</a>
               <div class="gm-npc-block-controls">
                 <xf:if is="$canManageImportantNpcs">
-                  <details class="gm-npc-edit-details">
-                    <summary title="Редактировать запись" aria-label="Редактировать запись"><span class="u-muted"><xf:fa icon="edit" /></span></summary>
-                    <div class="gm-npc-edit-form">
-                      <xf:form action="{$guildRoot}/important-npcs/{$npc.important_npc_id}/edit" class="block message">
-                        <div class="block-container">
-                          <div class="block-body">
-                            <div class="gm-npc-name-row">
-                              <div class="gm-field gm-field--name">
-                                <label>Имя НПС <span class="u-muted">(обязательное для заполнения)</span></label>
-                                <input type="text" name="npc_name" value="{$npc.npc_name}" class="input" maxlength="150" required="required" />
-                              </div>
-                              <div class="gm-field gm-field--submit">
-                                <label>&nbsp;</label>
-                                <button type="submit" class="button button--primary" title="Сохранить запись" aria-label="Сохранить запись"><xf:fa icon="save" /></button>
-                              </div>
-                            </div>
-                            <xf:editorrow
-                              name="message"
-                              value="{$npc.npc_bbcode}"
-                              rowtype="fullWidth noLabel"
-                              data-user-mention-url="{{ link('members/find') }}"
-                              data-min-height="180" />
-                          </div>
-                        </div>
-                      </xf:form>
-                    </div>
-                  </details>
-                  <xf:form action="{$guildRoot}/important-npcs/{$npc.important_npc_id}/delete" style="display:inline">
-                    <button type="submit" class="button button--link gm-icon-btn" title="Удалить запись" aria-label="Удалить запись"><xf:fa icon="fa-solid fa-eraser" /></button>
-                  </xf:form>
+                  <xf:if is="$canDeleteImportantNpcs">
+                    <xf:form action="{$guildRoot}/important-npcs/{$npc.important_npc_id}/delete" style="display:inline">
+                      <button type="submit" class="button button--link gm-icon-btn" title="Удалить запись" aria-label="Удалить запись"><xf:fa icon="fa-solid fa-eraser" /></button>
+                    </xf:form>
+                  </xf:if>
                 </xf:if>
                 <a href="#top" class="u-muted" style="font-size:12px;text-transform:lowercase;">вверх</a>
               </div>
             </div>
+            <xf:if is="$canManageImportantNpcs">
+              <details class="gm-npc-edit-details">
+                <summary title="Редактировать запись" aria-label="Редактировать запись"><span class="u-muted"><xf:fa icon="edit" /></span></summary>
+                <div class="gm-npc-edit-form">
+                  <xf:form action="{$guildRoot}/important-npcs/{$npc.important_npc_id}/edit" class="block message">
+                    <div class="block-container">
+                      <div class="block-body">
+                        <div class="gm-npc-name-row">
+                          <div class="gm-field gm-field--name">
+                            <label>Имя НПС <span class="u-muted">(обязательное для заполнения)</span></label>
+                            <input type="text" name="npc_name" value="{$npc.npc_name}" class="input" maxlength="150" required="required" />
+                          </div>
+                          <div class="gm-field gm-field--submit">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="button button--primary" title="Сохранить запись" aria-label="Сохранить запись"><xf:fa icon="save" /></button>
+                          </div>
+                        </div>
+                        <xf:editorrow
+                          name="message"
+                          value="{$npc.npc_bbcode}"
+                          rowtype="fullWidth noLabel"
+                          data-user-mention-url="{{ link('members/find') }}"
+                          data-min-height="180" />
+                      </div>
+                    </div>
+                  </xf:form>
+                </div>
+              </details>
+            </xf:if>
             <div class="gm-desc-read">
               <div class="gm-desc-bb">{$npc.npc_rendered|raw}</div>
             </div>
@@ -1293,6 +1736,231 @@
                 name="message"
                 value=""
                 rowtype="fullWidth noLabel"
+                data-user-mention-url="{{ link('members/find') }}"
+                data-min-height="220" />
+            </div>
+          </div>
+        </xf:form>
+      </xf:if>
+    </div>
+  </xf:if>
+
+  <xf:if is="$tab == 'bases'">
+    <div class="gm-bases-page">
+
+      <xf:if is="$guildBasesGrouped is empty && !$canManageGuildBases">
+        <div class="gm-empty">Базы гильдии пока не добавлены.</div>
+      </xf:if>
+
+      <xf:if is="$guildBasesGrouped is empty && $canManageGuildBases">
+        <div class="gm-bases-empty-plate">
+          <div class="gm-bases-empty-plate-corner"><span class="u-muted"><xf:fa icon="edit" /></span></div>
+        </div>
+      </xf:if>
+
+      <xf:if is="$guildBasesGrouped is not empty">
+        <xf:foreach loop="$guildBasesGrouped" value="$g">
+          <div class="gm-base-block gm-block" id="base-{$g.base.guild_base_id}">
+            <div class="gm-base-head">
+              <h2 class="gm-base-title">{$g.base.base_name}</h2>
+              <div class="gm-base-header-actions">
+                <xf:if is="$canManageGuildBases">
+                  <xf:form action="{$guildRoot}/bases/{$g.base.guild_base_id}/delete" style="display:inline">
+                    <button type="submit" class="button button--link gm-icon-btn" title="Удалить базу" aria-label="Удалить базу"><xf:fa icon="fa-solid fa-eraser" /></button>
+                  </xf:form>
+                </xf:if>
+                <a href="#top" class="u-muted gm-base-up">вверх</a>
+              </div>
+            </div>
+            <xf:if is="$canManageGuildBases">
+              <details class="gm-base-edit-details gm-base-edit-sheet">
+                <summary class="gm-base-edit-summary" title="Редактировать базу" aria-label="Редактировать базу"><span class="u-muted"><xf:fa icon="edit" /></span></summary>
+                <div class="gm-base-edit-form">
+                  <xf:form action="{$guildRoot}/bases/{$g.base.guild_base_id}/edit" class="block message">
+                    <div class="block-container">
+                      <div class="block-body">
+                        <div class="gm-npc-name-row">
+                          <div class="gm-field gm-field--name">
+                            <label>Название базы <span class="u-muted">(обязательно)</span></label>
+                            <input type="text" name="base_name" value="{$g.base.base_name}" class="input" maxlength="200" required="required" />
+                          </div>
+                          <div class="gm-field gm-field--submit" style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="button button--primary">Сохранить</button>
+                            <button type="submit" name="next_step" value="building" class="button gm-btn-plus">Добавить здание</button>
+                          </div>
+                        </div>
+                        <xf:editorrow name="message" value="{$g.base.base_bbcode}" rowtype="fullWidth noLabel"
+                          data-user-mention-url="{{ link('members/find') }}"
+                          data-min-height="200" />
+                      </div>
+                    </div>
+                  </xf:form>
+                </div>
+              </details>
+            </xf:if>
+            <div class="gm-desc-read">
+              <div class="gm-desc-bb">{$g.base.base_rendered|raw}</div>
+            </div>
+
+            <details class="gm-bases-buildings-spoiler"<xf:if is="$basesAddBuilding == 1 && $basesOpenBaseId == $g.base.guild_base_id"> open="open"</xf:if>>
+              <summary>Здания базы</summary>
+              <div class="gm-bases-buildings-inner">
+                <xf:if is="$g.buildings is not empty">
+                  <xf:foreach loop="$g.buildings" value="$bd">
+                    <div class="gm-base-building-row">
+                      <xf:if is="$canManageGuildBases">
+                        <div class="gm-base-building-controls">
+                          <xf:form action="{$guildRoot}/bases/{$g.base.guild_base_id}/building/{$bd.guild_base_building_id}/building-delete" style="display:inline">
+                            <button type="submit" class="button button--link gm-icon-btn" title="Удалить здание" aria-label="Удалить здание"><xf:fa icon="fa-solid fa-eraser" /></button>
+                          </xf:form>
+                          <details class="gm-base-building-edit-details">
+                            <summary class="gm-base-building-edit-summary" title="Редактировать здание" aria-label="Редактировать здание"><span class="u-muted"><xf:fa icon="edit" /></span></summary>
+                            <div style="margin-top:10px">
+                              <xf:form action="{$guildRoot}/bases/{$g.base.guild_base_id}/building/{$bd.guild_base_building_id}/building-edit" class="block message gm-base-building-form">
+                                <div class="block-container">
+                                  <div class="block-body">
+                                    <div class="gm-base-building-form-layout">
+                                      <div class="gm-base-building-form-fields">
+                                        <div class="gm-base-building-field-row">
+                                          <label for="building_name_{$bd.guild_base_building_id}">Название:</label>
+                                          <div class="gm-base-building-field-control"><input id="building_name_{$bd.guild_base_building_id}" type="text" name="building_name" value="{$bd.building_name}" class="input" maxlength="200" placeholder="Название здания" required="required" /></div>
+                                        </div>
+                                        <div class="gm-base-building-field-row">
+                                          <label for="building_level_{$bd.guild_base_building_id}">Уровень здания:</label>
+                                          <div class="gm-base-building-field-control"><input id="building_level_{$bd.guild_base_building_id}" type="text" name="building_level" value="{$bd.building_level}" class="input" maxlength="20" placeholder="I, II или III" /></div>
+                                        </div>
+                                        <div class="gm-base-building-field-row">
+                                          <label for="direction_text_{$bd.guild_base_building_id}">Направленность:</label>
+                                          <div class="gm-base-building-field-control"><input id="direction_text_{$bd.guild_base_building_id}" type="text" name="direction_text" value="{$bd.direction_text}" class="input" maxlength="255" placeholder="Одна из направленностей гильдии" /></div>
+                                        </div>
+                                        <div class="gm-base-building-field-row">
+                                          <label for="lieutenant_name_{$bd.guild_base_building_id}">Назначенный лейтенант:</label>
+                                          <div class="gm-base-building-field-control"><input id="lieutenant_name_{$bd.guild_base_building_id}" type="text" name="lieutenant_name" value="{$bd.lieutenant_name}" class="input" maxlength="150" placeholder="Имя НПС" /></div>
+                                        </div>
+                                        <div class="gm-base-building-field-row">
+                                          <label for="bonus_text_{$bd.guild_base_building_id}">Бонус:</label>
+                                          <div class="gm-base-building-field-control"><input id="bonus_text_{$bd.guild_base_building_id}" type="text" name="bonus_text" value="{$bd.bonus_text}" class="input" maxlength="600" placeholder="Пример: +3 обстоятельства к проверкам Арканы" /></div>
+                                        </div>
+                                        <div class="gm-base-building-field-row">
+                                          <label for="followers_text_{$bd.guild_base_building_id}">Последователи:</label>
+                                          <div class="gm-base-building-field-control"><input id="followers_text_{$bd.guild_base_building_id}" type="text" name="followers_text" value="{$bd.followers_text}" class="input" maxlength="120" placeholder="к-во последователей назначено / к-во требуемое" /></div>
+                                        </div>
+                                        <div class="gm-base-building-field-row gm-base-building-field-row-buttons">
+                                          <span class="gm-base-building-field-label-spacer"></span>
+                                          <div class="gm-base-building-field-control"><button type="submit" class="button button--primary">Сохранить</button></div>
+                                        </div>
+                                      </div>
+                                      <div class="gm-base-building-editor">
+                                        <label class="formRow-label">Описание здания:</label>
+                                        <xf:editorrow name="building_message" value="{$bd.description_bbcode}" rowtype="fullWidth noLabel"
+                                          data-user-mention-url="{{ link('members/find') }}"
+                                          data-min-height="200" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </xf:form>
+                            </div>
+                          </details>
+                        </div>
+                      </xf:if>
+                      <div class="gm-base-building-read">
+                      <dl class="gm-base-building-meta">
+                        <dt>Название</dt><dd><xf:if is="$bd.building_name">{$bd.building_name}<xf:else />—</xf:if></dd>
+                        <dt>Уровень здания</dt><dd><xf:if is="$bd.building_level">{$bd.building_level}<xf:else />—</xf:if></dd>
+                        <dt>Направленность</dt><dd><xf:if is="$bd.direction_text">{$bd.direction_text}<xf:else />—</xf:if></dd>
+                        <dt>Назначенный лейтенант</dt><dd><xf:if is="$bd.lieutenant_name">{$bd.lieutenant_name}<xf:else />—</xf:if></dd>
+                        <dt>Бонус</dt><dd><xf:if is="$bd.bonus_text">{$bd.bonus_text}<xf:else />—</xf:if></dd>
+                        <dt>Последователи</dt><dd><xf:if is="$bd.followers_text">{$bd.followers_text}<xf:else />—</xf:if></dd>
+                      </dl>
+                      <xf:if is="$bd.description_rendered">
+                        <span class="gm-base-building-desc-title">Описание здания</span>
+                        <div class="gm-desc-bb gm-base-building-prose">{$bd.description_rendered|raw}</div>
+                      </xf:if>
+                      </div>
+                    </div>
+                  </xf:foreach>
+                </xf:if>
+
+                <xf:if is="$basesAddBuilding == 1 && $basesOpenBaseId == $g.base.guild_base_id && $canManageGuildBases">
+                  <div class="gm-base-building-add">
+                    <xf:form action="{$guildRoot}/bases/{$g.base.guild_base_id}/building-add" class="block message gm-base-building-form">
+                      <div class="block-container">
+                        <div class="block-body">
+                          <div class="gm-base-building-form-layout">
+                            <div class="gm-base-building-form-fields">
+                              <div class="gm-base-building-field-row">
+                                <label for="building_name_new_{$g.base.guild_base_id}">Название:</label>
+                                <div class="gm-base-building-field-control"><input id="building_name_new_{$g.base.guild_base_id}" type="text" name="building_name" value="" class="input" maxlength="200" placeholder="Название здания" required="required" /></div>
+                              </div>
+                              <div class="gm-base-building-field-row">
+                                <label for="building_level_new_{$g.base.guild_base_id}">Уровень здания:</label>
+                                <div class="gm-base-building-field-control"><input id="building_level_new_{$g.base.guild_base_id}" type="text" name="building_level" value="" class="input" maxlength="20" placeholder="I, II или III" /></div>
+                              </div>
+                              <div class="gm-base-building-field-row">
+                                <label for="direction_text_new_{$g.base.guild_base_id}">Направленность:</label>
+                                <div class="gm-base-building-field-control"><input id="direction_text_new_{$g.base.guild_base_id}" type="text" name="direction_text" value="" class="input" maxlength="255" placeholder="Одна из направленностей гильдии" /></div>
+                              </div>
+                              <div class="gm-base-building-field-row">
+                                <label for="lieutenant_new_{$g.base.guild_base_id}">Назначенный лейтенант:</label>
+                                <div class="gm-base-building-field-control"><input id="lieutenant_new_{$g.base.guild_base_id}" type="text" name="lieutenant_name" value="" class="input" maxlength="150" placeholder="Имя НПС" /></div>
+                              </div>
+                              <div class="gm-base-building-field-row">
+                                <label for="bonus_new_{$g.base.guild_base_id}">Бонус:</label>
+                                <div class="gm-base-building-field-control"><input id="bonus_new_{$g.base.guild_base_id}" type="text" name="bonus_text" value="" class="input" maxlength="600" placeholder="Пример: +3 обстоятельства к проверкам Арканы" /></div>
+                              </div>
+                              <div class="gm-base-building-field-row">
+                                <label for="followers_new_{$g.base.guild_base_id}">Последователи:</label>
+                                <div class="gm-base-building-field-control"><input id="followers_new_{$g.base.guild_base_id}" type="text" name="followers_text" value="" class="input" maxlength="120" placeholder="к-во последователей назначено / к-во требуемое" /></div>
+                              </div>
+                              <div class="gm-base-building-field-row gm-base-building-field-row-buttons">
+                                <span class="gm-base-building-field-label-spacer"></span>
+                                <div class="gm-base-building-field-control"><button type="submit" class="button button--primary">Сохранить</button></div>
+                              </div>
+                            </div>
+                            <div class="gm-base-building-editor">
+                              <label class="formRow-label">Описание здания:</label>
+                              <xf:editorrow name="building_message" value="" rowtype="fullWidth noLabel"
+                                data-user-mention-url="{{ link('members/find') }}"
+                                data-min-height="220" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </xf:form>
+                  </div>
+                </xf:if>
+
+                <xf:if is="$canManageGuildBases">
+                  <div class="gm-bases-add-building-link" style="margin-top: 10px; text-align: right;">
+                    <a href="{{ link('enterum-guilds', {'guild_id': $guild.guild_id}, {'tab': 'bases', 'open_base': $g.base.guild_base_id, 'add_building': 1}) }}" class="button gm-btn-plus">Добавить здание</a>
+                  </div>
+                </xf:if>
+
+              </div>
+            </details>
+          </div>
+          <hr class="gm-npc-hr" />
+        </xf:foreach>
+      </xf:if>
+
+      <xf:if is="$canManageGuildBases">
+        <xf:form action="{$guildRoot}/bases/add" class="gm-add-row gm-bases-add-form block message">
+          <div class="block-container">
+            <div class="block-body">
+              <div class="gm-npc-name-row">
+                <div class="gm-field gm-field--name">
+                  <label>Название базы <span class="u-muted">(обязательно)</span></label>
+                  <input type="text" name="base_name" class="input" maxlength="200" placeholder="Название базы" required="required" />
+                </div>
+                <div class="gm-field gm-field--submit" style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;">
+                  <label>&nbsp;</label>
+                  <button type="submit" class="button button--primary">Сохранить</button>
+                  <button type="submit" name="next_step" value="building" class="button gm-btn-plus">Добавить здание</button>
+                </div>
+              </div>
+              <xf:editorrow name="message" value="" rowtype="fullWidth noLabel"
                 data-user-mention-url="{{ link('members/find') }}"
                 data-min-height="220" />
             </div>
@@ -1426,58 +2094,6 @@
           window.location.href = href;
         });
       });
-
-      if (!window.__gmRelationTooltipInit) {
-        window.__gmRelationTooltipInit = true;
-        var tooltipEl = null;
-        var activeTrigger = null;
-
-        function ensureTooltip() {
-          if (tooltipEl) return tooltipEl;
-          tooltipEl = document.createElement('div');
-          tooltipEl.className = 'gm-relation-tooltip';
-          tooltipEl.style.display = 'none';
-          document.body.appendChild(tooltipEl);
-          return tooltipEl;
-        }
-
-        function positionTooltip(evt) {
-          if (!tooltipEl || tooltipEl.style.display === 'none') return;
-          var w = 300;
-          var left = evt.clientX - (w / 2);
-          if (left < 8) left = 8;
-          if (left > (window.innerWidth - w - 8)) left = window.innerWidth - w - 8;
-          var top = evt.clientY - tooltipEl.offsetHeight - 12;
-          if (top < 8) top = evt.clientY + 14;
-          tooltipEl.style.left = left + 'px';
-          tooltipEl.style.top = top + 'px';
-        }
-
-        document.addEventListener('mouseover', function (evt) {
-          var trigger = evt.target && evt.target.closest ? evt.target.closest('.gm-relation-pill[data-gm-tooltip]') : null;
-          if (!trigger) return;
-          activeTrigger = trigger;
-          var tip = ensureTooltip();
-          tip.textContent = trigger.getAttribute('data-gm-tooltip') || '';
-          tip.style.display = 'block';
-          positionTooltip(evt);
-        });
-
-        document.addEventListener('mousemove', function (evt) {
-          if (!activeTrigger) return;
-          positionTooltip(evt);
-        });
-
-        document.addEventListener('mouseout', function (evt) {
-          if (!activeTrigger) return;
-          var rel = evt.relatedTarget;
-          if (rel && activeTrigger.contains(rel)) return;
-          activeTrigger = null;
-          if (tooltipEl) {
-            tooltipEl.style.display = 'none';
-          }
-        });
-      }
     })();
     </script>
   </xf:if>
@@ -1632,6 +2248,78 @@
     })();
     </script>
   </xf:if>
+
+  <script>
+  (function () {
+    if (window.__gmGmTooltipInit) return;
+    window.__gmGmTooltipInit = true;
+    var tooltipEl = null;
+    var activeTrigger = null;
+    var activeWidth = 300;
+
+    function tooltipClassFor(trigger) {
+      return trigger.classList.contains('gm-focus-pill') ? 'gm-focus-tooltip' : 'gm-relation-tooltip';
+    }
+
+    function widthFor(trigger) {
+      return trigger.classList.contains('gm-focus-pill') ? 200 : 300;
+    }
+
+    function ensureTooltip() {
+      if (tooltipEl) return tooltipEl;
+      tooltipEl = document.createElement('div');
+      tooltipEl.className = 'gm-relation-tooltip';
+      tooltipEl.style.display = 'none';
+      document.body.appendChild(tooltipEl);
+      return tooltipEl;
+    }
+
+    function positionTooltip(evt) {
+      if (!tooltipEl || tooltipEl.style.display === 'none') return;
+      var w = activeWidth;
+      var left = evt.clientX - (w / 2);
+      if (left < 8) left = 8;
+      if (left > (window.innerWidth - w - 8)) left = window.innerWidth - w - 8;
+      var top = evt.clientY - tooltipEl.offsetHeight - 12;
+      if (top < 8) top = evt.clientY + 14;
+      tooltipEl.style.left = left + 'px';
+      tooltipEl.style.top = top + 'px';
+    }
+
+    document.addEventListener('mouseover', function (evt) {
+      var trigger = evt.target && evt.target.closest
+        ? evt.target.closest('.gm-relation-pill[data-gm-tooltip], .gm-focus-pill[data-gm-tooltip]')
+        : null;
+      if (!trigger) return;
+      activeTrigger = trigger;
+      activeWidth = widthFor(trigger);
+      var tip = ensureTooltip();
+      tip.className = tooltipClassFor(trigger);
+      var rawTip = trigger.getAttribute('data-gm-tooltip') || '';
+      if (trigger.classList.contains('gm-focus-pill')) {
+        rawTip = rawTip.replace(/\\n/g, '\n');
+      }
+      tip.textContent = rawTip;
+      tip.style.display = 'block';
+      positionTooltip(evt);
+    });
+
+    document.addEventListener('mousemove', function (evt) {
+      if (!activeTrigger) return;
+      positionTooltip(evt);
+    });
+
+    document.addEventListener('mouseout', function (evt) {
+      if (!activeTrigger) return;
+      var rel = evt.relatedTarget;
+      if (rel && activeTrigger.contains(rel)) return;
+      activeTrigger = null;
+      if (tooltipEl) {
+        tooltipEl.style.display = 'none';
+      }
+    });
+  })();
+  </script>
 </div>
 ]]></template>
   <template type="admin" title="guild_manager_admin_create" version_id="1000270" version_string="1.0.0 Alpha 27"><![CDATA[

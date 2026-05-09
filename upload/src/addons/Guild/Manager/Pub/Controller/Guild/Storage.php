@@ -20,6 +20,7 @@ class Storage extends AbstractGuildAction
                 $this->filter('item_name', 'str'),
                 $this->filter('item_description', 'str'),
                 $this->filter('rarity', 'str'),
+                $this->filter('item_url', 'str'),
                 $this->filter('source_url', 'str'),
                 $guildRole
             );
@@ -42,6 +43,7 @@ class Storage extends AbstractGuildAction
                 $this->filter('item_name', 'str'),
                 $this->filter('item_description', 'str'),
                 $this->filter('rarity', 'str'),
+                $this->filter('item_url', 'str'),
                 $this->filter('source_url', 'str'),
                 $guildRole
             );
