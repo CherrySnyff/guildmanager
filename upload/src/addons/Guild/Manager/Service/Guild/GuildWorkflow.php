@@ -321,6 +321,109 @@ class GuildWorkflow extends AbstractService
         $membershipManager->setMemberRole($guild, $target, PermissionPreset::ROLE_OFFICER);
     }
 
+    /** Снятие роли офицера с выбранных пользователей (остаются участниками member, active). */
+    public function removeGuildOfficersByUserIds(
+        Guild $guild,
+        User $actor,
+        array $userIds,
+        ?string $guildRole = null
+    ): void {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanAppointGuildOfficer($guild, $actor, $guildRole);
+
+        $clean = [];
+        foreach ($userIds as $id) {
+            $id = (int)$id;
+            if ($id > 0) {
+                $clean[$id] = $id;
+            }
+        }
+        if ($clean === []) {
+            throw new PrintableException('Отметьте хотя бы одного офицера для снятия роли.');
+        }
+
+        /** @var \Guild\Manager\Repository\GuildMember $memberRepo */
+        $memberRepo = $this->repository('Guild\Manager:GuildMember');
+        /** @var MembershipManager $membershipManager */
+        $membershipManager = $this->service('Guild\Manager:Guild\MembershipManager');
+
+        $removed = 0;
+        foreach ($clean as $userId) {
+            if ((int)$guild->leader_user_id === $userId) {
+                continue;
+            }
+            /** @var \Guild\Manager\Entity\GuildMember|null $gm */
+            $gm = $memberRepo->findGuildMember($guild->guild_id, $userId)->fetchOne();
+            if (
+                !$gm
+                || $gm->member_state !== 'active'
+                || $gm->role !== PermissionPreset::ROLE_OFFICER
+            ) {
+                continue;
+            }
+            /** @var User|null $user */
+            $user = $this->em()->find('XF:User', $userId);
+            if (!$user) {
+                continue;
+            }
+            $membershipManager->setMemberRole($guild, $user, PermissionPreset::ROLE_MEMBER);
+            $removed++;
+        }
+
+        if ($removed === 0) {
+            throw new PrintableException('Среди отмеченных нет активных офицеров для снятия роли.');
+        }
+    }
+
+    /** Снять офицера from и назначить офицером to (один к одному). */
+    public function replaceGuildOfficer(
+        Guild $guild,
+        User $actor,
+        int $fromUserId,
+        int $toUserId,
+        ?string $guildRole = null
+    ): void {
+        /** @var PermissionGuard $permissionGuard */
+        $permissionGuard = $this->service('Guild\Manager:Guild\PermissionGuard');
+        $permissionGuard->assertCanAppointGuildOfficer($guild, $actor, $guildRole);
+
+        if ($fromUserId <= 0 || $toUserId <= 0) {
+            throw new PrintableException('Укажите корректные ID пользователей.');
+        }
+        if ($fromUserId === $toUserId) {
+            throw new PrintableException('Старый и новый ID совпадают.');
+        }
+        if ((int)$guild->leader_user_id === $toUserId) {
+            throw new PrintableException('Лидер гильдии уже имеет высшую роль; назначать офицером его не нужно.');
+        }
+
+        /** @var \Guild\Manager\Repository\GuildMember $memberRepo */
+        $memberRepo = $this->repository('Guild\Manager:GuildMember');
+        /** @var \Guild\Manager\Entity\GuildMember|null $fromMember */
+        $fromMember = $memberRepo->findGuildMember($guild->guild_id, $fromUserId)->fetchOne();
+        if (
+            !$fromMember
+            || $fromMember->member_state !== 'active'
+            || $fromMember->role !== PermissionPreset::ROLE_OFFICER
+        ) {
+            throw new PrintableException('Указанный пользователь не является активным офицером.');
+        }
+
+        /** @var User|null $fromUser */
+        $fromUser = $this->em()->find('XF:User', $fromUserId);
+        /** @var User|null $toUser */
+        $toUser = $this->em()->find('XF:User', $toUserId);
+        if (!$fromUser || !$toUser) {
+            throw new PrintableException('Пользователь не найден.');
+        }
+
+        /** @var MembershipManager $membershipManager */
+        $membershipManager = $this->service('Guild\Manager:Guild\MembershipManager');
+        $membershipManager->setMemberRole($guild, $fromUser, PermissionPreset::ROLE_MEMBER);
+        $membershipManager->setMemberRole($guild, $toUser, PermissionPreset::ROLE_OFFICER);
+    }
+
     public function addStorageItem(
         Guild $guild,
         User $actor,

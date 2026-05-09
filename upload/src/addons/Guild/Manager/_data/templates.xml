@@ -125,6 +125,49 @@
 .gm-admin-inline-form .gm-field select { min-height: 40px; }
 .gm-field--leader-id .gm-field--leader-id-row { display: flex; align-items: center; gap: 8px; }
 .gm-field--leader-id .gm-field--leader-id-row .input { flex: 1 1 auto; }
+.gm-edit-guild-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 20px;
+  margin-bottom: 12px;
+}
+.gm-edit-guild-header-row .gm-edit-guild-leader-form,
+.gm-edit-guild-header-row .gm-edit-guild-officer-add-form { margin: 0; }
+.gm-edit-guild-header-row .gm-edit-guild-leader-form { flex: 1 1 280px; }
+.gm-edit-guild-header-row .gm-edit-guild-officer-add-form { flex: 0 1 300px; }
+.gm-edit-guild-header-row .gm-admin-inline-form { align-items: flex-end; }
+.gm-officers-panel { margin-top: 12px; }
+.gm-officers-list-field label { font-weight: 600; display: block; margin-bottom: 6px; }
+.gm-officers-list { margin: 0 0 10px 0; }
+.gm-officers-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid @xf-borderColor;
+}
+.gm-officers-row:last-child { border-bottom: 0; }
+.gm-officers-pick { display: inline-flex; align-items: center; margin: 0; cursor: pointer; flex: 0 0 auto; }
+.gm-officers-identity-replace {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.gm-officers-who {
+  flex: 0 1 auto;
+  min-width: 0;
+  word-break: break-word;
+  font-size: 13px;
+}
+.gm-officers-replace-form { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; flex: 0 0 auto; }
+.gm-officers-replace-form .gm-officers-replace-id { width: 118px; min-width: 0; flex: 0 0 auto; }
+.gm-officers-remove-form { margin-top: 4px; }
+.gm-officers-empty { margin: 4px 0 0; font-size: 13px; opacity: 0.85; }
 .gm-btn-save-icon { min-width: 40px; }
 .gm-edit-guild-toggle-wrap { text-align: right; margin-top: 10px; }
 .gm-edit-guild-details > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
@@ -314,6 +357,13 @@
   .gm-admin-inline-form .gm-field,
   .gm-admin-edit-row .gm-field { min-width: 0; width: 100%; }
   .gm-field--leader-id .gm-field--leader-id-row { flex-direction: column; align-items: stretch; gap: 6px; }
+  .gm-edit-guild-header-row { flex-direction: column; align-items: stretch; }
+  .gm-edit-guild-header-row .gm-edit-guild-leader-form,
+  .gm-edit-guild-header-row .gm-edit-guild-officer-add-form { flex: 1 1 auto; width: 100%; }
+  .gm-officers-row { flex-direction: column; align-items: stretch; }
+  .gm-officers-identity-replace { flex-direction: column; align-items: stretch; width: 100%; }
+  .gm-officers-replace-form { width: 100%; }
+  .gm-officers-replace-form .gm-officers-replace-id { width: 100%; }
   .gm-btn-save-icon { width: 100%; min-width: 0; }
   .gm-table-wrap--rep-summary,
   .gm-table-wrap--rep-main,
@@ -1044,36 +1094,74 @@
             <xf:fa icon="edit" /> Редактировать гильдию
           </summary>
           <div class="gm-desc-editForm">
-            <xf:if is="$canChangeLeader || $canEditGuildTitleAdmin">
-              <xf:form action="{$guildRoot}/leader" class="gm-block gm-admin-inline-form">
-                <xf:if is="$canEditGuildTitleAdmin">
-                  <div class="gm-field">
-                    <label>Редактировать название гильдии</label>
-                    <input type="text" name="guild_title" value="{$guild.title}" class="input" maxlength="100" />
-                  </div>
+            <xf:if is="$canChangeLeader || $canEditGuildTitleAdmin || $canAppointGuildOfficer">
+              <div class="gm-edit-guild-header-row">
+                <xf:if is="$canChangeLeader || $canEditGuildTitleAdmin">
+                  <xf:form action="{$guildRoot}/leader" class="gm-block gm-admin-inline-form gm-edit-guild-leader-form">
+                    <xf:if is="$canEditGuildTitleAdmin">
+                      <div class="gm-field">
+                        <label>Редактировать название гильдии</label>
+                        <input type="text" name="guild_title" value="{$guild.title}" class="input" maxlength="100" />
+                      </div>
+                    </xf:if>
+                    <xf:if is="$canChangeLeader">
+                      <div class="gm-field gm-field--leader-id">
+                        <label>ID выбранного лидера</label>
+                        <div class="gm-field--leader-id-row">
+                          <input type="number" name="leader_user_id" id="gm-leader-user-id" value="{$guild.leader_user_id}" class="input" min="1" />
+                          <button type="submit" class="button gm-btn-save-icon" title="Сохранить изменения гильдии" aria-label="Сохранить изменения гильдии"><xf:fa icon="save" /></button>
+                        </div>
+                      </div>
+                    </xf:if>
+                  </xf:form>
                 </xf:if>
-                <xf:if is="$canChangeLeader">
-                  <div class="gm-field gm-field--leader-id">
-                    <label>ID выбранного лидера</label>
-                    <div class="gm-field--leader-id-row">
-                      <input type="number" name="leader_user_id" id="gm-leader-user-id" value="{$guild.leader_user_id}" class="input" min="1" />
-                      <button type="submit" class="button gm-btn-save-icon" title="Сохранить изменения гильдии" aria-label="Сохранить изменения гильдии"><xf:fa icon="save" /></button>
+                <xf:if is="$canAppointGuildOfficer">
+                  <xf:form action="{$guildRoot}/officer" class="gm-admin-inline-form gm-edit-guild-officer-add-form">
+                    <input type="hidden" name="gm_officer_op" value="add" />
+                    <div class="gm-field gm-field--leader-id">
+                      <label>Добавить офицера (ID пользователя)</label>
+                      <div class="gm-field--leader-id-row">
+                        <input type="number" name="officer_user_id" id="gm-officer-user-id" value="" class="input" min="1" />
+                        <button type="submit" class="button gm-btn-save-icon" title="Назначить офицера" aria-label="Назначить офицера"><xf:fa icon="save" /></button>
+                      </div>
                     </div>
-                  </div>
+                  </xf:form>
                 </xf:if>
-              </xf:form>
+              </div>
             </xf:if>
 
             <xf:if is="$canAppointGuildOfficer">
-              <xf:form action="{$guildRoot}/officer" class="gm-block gm-admin-inline-form">
-                <div class="gm-field gm-field--leader-id">
-                  <label>Добавить офицера (ID пользователя)</label>
-                  <div class="gm-field--leader-id-row">
-                    <input type="number" name="officer_user_id" id="gm-officer-user-id" value="" class="input" min="1" />
-                    <button type="submit" class="button gm-btn-save-icon" title="Назначить офицера" aria-label="Назначить офицера"><xf:fa icon="save" /></button>
-                  </div>
+              <div class="gm-block gm-officers-panel">
+                <div class="gm-field gm-officers-list-field">
+                  <label>Текущие офицеры</label>
+                  <xf:if is="$guildOfficers is not empty">
+                    <div class="gm-officers-list">
+                      <xf:foreach loop="$guildOfficers" value="$go">
+                        <div class="gm-officers-row">
+                          <label class="gm-officers-pick">
+                            <input type="checkbox" name="officer_remove_ids[]" value="{$go.user_id}" form="gm-officers-remove-form" title="Выбрать для снятия роли" />
+                          </label>
+                          <div class="gm-officers-identity-replace">
+                            <span class="gm-officers-who">#{$go.user_id} — {$go.username}</span>
+                            <xf:form action="{$guildRoot}/officer" class="gm-officers-replace-form">
+                              <input type="hidden" name="gm_officer_op" value="replace" />
+                              <input type="hidden" name="from_user_id" value="{$go.user_id}" />
+                              <input type="number" name="to_user_id" class="input gm-officers-replace-id" min="1" placeholder="Новый ID" title="ID нового офицера" aria-label="ID нового офицера" />
+                              <button type="submit" class="button button--small">Заменить</button>
+                            </xf:form>
+                          </div>
+                        </div>
+                      </xf:foreach>
+                    </div>
+                    <xf:form action="{$guildRoot}/officer" id="gm-officers-remove-form" class="gm-officers-remove-form">
+                      <input type="hidden" name="gm_officer_op" value="remove" />
+                      <button type="submit" class="button">Снять роль с выбранных</button>
+                    </xf:form>
+                  <xf:else />
+                    <div class="gm-officers-empty">Активных офицеров пока нет.</div>
+                  </xf:if>
                 </div>
-              </xf:form>
+              </div>
             </xf:if>
 
             <xf:if is="$canManageDirections && $maxDirectionSlots &gt;= 1">

@@ -20,4 +20,14 @@ class GuildMember extends Repository
             ->where('guild_id', $guildId)
             ->order('joined_date');
     }
+
+    /** Активные офицеры (роль officer, не лидер по полю гильдии — лидер отдельно). */
+    public function findActiveOfficersForGuild(int $guildId)
+    {
+        return $this->finder('Guild\Manager:GuildMember')
+            ->where('guild_id', $guildId)
+            ->where('member_state', 'active')
+            ->where('role', 'officer')
+            ->order('username');
+    }
 }

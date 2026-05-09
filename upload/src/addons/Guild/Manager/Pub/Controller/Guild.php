@@ -96,6 +96,16 @@ class Guild extends AbstractController
         $canManageDirections = $guard->canManageDirections($guild, $visitor, $guildRole);
         $canAppointGuildOfficer = $guard->canAppointGuildOfficer($guild, $visitor, $guildRole);
 
+        /** @var \Guild\Manager\Repository\GuildMember $guildMemberRepo */
+        $guildMemberRepo = $this->repository('Guild\Manager:GuildMember');
+        $guildOfficers = [];
+        foreach ($guildMemberRepo->findActiveOfficersForGuild($guild->guild_id)->fetch() as $officerRow) {
+            $guildOfficers[] = [
+                'user_id' => (int)$officerRow->user_id,
+                'username' => (string)$officerRow->username,
+            ];
+        }
+
         $focusRows = $this->finder('Guild\Manager:GuildFocus')
             ->where('guild_id', $guild->guild_id)
             ->order('display_order')
@@ -289,6 +299,7 @@ class Guild extends AbstractController
             'canChangeLeader' => $guard->canChangeLeader($guild, $visitor, $guildRole),
             'canEditGuildPanel' => ($isGuildOwner || $canEditGuildTitleAny || $canManageDirections || $canAppointGuildOfficer),
             'canAppointGuildOfficer' => $canAppointGuildOfficer,
+            'guildOfficers' => $guildOfficers,
             'canEditGuildTitleAdmin' => $canEditGuildTitleAny,
             'canEditGuildDirectionsAny' => $canEditGuildDirectionsAny,
             'canManageDirections' => $canManageDirections,
